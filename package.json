@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "electron": "^23.1.0"
+  },
+  "dependencies": {
+    "mineflayer": "^4.8.1"
+  },
+  "name": "3_el_client_1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "nodemon": "nodemon --watch . --exec \"electron .\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

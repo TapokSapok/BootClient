@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="styles/style.css">
+   <title>MineShould</title>
+</head>
+
+<body>
+
+   <nav class="nav bar">
+      <div class="nav-picture">
+         <div class="nav-bot-item"><img src="images/headPlayer.png" class="bot-img"></div>
+      </div>
+      <div class="nav-info">
+         <div class="nav-upper nav-side">
+            <div class="nav-info-item nav-username"></div>
+            <div class="nav-info-item nav-server"></div>
+            <div class="nav-info-item nav-health"></div>
+         </div>
+         <div class="nav-lover nav-side">
+            <div class="nav-info-item nav-coordinates"></div>
+            <div class="nav-info-item nav-hunger"></div>
+         </div>
+      </div>
+
+   </nav>
+
+   <div class="sidebar bar">
+      <div class="sep"></div>
+      <div class="sidebar-bot-item bot-plus"><img src="images/head1.png" class="bot-img" draggable="false"></div>
+      <div class="sep none last-separator"></div>
+   </div>
+   <div class="sideLog bar">
+      <div class="separ"></div>
+      <div class="sidebar-bot-item bot-log" data-bot=".all."><img src="images/computer.png" class="bot-img"
+            draggable="false"></div>
+   </div>
+
+   <!--  -->
+   <div class="console bar main-panel">
+      <div class="console header">
+         <select class="console choise">
+            <option value="chatLog" class="console choise-item" selected>ЧатЛог</option>
+            <option value="log" class="console choise-item">Логи</option>
+            <option value="addons">Аддоны</option>
+         </select>
+         <button class="console-quit">Выйти</button>
+      </div>
+      <div class="console item active" data-item="chatLog">
+         <div class="console chatLog">
+            <ul class="console ul"></ul>
+         </div>
+         <input class="console-chat" type="text" placeholder="сообщение в чат">
+      </div>
+      <div class="console item" data-item="log">
+         <div class="console log">
+            <ul class="console ul log"></ul>
+         </div>
+      </div>
+      <div class="console item" data-item="addons">
+         <div class="console clickWindow">
+            <input type="text" class="console clickWindow-input btn-blue" placeholder="clickWindow">
+            <button class="console clickWindow-btn btn-blue">Клик</button>
+         </div>
+      </div>
+   </div>
+
+   <!--  -->
+
+   <div class="control bar main-panel">
+
+      <div class="control header">
+         <select class="control choise">
+            <option value="chat" selected>Чат</option>
+            <option value="addons">Аддоны</option>
+            <option value="trading">Трейдинг</option>
+         </select>
+         <button class="control-quit">Выйти</button>
+      </div>
+
+      <div class="control item active" data-item="chat">
+         <div class="control lookAt">
+            <select class="control choise-lookAt btn-blue" onchange="choiseLookAt()">
+               <option value="player" selected class="control choise-lookAt-item">Игрок</option>
+               <option value="near-player" class="control choise-lookAt-item">Ближний игрок</option>
+            </select>
+            <input type="text" class="control lookAt-player btn-blue" placeholder="ник игрока">
+            <button class="control-lookAt btn-blue">Смотреть</button>
+         </div>
+         <div class="control chatLog">
+            <ul class="control ul">
+
+            </ul>
+         </div>
+         <input class="control-chat" type="text" placeholder="сообщение в чат">
+      </div>
+      <div class="control item" data-item="addons">
+         <div class="control clickWindow">
+            <input type="text" class="control clickWindow-input btn-blue" placeholder="Слот инвентаря">
+            <button class="control clickWindow-btn btn-blue">Клик</button>
+         </div>
+      </div>
+      <div class="control item" data-item="trading">
+         <div class="control trading-start btn-blue">Старт</div>
+         <div class="control trading-items"></div>
+         <select class="btn-blue">
+            <option selected>Добавить зачарование</option>
+         </select>
+      </div>
+   </div>
+
+   <div class="bots"></div>
+
+   <!--  -->
+
+   <div class="login bar main-panel active">
+      <div class="login-form">
+         <input type="text" class="login-username login-input" placeholder="username" value="Notch">
+         <input type="text" class="login-host login-input" placeholder="host" value="localhost">
+         <input type="text" class="login-port login-input" placeholder="port" value="1111">
+         <input type="text" class="login-version login-input" placeholder="Пример: 1.19.2" value="1.19.3">
+         <button type="submit" class="login-submit">Подключиться</button>
+      </div>
+   </div>
+</body>
+<script src="../internal/main.js"></script>
+<script src="../internal/manager.js"></script>
+<script src="../internal/htmlController.js"></script>
+
+
+</html>
