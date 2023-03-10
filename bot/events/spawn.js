@@ -1,4 +1,8 @@
-module.exports = () => {
+module.exports = (username) => {
+   const separator = document.querySelector('.last-separator')
+   const sidebarItem = `<div class="sidebar-bot-item" data-bot="${username}"><img src="images/headPlayer.png" class="bot-img" draggable="false"></div>`
+   separator.insertAdjacentHTML('beforebegin', sidebarItem)
+
    const item = document.createElement('div')
    item.innerHTML = `<div class="control header">
             <select class="control choise">
@@ -38,11 +42,16 @@ module.exports = () => {
             <option selected>Добавить зачарование</option>
             </select>
             </div>`
-   mainItem.className = 'control bar main-panel';
-   mainItem.dataset.useBot = `${this.username}`
-   document.querySelector('.bots').append(mainItem)
-   panelBots.push(mainItem)
+   item.className = 'control bar main-panel';
+   item.dataset.useBot = `${username}`
 
-   panelBots.forEach(el => console.log(el))
+   document.querySelector('.bots').append(item)
 
+   const props = {
+      username: `${username}`,
+      panel: item,
+      chatLog: item.querySelector('.control.ul')
+   }
+
+   clients.push(new bot.Client(props))
 }

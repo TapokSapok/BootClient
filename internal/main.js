@@ -57,7 +57,8 @@ const bot = require('../internal/manager.js'),
    idConsoleClickWindowInput = document.querySelector('.console.clickWindow-input')
 
 let bots = [];
-let panelBots = [];
+let clients = [];
+
 let activeBot = '';
 let x, y;
 let markerBotData = '';
@@ -163,6 +164,8 @@ function getTime() {
 }
 
 
+
+
 // ================== HTML
 
 function choiseLookAt() {
@@ -264,3 +267,4 @@ function openLoginPanel() {
 
    idNavItems.forEach(el => el.innerText = '')
 }
+

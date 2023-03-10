@@ -22,8 +22,9 @@ module.exports = class Bot {
    // === Инициализция ивентов бота
    initEvents() {
       this.bot.on("messagestr", (msg) => {
-         if (activeBot === '.all.') { consoleChatLog(msg) }
-         if (this.bot.username === activeBot) { chatLog(msg), consoleChatLog(msg) }
+         // if (activeBot === '.all.') { consoleChatLog(msg) }
+         // if (this.bot.username === activeBot) { chatLog(msg), consoleChatLog(msg) }
+         const func = require('./events/messageStr.js'); func(msg);
       })
 
       this.bot.on('health', () => {
@@ -40,10 +41,7 @@ module.exports = class Bot {
       })
 
       this.bot.once('spawn', () => {
-         const separator = document.querySelector('.last-separator')
-         const sidebarItem = `<div class="sidebar-bot-item" data-bot="${this.username}"><img src="images/headPlayer.png" class="bot-img" draggable="false"></div>`
-         separator.insertAdjacentHTML('beforebegin', sidebarItem)
-
+         const func = require('./events/spawn.js'); func(this.username);
          echo(1, `Connect`, `${this.host}:${this.port}`, this.username)
       })
 

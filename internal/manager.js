@@ -1,4 +1,5 @@
 module.exports = {
+   Client: require('../client/client.js'),
    Bot: require('../bot/bot.js'),
    connect: require('../bot/main/connect.js'),
 
@@ -6,4 +7,5 @@ module.exports = {
    quit: require('../bot/extends/quit.js'),
    lookAt: require('../bot/extends/lookAt.js'),
    clickWindow: require('../bot/extends/clickWindow.js'),
+
 }
