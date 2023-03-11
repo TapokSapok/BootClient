@@ -1,21 +1,17 @@
-module.exports = (text) => {
-   const message = document.createElement('li')
+module.exports = (username, text) => {
+   const messageChat = document.createElement('li')
+   const messageConsole = document.createElement('li')
 
-   message.innerText = text;
-   // idControlChatLogUl.append(message)
-   // idControlChatLogUl.scrollIntoView(false)
+   messageChat.innerText = text;
+   messageConsole.innerText = `[${username}]: ${text}`;
 
-
-
-   for (let j = 0; j < clients.length; j++) {
-      for (let i = 0; i < bots.length; i++) {
-         if (clients[j].username === bots[i].username) {
-            clients[j].chatLog.append(message)
-            // clients[j].chatLog.scrollIntoView(false)
-            console.log(bots[i].username, clients[j].chatLog)
-         }
-
+   for (let i = 0; i < bots.length; i++) {
+      if (bots[i].username === username) {
+         bots[i].chatLog.append(messageChat)
+         bots[i].chatLog.scrollIntoView(false)
       }
-
    }
+
+   idConsoleChatLogUl.append(messageConsole)
+   idConsoleChatLogUl.scrollIntoView(false)
 }

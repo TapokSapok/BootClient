@@ -57,7 +57,6 @@ const bot = require('../internal/manager.js'),
    idConsoleClickWindowInput = document.querySelector('.console.clickWindow-input')
 
 let bots = [];
-let clients = [];
 
 let activeBot = '';
 let x, y;
@@ -73,6 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
    idSideNewBot.addEventListener('click', () => { openLoginPanel(); })
    idSideConsole.addEventListener('click', () => { openConsole() })
    document.addEventListener('click', (el) => { choiceBot(el); markerBots(el); })
+
+
 
    idControlChat.addEventListener('keyup', (e) => { if (e.which == 13) { bot.chatSend() } })
    idControlQuit.addEventListener('click', () => { bot.quit() })
@@ -111,10 +112,13 @@ function choiceBot(el) {
    if (el.target.dataset.bot && el.target.className === 'sidebar-bot-item') {
       activeBot = el.target.dataset.bot;
 
-      idMainPanels.forEach(el => { el.classList.remove('active'); })
-      idControlPanel.classList.add('active')
-
-      idControlChatLogUl.innerHTML = ''
+      for (let i = 0; i < bots.length; i++) {
+         if (!bots[i].panel) continue;
+         if (bots[i].panel.dataset.useBot === el.target.dataset.bot) {
+            clearPanels()
+            bots[i].panel.classList.add('active')
+         }
+      }
 
       for (let i = 0; i < bots.length; i++) {
          bots[i].getInfo()
@@ -168,6 +172,14 @@ function getTime() {
 
 // ================== HTML
 
+function clearPanels() {
+   for (let i = 0; i < bots.length; i++) {
+      if (!bots[i].panel) continue;
+      bots[i].panel.classList.remove('active');
+   }
+   idMainPanels.forEach(el => { el.classList.remove('active'); })
+}
+
 function choiseLookAt() {
    const player = document.querySelector('.control.lookAt-player')
 
@@ -183,7 +195,6 @@ function choiseLookAt() {
 }
 
 function chatLog(text) {
-   const img = document.querySelector('.chatLog-img')
    const item = document.createElement('li')
 
    item.innerText = text;
@@ -192,7 +203,6 @@ function chatLog(text) {
 }
 
 function consoleChatLog(text) {
-   const img = document.querySelector('.chatLog-img')
    const item = document.createElement('li')
 
    item.innerText = text;
@@ -251,7 +261,7 @@ function markerBots(el) {
 function openConsole(elem) {
    activeBot = '.all.'
 
-   idMainPanels.forEach(el => el.classList.remove('active'))
+   clearPanels();
    idConsolePanel.classList.add('active')
 
    idNavItems.forEach(el => el.innerText = '')
@@ -262,7 +272,7 @@ function openConsole(elem) {
 function openLoginPanel() {
    activeBot = ''
 
-   idMainPanels.forEach(el => { el.classList.remove('active'); })
+   clearPanels()
    idLoginPanel.classList.add('active')
 
    idNavItems.forEach(el => el.innerText = '')

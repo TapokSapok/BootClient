@@ -1,8 +1,10 @@
 module.exports = () => {
-   bots.forEach(el => el.quit())
+   // bots.forEach(el => el.quit())
 
-   if (activeBot != '.all.') {
-      idMainPanels.forEach(el => { el.classList.remove('active'); })
-      idLoginPanel.classList.add('active')
-   }
+   // if (activeBot != '.all.') {
+   //    clearPanels()
+   //    idLoginPanel.classList.add('active')
+   // }
+
+
 }

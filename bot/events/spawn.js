@@ -47,11 +47,13 @@ module.exports = (username) => {
 
    document.querySelector('.bots').append(item)
 
-   const props = {
+   const quit = item.querySelector('.control-quit')
+
+   quit.addEventListener('click', () => { bot.quit() })
+
+   return props = {
       username: `${username}`,
       panel: item,
       chatLog: item.querySelector('.control.ul')
    }
-
-   clients.push(new bot.Client(props))
 }

@@ -5,6 +5,8 @@ module.exports = class Bot {
       this.host = options['host'];
       this.port = options['port'];
 
+      this.panel = null;
+      this.chatLog = null;
 
       this.initBot();
    }
@@ -21,10 +23,9 @@ module.exports = class Bot {
 
    // === Инициализция ивентов бота
    initEvents() {
-      this.bot.on("messagestr", (msg) => {
-         // if (activeBot === '.all.') { consoleChatLog(msg) }
-         // if (this.bot.username === activeBot) { chatLog(msg), consoleChatLog(msg) }
-         const func = require('./events/messageStr.js'); func(msg);
+      this.bot.on("messagestr", (text) => {
+         const func = require('./events/messageStr.js');
+         func(this.username, text);
       })
 
       this.bot.on('health', () => {
@@ -41,7 +42,13 @@ module.exports = class Bot {
       })
 
       this.bot.once('spawn', () => {
-         const func = require('./events/spawn.js'); func(this.username);
+         const func = require('./events/spawn.js');
+
+         const props = func(this.username);
+
+         this.panel = props['panel'];
+         this.chatLog = props['chatLog'];
+
          echo(1, `Connect`, `${this.host}:${this.port}`, this.username)
       })
 
@@ -86,8 +93,10 @@ module.exports = class Bot {
    }
    // Выход с сервера
    quit() {
-      if (activeBot === '.all.') { this.bot.quit('Выход с клиента') }
-      if (this.bot.username === activeBot) { this.bot.quit('Выход с клиента') };
+      // if (activeBot === '.all.') { this.bot.quit('Выход с клиента') }
+      // if (this.bot.username === activeBot) { this.bot.quit('Выход с клиента') };
+
+
    }
    // Посмотреть на..
    async lookAt(type) {
