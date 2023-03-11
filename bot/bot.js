@@ -105,35 +105,34 @@ module.exports = class Bot {
       this.bot.quit('Выход с клиента')
    }
    // Посмотреть на..
-   async lookAt(type) {
-      if (this.bot.username === activeBot) {
-         let target
-         switch (type) {
-            case 'near-player':
-               target = this.bot.nearestEntity(entity => entity.name === 'player')
-               if (!target) echo(2, 'lookAt', 'По близости нет игроков.', this.username); else {
-                  await this.bot.lookAt(target.position)
-                  echo(1, 'lookAt', `посмотрел на ${target.username}`, this.username)
-               }
-               break;
-            case 'player':
-               let localPlayers = this.bot.players;
-               if (localPlayers[idControlLookAtPlayer.value] != undefined) {
-                  const playerLocation = localPlayers[idControlLookAtPlayer.value].entity.position;
+   async lookAt(type, player) {
+      let target
+      switch (type) {
+         case 'near-player':
+            target = this.bot.nearestEntity(entity => entity.name === 'player')
+            if (!target) echo(2, 'lookAt', 'По близости нет игроков.', this.username); else {
+               await this.bot.lookAt(target.position)
+               echo(1, 'lookAt', `посмотрел на ${target.username}`, this.username)
+            }
+            break;
+         case 'player':
+            let localPlayers = this.bot.players;
+            if (localPlayers[player] != undefined) {
+               const playerLocation = localPlayers[player].entity.position;
 
-                  this.bot.lookAt(playerLocation)
-                  echo(1, 'lookAt', `посмотрел на ${idControlLookAtPlayer.value}`, this.username)
-               } else {
-                  echo(2, 'lookAt', 'По близости нет этого игрока.', this.username)
-               }
-               break;
-         }
+               this.bot.lookAt(playerLocation)
+               echo(1, 'lookAt', `посмотрел на ${player}`, this.username)
+            } else {
+               echo(2, 'lookAt', 'По близости нет этого игрока.', this.username)
+            }
+            break;
       }
+
    }
    // Клик в слот инвентаря.
    clickWindow(slot) {
-      if (activeBot === '.all.') { this.bot.simpleClick.leftMouse(slot); echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${activeBot}`) }
-      if (activeBot === this.username) { this.bot.simpleClick.leftMouse(slot); echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${this.username}`) }
+      this.bot.simpleClick.leftMouse(slot);
+      echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${this.username}`)
    }
 
 }

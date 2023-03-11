@@ -80,27 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-   idControlLookAt.addEventListener('click', () => { bot.lookAt() })
-   idControlClickWindowBtn.addEventListener('click', () => { bot.clickWindow(idControlClickWindowInput.value) })
-
-
 
    idConsoleChat.addEventListener('keyup', (el) => { if (el.which == 13) { bot.chatSend(el.target) } })
    idConsoleQuit.addEventListener('click', (el) => { bot.quit(el.target) })
-   idConsoleClickWindowBtn.addEventListener('click', () => { bot.clickWindow(idConsoleClickWindowInput.value) })
+   idConsoleClickWindowBtn.addEventListener('click', (el) => { bot.clickWindow(el.target, idConsoleClickWindowInput.value) })
 
    idConsoleChoise.addEventListener('change', (e) => {
       idConsoleItems.forEach(el => {
          if (el.dataset.item === e.target.value) {
             idConsoleItems.forEach(el => el.classList.remove('active'))
-            el.classList.add('active')
-         }
-      })
-   })
-   idControlChoise.addEventListener('change', (e) => {
-      idControlItems.forEach(el => {
-         if (el.dataset.item === e.target.value) {
-            idControlItems.forEach(el => el.classList.remove('active'))
             el.classList.add('active')
          }
       })
@@ -186,7 +174,7 @@ function clearPanels() {
    idMainPanels.forEach(el => { el.classList.remove('active'); })
 }
 
-function choiseLookAt(elem) {
+function choiseLookAt() {
    const player = document.querySelector('.control.lookAt-player')
 
    idControlChoiseLookAtItem.forEach(el => {

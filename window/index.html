@@ -64,7 +64,7 @@
       <div class="console item" data-item="addons">
          <div class="console clickWindow">
             <input type="text" class="console clickWindow-input btn-blue" placeholder="clickWindow">
-            <button class="console clickWindow-btn btn-blue">Клик</button>
+            <button class="console clickWindow-btn btn-blue" data-use-bot=".all.">Клик</button>
          </div>
       </div>
    </div>
@@ -83,6 +83,7 @@
       </div>
 
       <div class="control item active" data-item="chat">
+
          <div class="control lookAt">
             <select class="control choise-lookAt btn-blue" onchange="choiseLookAt()">
                <option value="player" selected class="control choise-lookAt-item">Игрок</option>
@@ -91,6 +92,7 @@
             <input type="text" class="control lookAt-player btn-blue" placeholder="ник игрока">
             <button class="control-lookAt btn-blue">Смотреть</button>
          </div>
+
          <div class="control chatLog">
             <ul class="control ul">
 
