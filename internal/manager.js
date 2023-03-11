@@ -6,5 +6,5 @@ module.exports = {
    quit: require('../bot/extends/quit.js'),
    lookAt: require('../bot/extends/lookAt.js'),
    clickWindow: require('../bot/extends/clickWindow.js'),
-
+   trading: require('../bot/extends/trading.js')
 }

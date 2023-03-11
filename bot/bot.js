@@ -8,6 +8,9 @@ module.exports = class Bot {
       this.panel = null;
       this.chatLog = null;
 
+      // this.activeScript = false;
+      this.activeTrading = false;
+
       this.initBot();
    }
 
@@ -49,7 +52,7 @@ module.exports = class Bot {
          this.panel = props['panel'];
          this.chatLog = props['chatLog'];
 
-         echo(1, `Connect`, `${this.host}:${this.port}`, this.username)
+         echo(1, `Connect`, ``, this.username)
       })
 
       this.bot.on('end', (reason) => {
@@ -72,7 +75,7 @@ module.exports = class Bot {
          if (reason === 'Выход с клиента') { echo(1, 'Disconnect', reason, this.username); return }
       })
 
-      this.bot.on('death', (reason) => { echo(2, 'death', `Умер`, this.username) })
+      this.bot.on('death', (reason) => { echo(2, 'death', '', this.username) })
 
       this.bot.on('kicked', (reason) => { echo(2, 'Kicked', reason, this.username) })
 
@@ -80,8 +83,6 @@ module.exports = class Bot {
    }
 
    // === Функции аддонов
-
-
 
 
    // Получение статистики бота
@@ -134,5 +135,81 @@ module.exports = class Bot {
       this.bot.simpleClick.leftMouse(slot);
       echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${this.username}`)
    }
+   // TRADING ===============
 
+
+   async trading_checkVillager() {
+      const ench = [
+         { enchant: 'minecraft:protection', level: 4 },
+         { enchant: 'minecraft:sharpness', level: 5 },
+         { enchant: 'minecraft:looting', level: 3 },
+         { enchant: 'minecraft:efficiency', level: 5 },
+         { enchant: 'minecraft:fortune', level: 3 },
+      ]
+
+      const target = this.bot.nearestEntity((e) => (e.name === 'villager'))
+      await this.bot.lookAt(target.position)
+      const villager = await this.bot.openVillager(target)
+
+      for (let i = 0; i < villager.trades.length; i++) {
+         if (villager.trades[i].outputItem.nbt) {
+            const id = villager.trades[i].outputItem.nbt.value.StoredEnchantments.value.value[0].id.value
+            const lvl = villager.trades[i].outputItem.nbt.value.StoredEnchantments.value.value[0].lvl.value
+            const price = villager.trades[i].inputItem1.count
+            for (let i = 0; i < ench.length; i++) {
+               if (id === ench[i].enchant && lvl === ench[i].level) {
+                  console.log('\n======================== FOUND ========================')
+                  this.activeTrading = false;
+               }
+            }
+            this.trading_log(id, lvl, price)
+         }
+      }
+   }
+   trading_isLectern(block) {
+      return block.name === 'lectern'
+   }
+   async trading_dig() {
+      const axe = this.bot.inventory.items().find(item => item.name.includes('diamond_axe'))
+      if (axe) this.bot.equip(axe, 'hand')
+
+      let block = this.bot.findBlock({
+         matching: this.trading_isLectern,
+         maxDistance: 5
+      })
+
+      if (block) await this.bot.dig(block)
+   }
+   async trading_place() {
+      const lectern = this.bot.inventory.items().find(item => item.name.includes('lectern'))
+      if (lectern) this.bot.equip(lectern, 'hand')
+
+      const target = this.bot.nearestEntity((e) => (e.name === 'villager')).position
+
+      let sourcePosition = target.offset(0, -1, -1)
+      let sourceBlock = this.bot.blockAt(sourcePosition)
+
+      if (sourceBlock) await this.bot.placeBlock(sourceBlock, new Vec3(0, 1, 0))
+   }
+   trading_log(enchant, level, price) {
+      const str = enchant.substring(10, enchant.length);
+      console.log(`\nEnchant: ${str}  ||  Level: ${level} ||  Price: ${price} ||  Time: ${getTime()} `)
+   }
+   trading_stopTrade() {
+      this.bot.clearControlStates()
+      this.bot.currentWindow.close()
+   }
+   async trading() {
+      while (this.activeTrading) {
+         await this.trading_checkVillager()
+         await this.bot.waitForTicks(3)
+         if (!this.activeTrading) { this.trading_stopTrade(); return; }
+         await this.trading_dig()
+         await this.bot.waitForTicks(3)
+         await this.trading_place()
+         await this.bot.waitForTicks(50)
+      }
+   }
+
+   // TRADING ===============
 }

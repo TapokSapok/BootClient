@@ -1,5 +1,6 @@
 const mineflayer = require('mineflayer')
-const bot = require('../internal/manager.js'),
+const bot = require('../internal/manager.js')
+const Vec3 = require('vec3').Vec3,
 
    // Элементы логина
    idLoginBtn = document.querySelector('.login-submit'),
@@ -77,8 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
    idSideNewBot.addEventListener('click', () => { openLoginPanel(); })
    idSideConsole.addEventListener('click', () => { openConsole() })
    document.addEventListener('click', (el) => { choiceBot(el); markerBots(el); })
-
-
 
 
    idConsoleChat.addEventListener('keyup', (el) => { if (el.which == 13) { bot.chatSend(el.target) } })
@@ -259,6 +258,9 @@ function openConsole(elem) {
    idConsolePanel.classList.add('active')
 
    idNavItems.forEach(el => el.innerText = '')
+
+   idConsoleChatLogUl.scrollIntoView(false)
+
    idNavUsername.innerText = 'Консоль управления всеми ботами';
 }
 

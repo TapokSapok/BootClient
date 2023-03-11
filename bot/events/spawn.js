@@ -34,7 +34,7 @@ module.exports = (username) => {
             </div>
          </div>
          <div class="control item" data-item="trading">
-            <div class="control trading-start btn-blue">Старт</div>
+            <div class="control trading-start btn-blue" data-use-bot="${username}">Старт</div>
             <div class="control trading-items"></div>
             <select class="btn-blue">
             <option selected>Добавить зачарование</option>
@@ -55,6 +55,9 @@ module.exports = (username) => {
 
    const clickWindowInput = item.querySelector('.control.clickWindow-input')
 
+   const tradingStart = item.querySelector('.control.trading-start')
+   let trading = false;
+
    const quit = item.querySelector('.control-quit')
    const chat = item.querySelector('.control-chat')
    const lookAt = item.querySelector('.control-lookAt')
@@ -68,6 +71,21 @@ module.exports = (username) => {
       bot.lookAt(el.target, type, lookAtPlayer.value)
    })
    clickWindow.addEventListener('click', (el) => { bot.clickWindow(el.target, clickWindowInput.value) })
+   tradingStart.addEventListener('click', (el) => {
+      trading = bot.trading(el.target);
+      if (trading) {
+         tradingStart.style.background = 'red';
+         tradingStart.style.textContent = 'Стоп';
+         tradingStart.style.color = 'black';
+         tradingStart.style.fontWeight = '600';
+      } else {
+         tradingStart.style.background = '';
+         tradingStart.style.color = '';
+         tradingStart.style.fontWeight = '';
+         tradingStart.style.textContent = 'Старт'
+      }
+   })
+
 
    // ()()()()()
 
