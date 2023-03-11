@@ -59,11 +59,17 @@ module.exports = class Bot {
                el.remove()
             }
          })
+
+         for (let i = 0; i < bots.length; i++) {
+            if (!bots[i].panel) continue;
+            if (this.username === bots[i].panel.dataset.useBot) {
+               bots[i].panel.remove()
+            }
+         }
+         idLoginPanel.classList.add('active')
+
          if (activeBot === this.username) { idNavItems.forEach(el => el.innerText = '') }
          if (reason === 'Выход с клиента') { echo(1, 'Disconnect', reason, this.username); return }
-
-         idMainPanels.forEach(el => { el.classList.remove('active'); })
-         idLoginPanel.classList.add('active')
       })
 
       this.bot.on('death', (reason) => { echo(2, 'death', `Умер`, this.username) })
@@ -74,6 +80,10 @@ module.exports = class Bot {
    }
 
    // === Функции аддонов
+
+
+
+
    // Получение статистики бота
    getInfo() {
       if (this.bot.username === activeBot) {
@@ -88,15 +98,11 @@ module.exports = class Bot {
    }
    // Отправка сообщение в чат
    chatSend(text) {
-      if (activeBot === '.all.') { this.bot.chat(text) }
-      if (this.bot.username === activeBot) { this.bot.chat(text) }
+      this.bot.chat(text)
    }
    // Выход с сервера
    quit() {
-      // if (activeBot === '.all.') { this.bot.quit('Выход с клиента') }
-      // if (this.bot.username === activeBot) { this.bot.quit('Выход с клиента') };
-
-
+      this.bot.quit('Выход с клиента')
    }
    // Посмотреть на..
    async lookAt(type) {
@@ -129,4 +135,5 @@ module.exports = class Bot {
       if (activeBot === '.all.') { this.bot.simpleClick.leftMouse(slot); echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${activeBot}`) }
       if (activeBot === this.username) { this.bot.simpleClick.leftMouse(slot); echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${this.username}`) }
    }
+
 }

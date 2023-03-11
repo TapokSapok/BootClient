@@ -1,10 +1,9 @@
-module.exports = () => {
-   // bots.forEach(el => el.quit())
-
-   // if (activeBot != '.all.') {
-   //    clearPanels()
-   //    idLoginPanel.classList.add('active')
-   // }
-
-
-}
+module.exports = (el) => {
+   for (let i = 0; i < bots.length; i++) {
+      if (el.dataset.useBot === bots[i].username) {
+         bots[i].quit();
+      } else if (el.dataset.useBot === '.all.') {
+         bots[i].quit();
+      }
+   }
+}                 

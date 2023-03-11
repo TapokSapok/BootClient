@@ -2,6 +2,8 @@ module.exports = (username, text) => {
    const messageChat = document.createElement('li')
    const messageConsole = document.createElement('li')
 
+   if (!text) return
+
    messageChat.innerText = text;
    messageConsole.innerText = `[${username}]: ${text}`;
 

@@ -10,12 +10,12 @@ module.exports = (username) => {
                <option value="addons">Аддоны</option>
                <option value="trading">Трейдинг</option>
             </select>
-            <button class="control-quit">Выйти</button>
+            <button class="control-quit" data-use-bot="${username}">Выйти</button>
          </div>
 
          <div class="control item active" data-item="chat">
             <div class="control lookAt">
-               <select class="control choise-lookAt btn-blue" onchange="choiseLookAt()">
+               <select class="control choise-lookAt btn-blue" onchange="choiseLookAt(this)">
                   <option value="player" selected class="control choise-lookAt-item">Игрок</option>
                   <option value="near-player" class="control choise-lookAt-item">Ближний игрок</option>
                </select>
@@ -27,7 +27,7 @@ module.exports = (username) => {
 
                </ul>
             </div>
-            <input class="control-chat" type="text" placeholder="сообщение в чат">
+            <input class="control-chat" data-use-bot="${username}" type="text" placeholder="сообщение в чат">
          </div>
          <div class="control item" data-item="addons">
             <div class="control clickWindow">
@@ -48,8 +48,12 @@ module.exports = (username) => {
    document.querySelector('.bots').append(item)
 
    const quit = item.querySelector('.control-quit')
+   const chat = item.querySelector('.control-chat')
+   const lookAt = item.querySelector('.control-lookAt')
 
-   quit.addEventListener('click', () => { bot.quit() })
+   quit.addEventListener('click', (el) => { bot.quit(el.target) })
+   chat.addEventListener('keyup', (el) => { if (el.which == 13) { bot.chatSend(el.target) } })
+   lookAt.addEventListener('click', (el) => { bot.lookAt(el.target, item.querySelectorAll('.control.lookAt-player')) })
 
    return props = {
       username: `${username}`,

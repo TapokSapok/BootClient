@@ -1,14 +1,22 @@
-module.exports = () => {
-   const player = document.querySelector('.control.lookAt-player')
+module.exports = (el, lookAtItem) => {
 
-   idControlChoiseLookAtItem.forEach(el => {
+   lookAtItem.forEach(el => {
       if (el.selected) {
          switch (el.value) {
-            case 'player': for (let i = 0; i < bots.length; i++) { bots[i].lookAt(el.value) }
-               break;
+            case 'player':
+
+               for (let i = 0; i < bots.length; i++) {
+                  if (el.dataset.useBot === bots[i].username) {
+                     bots[i].lookAt(el.value)
+                  } else if (el.dataset.useBot === '.all.') {
+                     bots[i].lookAt(el.value)
+                  }
+               }
+
             case 'near-player': for (let i = 0; i < bots.length; i++) { bots[i].lookAt(el.value) }
                break;
          }
       }
    })
+
 }

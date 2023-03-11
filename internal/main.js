@@ -68,6 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
    document.onmouseover = document.onmouseout = mouseAction;
    document.onmousemove = (e) => { x = e.clientX; y = e.clientY; }
 
+   username.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
+   host.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
+   port.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
+   version.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
+
    idLoginBtn.addEventListener('click', () => { bot.connect(username.value, host.value, port.value, version.value) })
    idSideNewBot.addEventListener('click', () => { openLoginPanel(); })
    idSideConsole.addEventListener('click', () => { openConsole() })
@@ -75,13 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-   idControlChat.addEventListener('keyup', (e) => { if (e.which == 13) { bot.chatSend() } })
-   idControlQuit.addEventListener('click', () => { bot.quit() })
    idControlLookAt.addEventListener('click', () => { bot.lookAt() })
    idControlClickWindowBtn.addEventListener('click', () => { bot.clickWindow(idControlClickWindowInput.value) })
 
-   idConsoleChat.addEventListener('keyup', (e) => { if (e.which == 13) { bot.chatSend() } })
-   idConsoleQuit.addEventListener('click', () => { bot.quit() })
+
+
+   idConsoleChat.addEventListener('keyup', (el) => { if (el.which == 13) { bot.chatSend(el.target) } })
+   idConsoleQuit.addEventListener('click', (el) => { bot.quit(el.target) })
    idConsoleClickWindowBtn.addEventListener('click', () => { bot.clickWindow(idConsoleClickWindowInput.value) })
 
    idConsoleChoise.addEventListener('change', (e) => {
@@ -170,6 +175,7 @@ function getTime() {
 
 
 
+
 // ================== HTML
 
 function clearPanels() {
@@ -180,7 +186,7 @@ function clearPanels() {
    idMainPanels.forEach(el => { el.classList.remove('active'); })
 }
 
-function choiseLookAt() {
+function choiseLookAt(elem) {
    const player = document.querySelector('.control.lookAt-player')
 
    idControlChoiseLookAtItem.forEach(el => {
