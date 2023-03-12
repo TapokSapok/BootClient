@@ -10,6 +10,7 @@ module.exports = class Bot {
 
       // this.activeScript = false;
       this.activeTrading = false;
+      this.tradingEnchants = [];
 
       this.initBot();
    }
@@ -137,15 +138,13 @@ module.exports = class Bot {
    }
    // TRADING ===============
 
+   // changeTrades(obj) {
+   //    this.tradingEnchants = obj;
+   // }
 
    async trading_checkVillager() {
-      const ench = [
-         { enchant: 'minecraft:protection', level: 4 },
-         { enchant: 'minecraft:sharpness', level: 5 },
-         { enchant: 'minecraft:looting', level: 3 },
-         { enchant: 'minecraft:efficiency', level: 5 },
-         { enchant: 'minecraft:fortune', level: 3 },
-      ]
+
+      const ench = this.tradingEnchants
 
       const target = this.bot.nearestEntity((e) => (e.name === 'villager'))
       await this.bot.lookAt(target.position)

@@ -4,7 +4,8 @@ module.exports = (username) => {
    separator.insertAdjacentHTML('beforebegin', sidebarItem)
 
    const item = document.createElement('div')
-   item.innerHTML = `<div class="control header">
+   item.innerHTML = `
+         <div class="control header">
             <select class="control choise">
                <option class="control choise-item" value="chat" selected>Чат</option>
                <option class="control choise-item" value="addons">Аддоны</option>
@@ -33,13 +34,30 @@ module.exports = (username) => {
                <button class="control clickWindow-btn btn-blue" data-use-bot="${username}">Клик</button>
             </div>
          </div>
-         <div class="control item" data-item="trading">
-            <div class="control trading-start btn-blue" data-use-bot="${username}">Старт</div>
-            <div class="control trading-items"></div>
-            <select class="btn-blue">
+
+      <div class="control item" data-item="trading">
+         <div class="control trading list-adder">
+
+         <select class="control trading select-enchant btn-blue" data-use-bot="${username}">
             <option selected>Добавить зачарование</option>
-            </select>
-            </div>`
+            <option>Починка</option>
+         </select>
+         <select class="control trading select-level btn-blue" data-use-bot="${username}">
+            <option selected>Уровень</option>
+            <option>IV</option>
+         </select>
+         <input type="number" placeholder="Цена" class="control trading select-max-price btn-blue" data-use-bot="${username}">
+         <button type="submit" class="control trading plus btn-blue" data-use-bot="${username}">+</button>
+         </div>
+
+      <div class="control trading list" data-use-bot="${username}">
+         <div class="control trading list-item btn-blue" data-use-bot="${username}">Прочность III | Макс.цена:12</div>
+      </div>
+
+      <div class="control trading-start btn-blue" data-use-bot="${username}">Старт</div>
+      </div>
+   </div>
+            `
    item.className = 'control bar main-panel';
    item.dataset.useBot = `${username}`
 
@@ -56,12 +74,19 @@ module.exports = (username) => {
    const clickWindowInput = item.querySelector('.control.clickWindow-input')
 
    const tradingStart = item.querySelector('.control.trading-start')
+   const tradingList = item.querySelector('.control.trading.list')
+   const tradingListItems = item.querySelector('.control.trading.list-item')
+   const tradingSelectEnchant = item.querySelector('control.trading.select-enchant')
+   const tradingSelectLevel = item.querySelector('.control.trading.select-level')
+   const tradingSelectMaxPrice = item.querySelector('.control.trading.select-max-price')
+   const tradingPlusEnchant = item.querySelector('.control.trading.plus')
    let trading = false;
 
    const quit = item.querySelector('.control-quit')
    const chat = item.querySelector('.control-chat')
    const lookAt = item.querySelector('.control-lookAt')
    const clickWindow = item.querySelector('.control.clickWindow-btn')
+
 
    quit.addEventListener('click', (el) => { bot.quit(el.target) })
    chat.addEventListener('keyup', (el) => { if (el.which == 13) { bot.chatSend(el.target) } })
@@ -75,20 +100,18 @@ module.exports = (username) => {
       trading = bot.trading(el.target);
       if (trading) {
          tradingStart.style.background = 'red';
-         tradingStart.style.textContent = 'Стоп';
+         tradingStart.textContent = 'Стоп';
          tradingStart.style.color = 'black';
          tradingStart.style.fontWeight = '600';
       } else {
          tradingStart.style.background = '';
          tradingStart.style.color = '';
          tradingStart.style.fontWeight = '';
-         tradingStart.style.textContent = 'Старт'
+         tradingStart.textContent = 'Старт'
       }
    })
 
-
    // ()()()()()
-
    selectControl.addEventListener('change', (e) => {
       controlItems.forEach(el => {
          if (el.dataset.item === e.target.value) {
@@ -97,7 +120,6 @@ module.exports = (username) => {
          }
       })
    })
-
    selectlookAt.addEventListener('change', () => {
 
       selectlookAtItems.forEach(el => {
@@ -110,10 +132,11 @@ module.exports = (username) => {
          }
       })
    })
-
-
-
    // ()()()()()
+   tradingPlusEnchant.addEventListener('click', (el) => { bot.changeEnchants(el.target); console.log('click +') })
+   // ()()()()()
+
+
 
    return props = {
       username: `${username}`,

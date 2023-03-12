@@ -71,7 +71,7 @@
 
    <!--  -->
 
-   <div class="control bar main-panel">
+   <div class="control bar main-panel active">
 
       <div class="control header">
          <select class="control choise">
@@ -82,7 +82,7 @@
          <button class="control-quit">Выйти</button>
       </div>
 
-      <div class="control item active" data-item="chat">
+      <div class="control item" data-item="chat">
 
          <div class="control lookAt">
             <select class="control choise-lookAt btn-blue" onchange="choiseLookAt()">
@@ -106,12 +106,28 @@
             <button class="control clickWindow-btn btn-blue">Клик</button>
          </div>
       </div>
-      <div class="control item" data-item="trading">
+      <div class="control item active" data-item="trading">
+
+         <div class="control trading list-adder">
+
+            <select class="control trading select-enchant btn-blue">
+               <option selected>Добавить зачарование</option>
+               <option>Починка</option>
+            </select>
+            <select class="control trading select-level btn-blue">
+               <option selected>Уровень</option>
+               <option>IV</option>
+            </select>
+            <input type="number" placeholder="Цена" class="control trading select-max-price btn-blue">
+            <button type="submit" class="control trading plus btn-blue">+</button>
+         </div>
+
+         <div class="control trading list">
+            <div class="control trading list-item btn-blue">Прочность III | Макс.цена:12</div>
+
+         </div>
+
          <div class="control trading-start btn-blue">Старт</div>
-         <div class="control trading-items"></div>
-         <select class="btn-blue">
-            <option selected>Добавить зачарование</option>
-         </select>
       </div>
    </div>
 
@@ -119,7 +135,7 @@
 
    <!--  -->
 
-   <div class="login bar main-panel active">
+   <div class="login bar main-panel">
       <div class="login-form">
          <input type="text" class="login-username login-input" placeholder="username" value="Notch">
          <input type="text" class="login-host login-input" placeholder="host" value="localhost">

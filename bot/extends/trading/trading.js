@@ -3,9 +3,9 @@ module.exports = (el) => {
       if (el.dataset.useBot === bots[i].username) {
 
          bots[i].activeTrading = !bots[i].activeTrading;
-         console.log(bots[i].activeTrading)
+         console.log(bots[i].activeTrading);
          bots[i].trading();
-         return bots[i].activeTrading
+         return bots[i].activeTrading;
       }
    }
 
