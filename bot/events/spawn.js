@@ -72,7 +72,7 @@ module.exports = (username) => {
 
    const tradingStart = item.querySelector('.control.trading-start')
    const tradingList = item.querySelector('.control.trading.list')
-   const tradingListItems = item.querySelector('.control.trading.list-item')
+   let tradingListItems = [];
    const tradingSelectEnchant = item.querySelector('.control.trading.select-enchant')
    let tradingSelectEnchantItems = [];
    const tradingSelectLevel = item.querySelector('.control.trading.select-level')
@@ -155,6 +155,7 @@ module.exports = (username) => {
    tradingPlusEnchant.addEventListener('click', (el) => { traidingPlusEnchant(el.target) })
    tradingSelectEnchant.addEventListener('change', (e) => { getTradingLevel(e) })
 
+
    const getTradingLevel = (e) => {
       tradingSelectLevelItems.forEach(el => el.remove(), tradingSelectLevelItems = [])
 
@@ -207,6 +208,7 @@ module.exports = (username) => {
       if (!item.dataset.enchant) return
 
       tradingList.append(item)
+      tradingListItems.push(item)
 
       tradingSelectEnchantItems.forEach(el => el.selected = false)
       tradingSelectEnchant.childNodes.selected = true;
@@ -216,6 +218,10 @@ module.exports = (username) => {
 
       tradingSelectMaxPrice.value = '';
 
+      item.addEventListener('click', (el) => {
+         bot.removeEnchant(el.target, enchant, item.dataset.level, item.dataset.maxPrice);
+         el.target.remove()
+      })
       bot.addEnchant(el, enchant, item.dataset.level, item.dataset.maxPrice);
    }
 

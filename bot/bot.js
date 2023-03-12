@@ -143,6 +143,17 @@ module.exports = class Bot {
       console.log(this.tradingEnchants)
    }
 
+   removeEnchant(obj) {
+      for (let i = 0; i < this.tradingEnchants.length; i++) {
+         if (this.tradingEnchants[i].enchant === obj.enchant
+            && this.tradingEnchants[i].level === obj.level
+            && this.tradingEnchants[i].maxPrice === obj.maxPrice) {
+            this.tradingEnchants.splice(i, 1)
+            console.log(this.tradingEnchants[i])
+         }
+      }
+   }
+
    async trading_checkVillager() {
 
       // const ench = this.tradingEnchants
