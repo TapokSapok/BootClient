@@ -49,7 +49,6 @@ module.exports = (username) => {
          </div>
 
       <div class="control trading list" data-use-bot="${username}">
-         <div class="control trading list-item btn-blue" data-use-bot="${username}">Прочность III | Макс.цена:12</div>
       </div>
 
       <div class="control trading-start btn-blue" data-use-bot="${username}">Старт</div>
@@ -75,7 +74,9 @@ module.exports = (username) => {
    const tradingList = item.querySelector('.control.trading.list')
    const tradingListItems = item.querySelector('.control.trading.list-item')
    const tradingSelectEnchant = item.querySelector('.control.trading.select-enchant')
+   let tradingSelectEnchantItems = [];
    const tradingSelectLevel = item.querySelector('.control.trading.select-level')
+   let tradingSelectLevelItems = [];
    const tradingSelectMaxPrice = item.querySelector('.control.trading.select-max-price')
    const tradingPlusEnchant = item.querySelector('.control.trading.plus')
    let trading = false;
@@ -126,6 +127,7 @@ module.exports = (username) => {
                   item.value = `${bot.enchants.enchants[i].id}`
                   item.textContent = `${bot.enchants.enchants[i].displayName}`
                   tradingSelectEnchant.append(item)
+                  tradingSelectEnchantItems.push(item)
                }
 
             }
@@ -145,30 +147,70 @@ module.exports = (username) => {
       })
    })
    // ()()()()()
-   tradingPlusEnchant.addEventListener('click', (el) => { bot.changeEnchants(el.target); })
-   tradingSelectEnchant.addEventListener('change', (e) => {
+   tradingPlusEnchant.addEventListener('click', (el) => { bot.changeEnchants(el.target); traidingPlusEnchant() })
+   tradingSelectEnchant.addEventListener('change', (e) => { getTradingLevel(e) })
 
-      const tradingSelectLevelItems = item.querySelectorAll('.control.trading.select-level-item')
-
-      tradingSelectLevelItems.forEach(el => { if (el.value !== 'level') el.remove; })
+   const getTradingLevel = (e) => {
+      tradingSelectLevelItems.forEach(el => el.remove(), tradingSelectLevelItems = [])
 
       for (let i = 0; i < bot.enchants.enchants.length; i++) {
          if (e.target.value === bot.enchants.enchants[i].id) {
 
-            const item = document.createElement('option');
-            item.className = 'control trading select-level-item';
-            item.dataset.useBot = `${username}`
-            item.value = `${bot.enchants.enchants[i].maxLevel}`
-            item.textContent = `${bot.enchants.enchants[i].maxLevel}`
-            tradingSelectLevel.append(item)
+            for (let j = 1; j < bot.enchants.enchants[i].maxLevel + 1; j++) {
+               const item = document.createElement('option');
+               item.dataset.useBot = `${username}`
+               item.value = `${j}`
+               item.textContent = `${j}`
+
+               tradingSelectLevel.append(item)
+               tradingSelectLevelItems.push(item)
+            }
+
+            tradingSelectLevelItems.forEach(el => {
+               if (+el.value === bot.enchants.enchants[i].maxLevel) {
+                  el.selected = true;
+               }
+            })
+
          }
       }
-   })
+   }
+   const traidingPlusEnchant = () => {
+      const item = document.createElement('div');
+
+      item.className = 'control trading list-item btn-blue';
+      item.dataset.useBot = `${username}`
+      tradingSelectEnchantItems.forEach(el => {
+         if (el.selected) {
+            for (let i = 0; i < bot.enchants.enchants.length; i++) {
+               if (el.value === bot.enchants.enchants[i].id) {
+                  item.dataset.enchant = bot.enchants.enchants[i].displayName
+               }
+            }
+         }
+      })
+      tradingSelectLevelItems.forEach(el => el.selected ? item.dataset.level = el.value : undefined)
+      item.dataset.maxPrice = tradingSelectMaxPrice.value
+      if (!item.dataset.maxPrice) {
+         item.textContent = `${item.dataset.enchant} ${item.dataset.level}`
+      } else {
+         item.textContent = `${item.dataset.enchant} ${item.dataset.level} | Макс.цена: ${item.dataset.maxPrice}`
+      }
+
+      if (!item.dataset.enchant) return
+
+      tradingList.append(item)
+
+      tradingSelectEnchantItems.forEach(el => el.selected = false)
+      tradingSelectEnchant.childNodes.selected = true;
+
+      tradingSelectLevelItems.forEach(el => el.selected = false)
+      tradingSelectLevel.childNodes.selected = true;
+
+      tradingSelectMaxPrice.value = '';
+   }
 
    // ()()()()()
-
-
-
    return props = {
       username: `${username}`,
       panel: item,
