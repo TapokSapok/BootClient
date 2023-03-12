@@ -46,9 +46,12 @@ module.exports = (username) => {
          </select>
          <input type="number" placeholder="Цена" class="control trading select-max-price btn-blue" data-use-bot="${username}">
          <button type="submit" class="control trading plus btn-blue" data-use-bot="${username}">+</button>
+
          </div>
 
-      <div class="control trading list" data-use-bot="${username}">
+      <div class="control trading list" data-use-bot="${username}"></div>
+      <div class="control trading trading-log">
+         <div class="control trading-log ul"></div>
       </div>
 
       <div class="control trading-start btn-blue" data-use-bot="${username}">Старт</div>
@@ -231,7 +234,8 @@ module.exports = (username) => {
    return props = {
       username: `${username}`,
       panel: item,
-      chatLog: item.querySelector('.control.ul')
+      chatLog: item.querySelector('.control.ul'),
+      tradeLog: item.querySelector('.control.trading-log.ul')
    }
 }
 

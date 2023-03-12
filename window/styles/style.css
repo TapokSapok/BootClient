@@ -335,7 +335,7 @@ p {
    border: none;
    border-top: solid 1px rgb(95, 95, 95);
    outline: none;
-   background: #000;
+   background: #101010;
    color: #fff;
    box-sizing: border-box;
    padding-left: 8px;
@@ -364,7 +364,7 @@ p {
 
    margin-top: 20px;
    height: 300px;
-   background: #000;
+   background: #101010;
    border-radius: 5px 5px 0 0;
    overflow: auto;
    text-align: left;
@@ -508,7 +508,7 @@ span.red {
    border: none;
    border-top: solid 1px rgb(95, 95, 95);
    outline: none;
-   background: #000;
+   background: #101010;
    color: #fff;
    box-sizing: border-box;
    padding-left: 8px;
@@ -528,7 +528,7 @@ span.red {
 
    margin-top: 20px;
    height: 300px;
-   background: #000;
+   background: #101010;
    border-radius: 5px 5px 0 0;
    overflow: auto;
    text-align: left;
@@ -581,7 +581,7 @@ span.red {
    margin: 0 10px;
    margin-top: 20px;
    height: 300px;
-   background: #000;
+   background: #101010;
    border-radius: 5px;
    overflow: auto;
    text-align: left;
@@ -654,6 +654,7 @@ span.red {
    margin-top: 10px;
    border-radius: 5px;
    overflow: auto;
+
 }
 
 .control.trading.list-item {
@@ -666,4 +667,37 @@ span.red {
    width: 93%;
    height: 15px;
 
+}
+
+.control.trading.trading-log {
+   box-sizing: border-box;
+   height: 190px;
+
+   width: calc(100% - 20px);
+   margin: 0 auto;
+
+   margin-top: 10px;
+   background: #101010;
+   border-radius: 5px 5px 5px 5px;
+   overflow: auto;
+   text-align: left;
+}
+
+.control.trading-log.ul {
+   display: inline-block;
+   padding: 0;
+   margin: 0;
+   flex-wrap: wrap;
+   /* padding-left: 8px; */
+   padding-bottom: 8px;
+   width: 100%;
+}
+
+.control.trading-log.ul li {
+   margin: 3px 0;
+   color: #fff;
+   list-style-type: none;
+   padding-left: 8px;
+   font-weight: 600;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

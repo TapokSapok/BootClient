@@ -7,6 +7,7 @@ module.exports = class Bot {
 
       this.panel = null;
       this.chatLog = null;
+      this.tradeLog = null;
 
       // this.activeScript = false;
       this.activeTrading = false;
@@ -52,6 +53,7 @@ module.exports = class Bot {
 
          this.panel = props['panel'];
          this.chatLog = props['chatLog'];
+         this.tradeLog = props['tradeLog'];
 
          echo(1, `Connect`, ``, this.username)
       })
@@ -140,7 +142,6 @@ module.exports = class Bot {
 
    addEnchant(obj) {
       this.tradingEnchants.push(obj)
-      console.log(this.tradingEnchants)
    }
 
    removeEnchant(obj) {
@@ -149,15 +150,11 @@ module.exports = class Bot {
             && this.tradingEnchants[i].level === obj.level
             && this.tradingEnchants[i].maxPrice === obj.maxPrice) {
             this.tradingEnchants.splice(i, 1)
-            console.log(this.tradingEnchants[i])
          }
       }
    }
 
    async trading_checkVillager() {
-
-      // const ench = this.tradingEnchants
-      // console.log(ench)
 
       const target = this.bot.nearestEntity((e) => (e.name === 'villager'))
       await this.bot.lookAt(target.position)
@@ -165,16 +162,21 @@ module.exports = class Bot {
 
       for (let i = 0; i < villager.trades.length; i++) {
          if (villager.trades[i].outputItem.nbt) {
-            const id = villager.trades[i].outputItem.nbt.value.StoredEnchantments.value.value[0].id.value
-            const lvl = villager.trades[i].outputItem.nbt.value.StoredEnchantments.value.value[0].lvl.value
-            const price = villager.trades[i].inputItem1.count
+            const id = villager.trades[i].outputItem.nbt.value.StoredEnchantments.value.value[0].id.value;
+            const lvl = villager.trades[i].outputItem.nbt.value.StoredEnchantments.value.value[0].lvl.value;
+            const price = villager.trades[i].inputItem1.count;
+
             for (let j = 0; j < this.tradingEnchants.length; j++) {
-               if (id === this.tradingEnchants[j].enchant && lvl === +this.tradingEnchants[j].level) {
-                  console.log('\n======================== FOUND ========================')
+               if (id === this.tradingEnchants[j].enchant
+                  && lvl === +this.tradingEnchants[j].level
+                  && (!this.tradingEnchants[j].maxPrice || price <= +this.tradingEnchants[j].maxPrice)) {
+
+                  this.trading_log(id, lvl, price, true)
                   this.activeTrading = false;
+                  return;
                }
             }
-            this.trading_log(id, lvl, price)
+            this.trading_log(id, lvl, price, false)
          }
       }
    }
@@ -203,9 +205,16 @@ module.exports = class Bot {
 
       if (sourceBlock) await this.bot.placeBlock(sourceBlock, new Vec3(0, 1, 0))
    }
-   trading_log(enchant, level, price) {
+   trading_log(enchant, level, price, type) {
       const str = enchant.substring(10, enchant.length);
       console.log(`\nEnchant: ${str}\nLevel: ${level}\nPrice: ${price}\nTime: ${getTime()} `)
+      const item = document.createElement('li');
+      if (type) {
+         item.innerHTML = `<span class="yellow">${getTime()} | ${enchant} ${level} | ${price} Изумрудов</span>`
+      } else item.innerHTML = `${getTime()} | ${enchant} ${level} | ${price} Изумрудов`
+
+      this.tradeLog.append(item)
+      this.tradeLog.scrollIntoView(false)
    }
    trading_stopTrade() {
       this.bot.clearControlStates()
