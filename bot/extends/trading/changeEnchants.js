@@ -1,16 +1,13 @@
 module.exports = (el) => {
    for (let i = 0; i < bots.length; i++) {
       if (el.dataset.useBot === bots[i].username) {
+         let array = [];
 
-         const enchants = bot.enchants
-         console.log(enchants)
-
-         for (let j = 0; j < bot.enchants.usedEnchants; j++) {
-            console.log('1')
-            console.log(bot.enchants.usedEnchants[j])
+         for (let j = 0; j < bot.enchants.usedEnchants.length; j++) {
+            array.push(bot.enchants.usedEnchants[j])
          }
 
-
+         bots[i].changeEnchants(array)
       }
    }
 }

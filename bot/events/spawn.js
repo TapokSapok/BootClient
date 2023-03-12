@@ -40,11 +40,9 @@ module.exports = (username) => {
 
          <select class="control trading select-enchant btn-blue" data-use-bot="${username}">
             <option selected>Добавить зачарование</option>
-            <option>Починка</option>
          </select>
          <select class="control trading select-level btn-blue" data-use-bot="${username}">
-            <option selected>Уровень</option>
-            <option>IV</option>
+            <option selected value="level">Уровень</option>
          </select>
          <input type="number" placeholder="Цена" class="control trading select-max-price btn-blue" data-use-bot="${username}">
          <button type="submit" class="control trading plus btn-blue" data-use-bot="${username}">+</button>
@@ -76,7 +74,7 @@ module.exports = (username) => {
    const tradingStart = item.querySelector('.control.trading-start')
    const tradingList = item.querySelector('.control.trading.list')
    const tradingListItems = item.querySelector('.control.trading.list-item')
-   const tradingSelectEnchant = item.querySelector('control.trading.select-enchant')
+   const tradingSelectEnchant = item.querySelector('.control.trading.select-enchant')
    const tradingSelectLevel = item.querySelector('.control.trading.select-level')
    const tradingSelectMaxPrice = item.querySelector('.control.trading.select-max-price')
    const tradingPlusEnchant = item.querySelector('.control.trading.plus')
@@ -97,6 +95,7 @@ module.exports = (username) => {
    })
    clickWindow.addEventListener('click', (el) => { bot.clickWindow(el.target, clickWindowInput.value) })
    tradingStart.addEventListener('click', (el) => {
+      bot.changeEnchants(el.target);
       trading = bot.trading(el.target);
       if (trading) {
          tradingStart.style.background = 'red';
@@ -117,6 +116,19 @@ module.exports = (username) => {
          if (el.dataset.item === e.target.value) {
             controlItems.forEach(el => { el.classList.remove('active') })
             el.classList.add('active')
+
+            if (e.target.value === 'trading') {
+
+               for (let i = 0; i < bot.enchants.enchants.length; i++) {
+                  const item = document.createElement('option');
+                  item.className = 'control trading select-enchant-item';
+                  item.dataset.useBot = `${username}`
+                  item.value = `${bot.enchants.enchants[i].id}`
+                  item.textContent = `${bot.enchants.enchants[i].displayName}`
+                  tradingSelectEnchant.append(item)
+               }
+
+            }
          }
       })
    })
@@ -133,7 +145,26 @@ module.exports = (username) => {
       })
    })
    // ()()()()()
-   tradingPlusEnchant.addEventListener('click', (el) => { bot.changeEnchants(el.target); console.log('click +') })
+   tradingPlusEnchant.addEventListener('click', (el) => { bot.changeEnchants(el.target); })
+   tradingSelectEnchant.addEventListener('change', (e) => {
+
+      const tradingSelectLevelItems = item.querySelectorAll('.control.trading.select-level-item')
+
+      tradingSelectLevelItems.forEach(el => { if (el.value !== 'level') el.remove; })
+
+      for (let i = 0; i < bot.enchants.enchants.length; i++) {
+         if (e.target.value === bot.enchants.enchants[i].id) {
+
+            const item = document.createElement('option');
+            item.className = 'control trading select-level-item';
+            item.dataset.useBot = `${username}`
+            item.value = `${bot.enchants.enchants[i].maxLevel}`
+            item.textContent = `${bot.enchants.enchants[i].maxLevel}`
+            tradingSelectLevel.append(item)
+         }
+      }
+   })
+
    // ()()()()()
 
 

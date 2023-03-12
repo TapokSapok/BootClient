@@ -138,13 +138,14 @@ module.exports = class Bot {
    }
    // TRADING ===============
 
-   // changeTrades(obj) {
-   //    this.tradingEnchants = obj;
-   // }
+   changeEnchants(arr) {
+      this.tradingEnchants = arr;
+   }
 
    async trading_checkVillager() {
 
       const ench = this.tradingEnchants
+      console.log(ench)
 
       const target = this.bot.nearestEntity((e) => (e.name === 'villager'))
       await this.bot.lookAt(target.position)
