@@ -8,5 +8,5 @@ module.exports = {
    clickWindow: require('../bot/extends/clickWindow.js'),
    trading: require('../bot/extends/trading/trading.js'),
    enchants: require('../bot/extends/trading/enchants.js'),
-   changeEnchants: require('../bot/extends/trading/changeEnchants.js')
+   addEnchant: require('../bot/extends/trading/addEnchant.js')
 }

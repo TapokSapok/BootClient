@@ -138,14 +138,15 @@ module.exports = class Bot {
    }
    // TRADING ===============
 
-   changeEnchants(arr) {
-      this.tradingEnchants = arr;
+   addEnchant(obj) {
+      this.tradingEnchants.push(obj)
+      console.log(this.tradingEnchants)
    }
 
    async trading_checkVillager() {
 
-      const ench = this.tradingEnchants
-      console.log(ench)
+      // const ench = this.tradingEnchants
+      // console.log(ench)
 
       const target = this.bot.nearestEntity((e) => (e.name === 'villager'))
       await this.bot.lookAt(target.position)
@@ -156,8 +157,8 @@ module.exports = class Bot {
             const id = villager.trades[i].outputItem.nbt.value.StoredEnchantments.value.value[0].id.value
             const lvl = villager.trades[i].outputItem.nbt.value.StoredEnchantments.value.value[0].lvl.value
             const price = villager.trades[i].inputItem1.count
-            for (let i = 0; i < ench.length; i++) {
-               if (id === ench[i].enchant && lvl === ench[i].level) {
+            for (let j = 0; j < this.tradingEnchants.length; j++) {
+               if (id === this.tradingEnchants[j].enchant && lvl === +this.tradingEnchants[j].level) {
                   console.log('\n======================== FOUND ========================')
                   this.activeTrading = false;
                }
@@ -193,7 +194,7 @@ module.exports = class Bot {
    }
    trading_log(enchant, level, price) {
       const str = enchant.substring(10, enchant.length);
-      console.log(`\nEnchant: ${str}  ||  Level: ${level} ||  Price: ${price} ||  Time: ${getTime()} `)
+      console.log(`\nEnchant: ${str}\nLevel: ${level}\nPrice: ${price}\nTime: ${getTime()} `)
    }
    trading_stopTrade() {
       this.bot.clearControlStates()
