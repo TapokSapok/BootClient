@@ -231,9 +231,17 @@ module.exports = class Bot {
       return block.name === 'lectern'
    }
    async trading_dig() {
-      const axes = ['diamond_axe'];
+      const axes = ['diamond_axe', 'netherite_axe', 'golden_axe', 'iron_axe', 'stone_axe', 'wooden_axe'];
+      let axe = '';
 
-      const axe = this.bot.inventory.items().find(item => item.name.includes(axes))
+      this.bot.inventory.items().forEach(item => {
+         axes.forEach(topor => {
+            if (item.name === topor) {
+               axe = item
+            }
+         })
+
+      })
       if (axe) this.bot.equip(axe, 'hand')
 
       let block = this.bot.findBlock({
