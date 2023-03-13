@@ -6,8 +6,10 @@ module.exports = {
    quit: require('../bot/extends/quit.js'),
    lookAt: require('../bot/extends/lookAt.js'),
    clickWindow: require('../bot/extends/clickWindow.js'),
-   trading: require('../bot/extends/trading/trading.js'),
+
+   StartTrading: require('../bot/extends/trading/StartTrading.js'),
+   stopTrading: require('../bot/extends/trading/stopTrading.js'),
    enchants: require('../bot/extends/trading/enchants.js'),
    addEnchant: require('../bot/extends/trading/addEnchant.js'),
-   removeEnchant: require('../bot/extends/trading/removeEnchant.js')
+   removeEnchant: require('../bot/extends/trading/removeEnchant.js'),
 }

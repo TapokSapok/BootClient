@@ -52,6 +52,7 @@ p {
    font-size: 20px;
    position: absolute;
    opacity: .9;
+
 }
 
 .nav-username {
@@ -181,6 +182,10 @@ p {
    height: 30px;
    font-size: 20px;
    transition: .2s;
+}
+
+.login-input::selection {
+   background: #381919;
 }
 
 .login-input:focus {
@@ -325,7 +330,7 @@ p {
 }
 
 .control.bar {
-   overflow: auto;
+   /* overflow: auto; */
 }
 
 .control-chat {

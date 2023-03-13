@@ -1,4 +1,4 @@
-module.exports = (el, enchant, lvl, maxPrice) => {
+module.exports = (el, enchant, lvl, maxPrice, displayName) => {
 
    for (let i = 0; i < bots.length; i++) {
       if (el.dataset.useBot === bots[i].username) {
@@ -10,7 +10,8 @@ module.exports = (el, enchant, lvl, maxPrice) => {
                obj = {
                   enchant: `${enchant}`,
                   level: `${lvl}`,
-                  maxPrice: `${maxPrice}`
+                  maxPrice: `${maxPrice}`,
+                  displayName: `${displayName}`
                }
                console.log(obj)
                bots[i].addEnchant(obj)

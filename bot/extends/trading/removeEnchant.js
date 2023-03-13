@@ -6,7 +6,7 @@ module.exports = (el, enchant, lvl, maxPrice) => {
          const obj = {
             enchant: `${enchant}`,
             level: `${lvl}`,
-            maxPrice: `${maxPrice}`
+            maxPrice: `${maxPrice}`,
          }
          console.log(obj)
          bots[i].removeEnchant(obj)

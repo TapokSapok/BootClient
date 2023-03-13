@@ -13,12 +13,4 @@ module.exports = {
       { id: 'minecraft:blast_protection', maxLevel: 4, displayName: 'Взрывоустойчивость' },
       { id: 'minecraft:projectile_protection', maxLevel: 4, displayName: 'Защита от снарядов' },
    ],
-   usedEnchants: [
-      { enchant: 'minecraft:looting', level: 3 },
-      { enchant: 'minecraft:feather_falling', level: 2 },
-      { enchant: 'minecraft:fire_aspect', level: 2 },
-      { enchant: 'minecraft:fire_protection', level: 2 },
-      { enchant: 'minecraft:blast_protection', level: 2 },
-      { enchant: 'minecraft:projectile_protection', level: 2 },
-   ],
 }

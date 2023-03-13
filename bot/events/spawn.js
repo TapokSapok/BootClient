@@ -98,20 +98,7 @@ module.exports = (username) => {
       bot.lookAt(el.target, type, lookAtPlayer.value)
    })
    clickWindow.addEventListener('click', (el) => { bot.clickWindow(el.target, clickWindowInput.value) })
-   tradingStart.addEventListener('click', (el) => {
-      trading = bot.trading(el.target);
-      if (trading) {
-         tradingStart.style.background = 'red';
-         tradingStart.textContent = 'Стоп';
-         tradingStart.style.color = 'black';
-         tradingStart.style.fontWeight = '600';
-      } else {
-         tradingStart.style.background = '';
-         tradingStart.style.color = '';
-         tradingStart.style.fontWeight = '';
-         tradingStart.textContent = 'Старт'
-      }
-   })
+   tradingStart.addEventListener('click', (el) => { bot.StartTrading(el.target); })
 
    // ()()()()()
 
@@ -222,10 +209,10 @@ module.exports = (username) => {
       tradingSelectMaxPrice.value = '';
 
       item.addEventListener('click', (el) => {
-         bot.removeEnchant(el.target, enchant, item.dataset.level, item.dataset.maxPrice);
+         bot.removeEnchant(el.target, enchant, item.dataset.level, item.dataset.maxPrice, item.dataset.enchant);
          el.target.remove()
       })
-      bot.addEnchant(el, enchant, item.dataset.level, item.dataset.maxPrice);
+      bot.addEnchant(el, enchant, item.dataset.level, item.dataset.maxPrice, item.dataset.enchant);
    }
 
 
@@ -235,7 +222,8 @@ module.exports = (username) => {
       username: `${username}`,
       panel: item,
       chatLog: item.querySelector('.control.ul'),
-      tradeLog: item.querySelector('.control.trading-log.ul')
+      tradeLog: item.querySelector('.control.trading-log.ul'),
+      tradingBtn: item.querySelector('.control.trading-start')
    }
 }
 
