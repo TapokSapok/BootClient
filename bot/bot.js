@@ -51,9 +51,8 @@ module.exports = class Bot {
       })
 
       this.bot.once('spawn', () => {
-         const func = require('./events/spawn.js');
 
-         const props = func(this.username);
+         const props = bot.spawn(this.username);
 
          this.mcData = require('minecraft-data')(this.bot.version)
          this.panel = props['panel'];
@@ -61,8 +60,6 @@ module.exports = class Bot {
          this.tradeLog = props['tradeLog'];
 
          this.tradingBtn = props['tradingBtn'];
-
-         console.log(this.mcData)
 
          echo(1, `Connect`, ``, this.username)
       })
