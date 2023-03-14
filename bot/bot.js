@@ -4,7 +4,9 @@ module.exports = class Bot {
       this.username = options['username'];
       this.host = options['host'];
       this.port = options['port'];
+      this.version = options['version'];
 
+      this.mcData = null;
       this.panel = null;
       this.chatLog = null;
       this.tradeLog = null;
@@ -53,11 +55,14 @@ module.exports = class Bot {
 
          const props = func(this.username);
 
+         this.mcData = require('minecraft-data')(this.bot.version)
          this.panel = props['panel'];
          this.chatLog = props['chatLog'];
          this.tradeLog = props['tradeLog'];
 
          this.tradingBtn = props['tradingBtn'];
+
+         console.log(this.mcData)
 
          echo(1, `Connect`, ``, this.username)
       })
