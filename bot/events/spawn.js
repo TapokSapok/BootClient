@@ -14,6 +14,7 @@ module.exports = (username) => {
             <button class="control-quit" data-use-bot="${username}">Выйти</button>
          </div>
 
+
          <div class="control item active" data-item="chat">
             <div class="control lookAt">
                <select class="control choise-lookAt btn-blue">
@@ -28,12 +29,20 @@ module.exports = (username) => {
             </div>
             <input class="control-chat" data-use-bot="${username}" type="text" placeholder="сообщение в чат">
          </div>
+
+
          <div class="control item" data-item="addons">
             <div class="control clickWindow">
                <input type="text" class="control clickWindow-input btn-blue" placeholder="Слот инвентаря">
                <button class="control clickWindow-btn btn-blue" data-use-bot="${username}">Клик</button>
             </div>
+            <div class="control addon followPlayer">
+            <input type="checkbox" class="control followPlayer-input-radio btn-blue"></input>
+            <input type="text" class="control followPlayer-input btn-blue" placeholder="Ник игрока">
+            <button class="control followPlayer-btn btn-blue" data-use-bot="${username}">Подойти</button>
+            </div>
          </div>
+
 
       <div class="control item" data-item="trading">
          <div class="control trading list-adder">
@@ -68,7 +77,8 @@ module.exports = (username) => {
       panel: item,
       chatLog: item.querySelector('.control.ul'),
       tradeLog: item.querySelector('.control.trading-log.ul'),
-      tradingBtn: item.querySelector('.control.trading-start')
+      tradingBtn: item.querySelector('.control.trading-start'),
+      followComeBtn: item.querySelector('.control.followPlayer-btn')
    }
 
    bot.client(item)

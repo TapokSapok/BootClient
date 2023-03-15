@@ -1,18 +1,26 @@
+const { pathfinder, Movements } = require('mineflayer-pathfinder');
 
 module.exports = class Bot {
    constructor(options) {
+      // MAIN
       this.username = options['username'];
       this.host = options['host'];
       this.port = options['port'];
       this.version = options['version'];
 
+      // SECOND
       this.mcData = null;
       this.panel = null;
       this.chatLog = null;
       this.tradeLog = null;
 
-      // this.activeScript = false;
+      // SCRIPTS
+      this.activeScript = false;
 
+      this.activeFollowPlayer = false;
+      this.followComeBtn = null;
+
+      // TRADING
       this.tradingBtn = null;
       this.activeTrading = false;
       this.tradingEnchants = [];
@@ -27,6 +35,8 @@ module.exports = class Bot {
          'host': this.host,
          'port': this.port,
       })
+
+      this.bot.loadPlugin(pathfinder)
       this.initEvents()
    }
 
@@ -60,6 +70,7 @@ module.exports = class Bot {
          this.tradeLog = props['tradeLog'];
 
          this.tradingBtn = props['tradingBtn'];
+         this.followComeBtn = props['followComeBtn']
 
          echo(1, `Connect`, ``, this.username)
       })
@@ -91,8 +102,7 @@ module.exports = class Bot {
       this.bot.on('error', (err) => { echo(3, 'Error', err, this.username) })
    }
 
-   // === Функции аддонов
-
+   // === ФУНКЦИИ АДДОНОВ
 
    // Получение статистики бота
    getInfo() {
@@ -144,11 +154,50 @@ module.exports = class Bot {
       this.bot.simpleClick.leftMouse(slot);
       echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${this.username}`)
    }
+   // FollowPLayer
+   stopComeFollow(type) {
+      this.activeFollowPlayer = false;
+      if (this.bot.pathfinder !== undefined) this.bot.pathfinder.setGoal(null);
+      this.bot.clearControlStates();
+      bot.stopFollowPlayer(this.followComeBtn, type);
+   }
 
+   async comePlayer(player) {
 
-   // СТАРТ СКРИПТА
+      const target = this.bot.players[`${player}`];
+      if (!target) {
+         echo(2, 'comePlayer', `По близости нет игрока [${player}]`, this.username);
+         this.stopComeFollow('come')
+         return false
+      }
 
+      echo(1, 'comePlayer', `Начал путь до игрока [${player}]`, this.username)
+      const goal = new GoalFollow(target.entity, 1);
+      await this.bot.pathfinder.goto(goal)
+      echo(1, 'comePlayer', `Подошел к игроку [${player}]`, this.username)
 
+   }
+   async followPlayer(player) {
+
+      if (!this.activeFollowPlayer) { this.stopComeFollow(player); return; }
+
+      const target = this.bot.players[`${player}`];
+      if (!target) {
+         echo(2, 'followPlayer', `По близости нет игрока [${player}]`, this.username);
+         this.stopComeFollow('follow');
+         return 0;
+      }
+
+      echo(1, 'followPlayer', `Начал следовать за игроком [${player}].`, this.username)
+
+      const movements = new Movements(this.bot, this.mcData);
+      this.bot.pathfinder.setMovements(movements)
+      const goal = new GoalFollow(target.entity, 1);
+
+      await this.bot.pathfinder.setGoal(goal, true)
+   }
+
+   // ЛОГ СКРИПТОВ
    scriptLog(script, state) {
       switch (script) {
          case 'trading':
@@ -166,15 +215,13 @@ module.exports = class Bot {
       }
    }
 
-   // TRADING ===============
-
+   // ТРЕЙДИНГ
    stopTrading() {
       this.activeTrading = false;
       bot.stopTrading(this.tradingBtn);
       this.bot.clearControlStates();
       this.bot.currentWindow.close();
    }
-
    async trading() {
       while (this.activeTrading) {
          await this.trading_checkVillager()
@@ -186,8 +233,6 @@ module.exports = class Bot {
          await this.bot.waitForTicks(50)
       }
    }
-
-
    addEnchant(obj) {
       this.tradingEnchants.push(obj)
       console.log(this.tradingEnchants)
@@ -201,7 +246,6 @@ module.exports = class Bot {
          }
       }
    }
-
    async trading_checkVillager() {
 
       const target = this.bot.nearestEntity((e) => (e.name === 'villager'));
@@ -276,6 +320,5 @@ module.exports = class Bot {
       this.tradeLog.append(item)
       this.tradeLog.scrollIntoView(false)
    }
-
-   // TRADING ===============
+   // ТРЕЙДИНГ
 }

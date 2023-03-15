@@ -1,4 +1,8 @@
 module.exports = (item) => {
+   const followComeCheckbox = item.querySelector('.control.followPlayer-input-radio')
+   const followComePlayer = item.querySelector('.control.followPlayer-input')
+
+
    const selectControl = item.querySelector('.control.choise');
    const controlItems = item.querySelectorAll('.control.item')
 
@@ -23,6 +27,7 @@ module.exports = (item) => {
    const chat = item.querySelector('.control-chat')
    const lookAt = item.querySelector('.control-lookAt')
    const clickWindow = item.querySelector('.control.clickWindow-btn')
+   const followCome = item.querySelector('.control.followPlayer-btn')
 
 
    quit.addEventListener('click', (el) => { bot.quit(el.target) })
@@ -34,6 +39,20 @@ module.exports = (item) => {
    })
    clickWindow.addEventListener('click', (el) => { bot.clickWindow(el.target, clickWindowInput.value) })
    tradingStart.addEventListener('click', (el) => { bot.StartTrading(el.target); })
+   followCome.addEventListener('click', (el) => {
+      if (followComeCheckbox.checked) {
+
+         if (bot.followPlayer(el.target, followComePlayer.value)) {
+            followComeCheckbox.disabled = true;
+         } else {
+            followComeCheckbox.disabled = false;
+         }
+
+      } else {
+         bot.comePlayer(el.target, followComePlayer.value)
+      }
+
+   })
 
    // ===================================================================================
 
@@ -144,6 +163,16 @@ module.exports = (item) => {
          el.target.remove()
       })
       bot.addEnchant(el, enchant, item.dataset.level, item.dataset.maxPrice, item.dataset.enchant);
+   }
+
+   // ===================================================================================
+
+   followComeCheckbox.onchange = (el) => {
+      if (el.target.checked) {
+         followCome.textContent = 'Следить';
+      } else {
+         followCome.textContent = 'Подойти';
+      }
    }
 
    // ===================================================================================
