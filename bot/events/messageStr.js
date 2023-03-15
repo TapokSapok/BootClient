@@ -14,6 +14,10 @@ module.exports = (username, text) => {
       }
    }
 
-   idConsoleChatLogUl.append(messageConsole)
+   if (idConsoleChatLogUl.lastElementChild) {
+      if (idConsoleChatLogUl.lastElementChild.textContent.includes(text)) return;
+   }
+
+   idConsoleChatLogUl.append(messageConsole);
    idConsoleChatLogUl.scrollIntoView(false)
 }

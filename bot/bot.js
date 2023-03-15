@@ -43,8 +43,7 @@ module.exports = class Bot {
    // === Инициализция ивентов бота
    initEvents() {
       this.bot.on("messagestr", (text) => {
-         const func = require('./events/messageStr.js');
-         func(this.username, text);
+         bot.messageStr(this.username, text)
       })
 
       this.bot.on('health', () => {
@@ -89,9 +88,9 @@ module.exports = class Bot {
                bots[i].panel.remove()
             }
          }
-         idLoginPanel.classList.add('active')
 
-         if (activeBot === this.username) { idNavItems.forEach(el => el.innerText = '') }
+
+         if (activeBot === this.username) { idNavItems.forEach(el => el.innerText = ''); idLoginPanel.classList.add('active'); activeBot = '' }
          if (reason === 'Выход с клиента') { echo(1, 'Disconnect', reason, this.username); return }
       })
 
