@@ -1,8 +1,11 @@
-const mineflayer = require('mineflayer')
-const bot = require('../internal/manager.js')
-const Vec3 = require('vec3').Vec3,
+const mineflayer = require('mineflayer');
+const bot = require('../internal/manager.js');
+const Vec3 = require('vec3').Vec3;
+const { pathfinder, Movements, goals } = require('mineflayer-pathfinder');
+const GoalFollow = goals.GoalFollow;
 
-   // Элементы логина
+
+const // Элементы логина
    idLoginBtn = document.querySelector('.login-submit'),
    host = document.querySelector('.login-host'),
    username = document.querySelector('.login-username'),
@@ -69,12 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
    document.onmouseover = document.onmouseout = mouseAction;
    document.onmousemove = (e) => { x = e.clientX; y = e.clientY; }
 
-   username.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
-   host.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
-   port.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
-   version.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
+   username.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
+   host.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
+   // port.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
+   version.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
 
-   idLoginBtn.addEventListener('click', () => { bot.connect(username.value, host.value, port.value, version.value) })
+   idLoginBtn.addEventListener('click', () => { bot.connect(username.value, host.value, version.value) })
    idSideNewBot.addEventListener('click', () => { openLoginPanel(); })
    idSideConsole.addEventListener('click', () => { openConsole() })
    document.addEventListener('click', (el) => { choiceBot(el); markerBots(el); })

@@ -34,6 +34,7 @@ module.exports = class Bot {
          'username': this.username,
          'host': this.host,
          'port': this.port,
+         'version': this.version,
       })
 
       this.bot.loadPlugin(pathfinder)

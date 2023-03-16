@@ -706,3 +706,7 @@ span.red {
    font-weight: 600;
    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+.control.addon.followPlayer {
+   margin-top: 20px;
+}

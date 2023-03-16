@@ -7,12 +7,17 @@ module.exports = {
 
    // EVENTS
    spawn: require('../bot/events/spawn.js'),
+   messageStr: require('../bot/events/messageStr.js'),
 
    // ADDONS
    chatSend: require('../bot/extends/chatSend.js'),
    quit: require('../bot/extends/quit.js'),
    lookAt: require('../bot/extends/lookAt.js'),
    clickWindow: require('../bot/extends/clickWindow.js'),
+
+   comePlayer: require('../bot/extends/movements/come.js'),
+   followPlayer: require('../bot/extends/movements/follow.js'),
+   stopFollowPlayer: require('../bot/extends/movements/stopFollow.js'),
 
    // TRADING
    StartTrading: require('../bot/extends/trading/StartTrading.js'),

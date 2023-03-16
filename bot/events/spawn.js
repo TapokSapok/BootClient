@@ -16,14 +16,6 @@ module.exports = (username) => {
 
 
          <div class="control item active" data-item="chat">
-            <div class="control lookAt">
-               <select class="control choise-lookAt btn-blue">
-                  <option value="player" selected class="control choise-lookAt-item">Игрок</option>
-                  <option value="near-player" class="control choise-lookAt-item">Ближний игрок</option>
-               </select>
-               <input type="text" class="control lookAt-player btn-blue" placeholder="ник игрока">
-               <button class="control-lookAt btn-blue" data-use-bot="${username}">Смотреть</button>
-            </div>
             <div class="control chatLog">
                <ul class="control ul"></ul>
             </div>
@@ -41,6 +33,14 @@ module.exports = (username) => {
             <input type="text" class="control followPlayer-input btn-blue" placeholder="Ник игрока">
             <button class="control followPlayer-btn btn-blue" data-use-bot="${username}">Подойти</button>
             </div>
+            <div class="control lookAt">
+            <select class="control choise-lookAt btn-blue">
+               <option value="player" selected class="control choise-lookAt-item">Игрок</option>
+               <option value="near-player" class="control choise-lookAt-item">Ближний игрок</option>
+            </select>
+            <input type="text" class="control lookAt-player btn-blue" placeholder="ник игрока">
+            <button class="control-lookAt btn-blue" data-use-bot="${username}">Смотреть</button>
+         </div>
          </div>
 
 
