@@ -161,7 +161,7 @@ p {
    display: flex;
    justify-content: center;
    align-items: center;
-   text-align: center;
+   text-align: left;
 
 
    display: none;
@@ -347,14 +347,18 @@ p {
    z-index: 3;
    width: 95%;
    border-radius: 0 0 5px 5px;
+
+   margin: 0 50%;
+   transform: translate(-50%);
 }
 
 .control.chat {
    margin-top: 20px;
 }
 
-.control.lookAt {
+.control.addon.lookAt {
    margin-top: 20px;
+   margin-left: 10px;
 }
 
 .control.lookAt-player {
@@ -441,8 +445,9 @@ span.red {
 }
 
 
-.control.clickWindow {
+.control.addon.clickWindow {
    margin-top: 20px;
+   margin-left: 10px;
 }
 
 .control.trading-start {
@@ -520,6 +525,9 @@ span.red {
    z-index: 3;
    width: 95%;
    border-radius: 0 0 5px 5px;
+
+   margin: 0 50%;
+   transform: translate(-50%);
 }
 
 .console.chat {
@@ -709,4 +717,26 @@ span.red {
 
 .control.addon.followPlayer {
    margin-top: 20px;
+   margin-left: 10px;
+}
+
+.captcha-img {
+   position: absolute;
+   left: 0;
+   top: 0;
+   height: 50px;
+   width: 50px;
+}
+
+.control.addon.autoclicker {
+   margin-top: 20px;
+   margin-left: 10px;
+}
+
+.control.addon.description {
+   opacity: 0.5;
+   font-weight: 700;
+   font-size: 17px;
+   color: rgb(95, 95, 95);
+
 }

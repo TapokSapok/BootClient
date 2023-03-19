@@ -24,23 +24,35 @@ module.exports = (username) => {
 
 
          <div class="control item" data-item="addons">
-            <div class="control clickWindow">
+
+            <div class="control addon clickWindow">
                <input type="text" class="control clickWindow-input btn-blue" placeholder="Слот инвентаря">
                <button class="control clickWindow-btn btn-blue" data-use-bot="${username}">Клик</button>
+               <span class="control addon description"> - Клик по слоту инвентаря</span>
             </div>
+
             <div class="control addon followPlayer">
-            <input type="checkbox" class="control followPlayer-input-radio btn-blue"></input>
-            <input type="text" class="control followPlayer-input btn-blue" placeholder="Ник игрока">
-            <button class="control followPlayer-btn btn-blue" data-use-bot="${username}">Подойти</button>
+               <input type="text" class="control followPlayer-input btn-blue" placeholder="Ник игрока">
+               <input type="checkbox" class="control followPlayer-input-radio btn-blue"></input>
+               <button class="control followPlayer-btn btn-blue" data-use-bot="${username}">Подойти</button>
+               <span class="control addon description"> - Следовать[подойти] к игроку</span>
             </div>
-            <div class="control lookAt">
-            <select class="control choise-lookAt btn-blue">
-               <option value="player" selected class="control choise-lookAt-item">Игрок</option>
-               <option value="near-player" class="control choise-lookAt-item">Ближний игрок</option>
-            </select>
-            <input type="text" class="control lookAt-player btn-blue" placeholder="ник игрока">
-            <button class="control-lookAt btn-blue" data-use-bot="${username}">Смотреть</button>
-         </div>
+
+            <div class="control addon lookAt">
+               <select class="control choise-lookAt btn-blue">
+                  <option value="player" selected class="control choise-lookAt-item">Игрок</option>
+                  <option value="near-player" class="control choise-lookAt-item">Ближний игрок</option>
+               </select>
+               <input type="text" class="control lookAt-player btn-blue" placeholder="Ник игрока">
+               <button class="control-lookAt btn-blue" data-use-bot="${username}">Смотреть</button>
+               <span class="control addon description"> - Посмотреть на игрока</span>
+            </div>
+            <div class="control addon autoclicker">
+               <input type="number" class="control autoclicker-interval btn-blue" placeholder="Интервал [ms]">
+               <button class="control autoclicker-btn btn-blue" data-use-bot="${username}">Старт</button>
+               <span class="control addon description"> - Автокликер</span>
+            </div>
+         
          </div>
 
 
@@ -81,7 +93,7 @@ module.exports = (username) => {
       followComeBtn: item.querySelector('.control.followPlayer-btn')
    }
 
-   bot.client(item)
+   bot.client(item, username)
 
    return props
 }

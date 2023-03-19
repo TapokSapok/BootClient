@@ -9,8 +9,15 @@ module.exports = (username, text) => {
 
    for (let i = 0; i < bots.length; i++) {
       if (bots[i].username === username) {
-         bots[i].chatLog.append(messageChat)
-         bots[i].chatLog.scrollIntoView(false)
+         if (bots[i].chatLog) {
+
+            if (bots[i].chatLog.lastElementChild) {
+               if (bots[i].chatLog.lastElementChild.textContent.includes(text)) return;
+            }
+
+            bots[i].chatLog.append(messageChat)
+            bots[i].chatLog.scrollIntoView(false)
+         }
       }
    }
 

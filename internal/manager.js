@@ -4,6 +4,7 @@ module.exports = {
    Bot: require('../bot/bot.js'),
    client: require('../bot/client.js'),
    connect: require('../bot/main/connect.js'),
+   getColor: require('../bot/main/getColor.js'),
 
    // EVENTS
    spawn: require('../bot/events/spawn.js'),
@@ -14,6 +15,7 @@ module.exports = {
    quit: require('../bot/extends/quit.js'),
    lookAt: require('../bot/extends/lookAt.js'),
    clickWindow: require('../bot/extends/clickWindow.js'),
+   autoclicker: require('../bot/extends/autoclicker.js'),
 
    comePlayer: require('../bot/extends/movements/come.js'),
    followPlayer: require('../bot/extends/movements/follow.js'),

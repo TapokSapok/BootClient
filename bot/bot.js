@@ -18,6 +18,8 @@ module.exports = class Bot {
       this.activeScript = false;
 
       this.activeFollowPlayer = false;
+      this.activeAutoclicker = false;
+
       this.followComeBtn = null;
 
       // TRADING
@@ -38,6 +40,7 @@ module.exports = class Bot {
       })
 
       this.bot.loadPlugin(pathfinder)
+      this.bot.loadPlugin(autoclicker);
       this.initEvents()
    }
 
@@ -60,8 +63,7 @@ module.exports = class Bot {
          }
       })
 
-      this.bot.once('spawn', () => {
-
+      this.bot.once('inject_allowed', () => {
          const props = bot.spawn(this.username);
 
          this.mcData = require('minecraft-data')(this.bot.version)
@@ -72,7 +74,14 @@ module.exports = class Bot {
          this.tradingBtn = props['tradingBtn'];
          this.followComeBtn = props['followComeBtn']
 
-         echo(1, `Connect`, ``, this.username)
+         echo(1, `Connect`, ``, this.username);
+      })
+
+      this.bot.once('spawn', () => {
+         if (this.bot.username === activeBot) {
+            idNavUsername.innerText = `${this.bot.username}`
+            idNavServer.innerText = `${this.host}: ${this.port}`
+         }
       })
 
       this.bot.on('end', (reason) => {
@@ -94,6 +103,36 @@ module.exports = class Bot {
          if (activeBot === this.username) { idNavItems.forEach(el => el.innerText = ''); idLoginPanel.classList.add('active'); activeBot = '' }
          if (reason === 'Выход с клиента') { echo(1, 'Disconnect', reason, this.username); return }
       })
+
+      this.bot._client.on('map', ({ data }) => {
+         if (!data) return;
+
+         const size = Math.sqrt(data.length);
+         const image = PNGImage.createImage(size, size);
+
+         for (let x = 0; x < size; x++) {
+            for (let z = 0; z < size; z++) {
+
+               const colorId = data[x + (z * size)];
+               image.setAt(x, z, bot.getColor(colorId));
+            }
+         }
+
+         image.writeImage(`${__dirname}/assets/captha.png`, function (err) {
+            if (err) throw err;
+
+            // const img = document.createElement('img');
+            // img.className = 'login bar main-panel active'
+            // img.src = `${__dirname}/assets/captha.png`;
+            // document.querySelector('.captcha-img').append(img)
+            // console.log(document.querySelector('.captcha-img'))
+
+         });
+         this.bot.on('login', function () {
+            console.log("[DUBUG] Бот успешно подключён к серверу!");
+         });
+      });
+
 
       this.bot.on('death', (reason) => { echo(2, 'death', '', this.username) })
 
@@ -160,6 +199,15 @@ module.exports = class Bot {
       if (this.bot.pathfinder !== undefined) this.bot.pathfinder.setGoal(null);
       this.bot.clearControlStates();
       bot.stopFollowPlayer(this.followComeBtn, type);
+   }
+
+   autoclicker(interval) {
+      if (this.activeAutoclicker) {
+         this.bot.autoclicker.options.delay = interval ? interval : 1500;
+         this.bot.autoclicker.start();
+      } else {
+         this.bot.autoclicker.stop();
+      }
    }
 
    async comePlayer(player) {

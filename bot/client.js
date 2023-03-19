@@ -1,7 +1,9 @@
-module.exports = (item) => {
+module.exports = (item, username) => {
+
+   const autoclickerInterval = item.querySelector('.control.autoclicker-interval')
+
    const followComeCheckbox = item.querySelector('.control.followPlayer-input-radio')
    const followComePlayer = item.querySelector('.control.followPlayer-input')
-
 
    const selectControl = item.querySelector('.control.choise');
    const controlItems = item.querySelectorAll('.control.item')
@@ -28,6 +30,7 @@ module.exports = (item) => {
    const lookAt = item.querySelector('.control-lookAt')
    const clickWindow = item.querySelector('.control.clickWindow-btn')
    const followCome = item.querySelector('.control.followPlayer-btn')
+   const autoclicker = item.querySelector('.control.autoclicker-btn')
 
 
    quit.addEventListener('click', (el) => { bot.quit(el.target) })
@@ -53,6 +56,7 @@ module.exports = (item) => {
       }
 
    })
+   autoclicker.addEventListener('click', (el) => { bot.autoclicker(el.target, autoclickerInterval.value) })
 
    // ===================================================================================
 
@@ -174,6 +178,10 @@ module.exports = (item) => {
          followCome.textContent = 'Подойти';
       }
    }
+
+   // ===================================================================================
+
+
 
    // ===================================================================================
 }

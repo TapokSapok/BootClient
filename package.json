@@ -4,7 +4,9 @@
   },
   "dependencies": {
     "mineflayer": "^4.8.1",
-    "mineflayer-pathfinder": "^2.4.2"
+    "mineflayer-autoclicker": "^1.2.0",
+    "mineflayer-pathfinder": "^2.4.2",
+    "pngjs-image": "^0.11.7"
   },
   "name": "3_el_client_1",
   "version": "1.0.0",

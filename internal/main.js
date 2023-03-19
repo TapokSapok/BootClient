@@ -1,8 +1,11 @@
 const mineflayer = require('mineflayer');
 const bot = require('../internal/manager.js');
+const PNGImage = require('pngjs-image');
 const Vec3 = require('vec3').Vec3;
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder');
+const autoclicker = require('mineflayer-autoclicker')
 const GoalFollow = goals.GoalFollow;
+
 
 
 const // Элементы логина
