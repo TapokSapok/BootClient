@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "electron-builder": "^23.6.0",
     "electron": "^23.1.0"
   },
   "dependencies": {
@@ -8,15 +9,36 @@
     "mineflayer-pathfinder": "^2.4.2",
     "pngjs-image": "^0.11.7"
   },
-  "name": "3_el_client_1",
-  "version": "1.0.0",
+  "name": "sapok-client",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "nodemon": "nodemon --watch . --exec \"electron .\""
+    "nodemon": "nodemon --watch . --exec \"electron .\"",
+    "build": "electron-builder"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "hello",
+  "build": {
+    "appId": "SapokClient",
+    "productName": "SapokClient",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "uninstallDisplayName": "SapokClient-uninstaller",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": false
+    }
+  }
 }

@@ -21,4 +21,16 @@ module.exports = (username, server, version) => {
 
    console.log(`Connect ${options.username} \n to ${options.host}:${options.port}`)
    startClient(options)
+
+   const data = `
+      [
+         {
+            "username": "SapokTapok",
+            "host": "localhost",
+            "port": "25565"
+         }
+      ]
+   `
+
+   fs.writeFileSync('./bot/assets/accounts/accounts.json', data)
 }

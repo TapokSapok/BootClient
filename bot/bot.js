@@ -80,7 +80,7 @@ module.exports = class Bot {
       this.bot.once('spawn', () => {
          if (this.bot.username === activeBot) {
             idNavUsername.innerText = `${this.bot.username}`
-            idNavServer.innerText = `${this.host}: ${this.port}`
+            idNavServer.innerText = `${this.host}:${this.port}`
          }
       })
 
@@ -150,7 +150,7 @@ module.exports = class Bot {
          idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`
 
          idNavUsername.innerText = `${this.bot.username}`
-         idNavServer.innerText = `${this.host}: ${this.port}`
+         idNavServer.innerText = `${this.host}:${this.port}`
 
          idNavCoordinates.innerText = `${this.bot.entity.position.x.toFixed(0)}, ${this.bot.entity.position.y.toFixed(0)}, ${this.bot.entity.position.z.toFixed(0)}`
       }

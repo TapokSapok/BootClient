@@ -6,7 +6,8 @@ const { pathfinder, Movements, goals } = require('mineflayer-pathfinder');
 const autoclicker = require('mineflayer-autoclicker')
 const GoalFollow = goals.GoalFollow;
 
-
+const fs = require('fs')
+// fs.writeFileSync('./assets/captcha/EXECFILE.js', 'const data = [1,2,3,4,5,6]', 'utf-8');
 
 const // Элементы логина
    idLoginBtn = document.querySelector('.login-submit'),
