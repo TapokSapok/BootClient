@@ -49,10 +49,32 @@ app.on('window-all-closed', () => {
    if (process.platform !== 'darwin') app.quit()
 });
 
-fs.mkdir('./bot/assets', () => {
-   fs.mkdir('./bot/assets/captcha', () => { })
-   fs.mkdir('./bot/assets/accounts', () => {
-      fs.writeFile('./bot/assets/accounts/accounts.json', '', 'utf8', () => { })
-   })
-})
+
+try {
+   if (!fs.existsSync('./bot/assets')) {
+      fs.mkdir('./bot/assets', () => {
+         try {
+            if (!fs.existsSync('./bot/assets/captcha')) {
+               fs.mkdir('./bot/assets/captcha', () => { })
+            }
+         } catch (err) { console.log(err) }
+         try {
+            if (!fs.existsSync('./bot/assets/accounts')) {
+               fs.mkdir('./bot/assets/accounts', () => {
+                  try {
+                     if (!fs.existsSync('./bot/assets/accounts/accounts.json')) {
+                        fs.writeFile('./bot/assets/accounts/accounts.json', '[]', 'utf8', () => { })
+                     }
+                  } catch (err) { console.log(err) }
+               })
+            }
+         } catch (err) { console.log(err) }
+      })
+   }
+} catch (err) { console.log(err) }
+
+
+
+
+
 

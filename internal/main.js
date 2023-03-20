@@ -62,7 +62,12 @@ const // Элементы логина
    idConsoleItems = document.querySelectorAll('.console.item'),
    idConsoleLogUl = document.querySelector('.console.ul.log'),
    idConsoleClickWindowBtn = document.querySelector('.console.clickWindow-btn'),
-   idConsoleClickWindowInput = document.querySelector('.console.clickWindow-input')
+   idConsoleClickWindowInput = document.querySelector('.console.clickWindow-input'),
+
+   idLoginFavoritePanel = document.querySelector('.login.favorite.panel'),
+   idLoginFavoriteAdd = document.querySelector('.login.favorite.add'),
+   idLoginFavoriteCheckbox = document.querySelector('.login.favorite.checkbox'),
+   idLoginFavoriteItems = [];
 
 let bots = [];
 
@@ -75,6 +80,7 @@ let markerBot;
 document.addEventListener('DOMContentLoaded', () => {
    document.onmouseover = document.onmouseout = mouseAction;
    document.onmousemove = (e) => { x = e.clientX; y = e.clientY; }
+   uploadFavorites()
 
    username.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
    host.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
@@ -166,11 +172,115 @@ function getTime() {
    return `${h}:${m}:${s}`
 }
 
+idLoginFavoriteAdd.addEventListener('click', () => { addFavorite() })
+
 
 
 
 
 // ================== HTML
+function favoriteEvent(item) {
+   fs.readFile('./bot/assets/accounts/accounts.json', (err, data) => {
+      data = JSON.parse(data)
+      item.addEventListener('click', () => {
+         if (idLoginFavoriteCheckbox.checked) {
+            for (let i = 0; i < data.length; i++) {
+               if (item.dataset.username === data[i].username
+                  && item.dataset.host === data[i].host
+                  && item.dataset.port === data[i].port
+                  && item.dataset.version === data[i].version) {
+
+                  console.log(data)
+                  console.log(data.splice(i, 1))
+                  console.log(data)
+               }
+            }
+            fs.writeFileSync("./bot/assets/accounts/accounts.json", JSON.stringify(data))
+            uploadFavorites()
+         } else {
+            username.value = item.dataset.username;
+            if (!item.dataset.port) {
+               host.value = `${item.dataset.host}`
+            } else {
+               host.value = `${item.dataset.host}:${item.dataset.port}`;
+            }
+            version.value = item.dataset.version
+         }
+      })
+   })
+}
+
+function addFavorite() {
+   if (!username.value || !host.value) return;
+
+   const index = host.value.indexOf(':')
+
+   let hostFav = '';
+   let portFav = '';
+
+   if (index !== -1) {
+      portFav = host.value.slice(index + 1, host.value.length)
+      hostFav = host.value.slice(0, index)
+   } else {
+      hostFav = host.value;
+   }
+
+   const option = {
+      username: username.value, host: hostFav, port: portFav, version: version.value
+   }
+
+   fs.readFile('./bot/assets/accounts/accounts.json', (err, data) => {
+      if (!data) return;
+
+      data = JSON.parse(data)
+
+      for (let i = 0; i < data.length; i++) {
+         if (data[i].username === option.username
+            && data[i].host === option.host
+            && data[i].port === option.port
+            && data[i].version === option.version) return;
+      }
+
+      data.push(option);
+      fs.writeFileSync("./bot/assets/accounts/accounts.json", JSON.stringify(data))
+
+      const item = document.createElement('div')
+      item.className = 'login favorite item';
+      item.innerHTML = `<span>${option.username}</span>`
+      item.dataset.username = `${option.username}`
+      item.dataset.host = `${option.host}`
+      item.dataset.port = `${option.port}`
+      item.dataset.version = `${option.version}`
+      idLoginFavoritePanel.append(item)
+      idLoginFavoriteItems.push(item)
+
+      favoriteEvent(item)
+   })
+}
+
+function uploadFavorites() {
+
+   idLoginFavoriteItems.forEach(el => el.remove())
+
+   fs.readFile('./bot/assets/accounts/accounts.json', (err, data) => {
+      data = JSON.parse(data)
+
+      for (let i = 0; i < data.length; i++) {
+         const item = document.createElement('div')
+         item.className = 'login favorite item';
+         item.innerHTML = `<span>${data[i].username}</span>`
+         item.dataset.username = `${data[i].username}`
+         item.dataset.host = `${data[i].host}`
+         item.dataset.port = `${data[i].port}`
+         item.dataset.version = `${data[i].version}`
+         idLoginFavoritePanel.append(item)
+         idLoginFavoriteItems.push(item)
+         favoriteEvent(item)
+      }
+   })
+
+}
+
 
 function clearPanels() {
    for (let i = 0; i < bots.length; i++) {

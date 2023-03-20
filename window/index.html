@@ -72,68 +72,6 @@
 
    <!--  -->
 
-   <!-- <div class="control bar main-panel active">
-
-      <div class="control header">
-         <select class="control choise">
-            <option value="chat" selected>Чат</option>
-            <option value="addons">Аддоны</option>
-            <option value="trading">Трейдинг</option>
-         </select>
-         <button class="control-quit">Выйти</button>
-      </div>
-
-      <div class="control item" data-item="chat">
-
-         <div class="control lookAt">
-            <select class="control choise-lookAt btn-blue" onchange="choiseLookAt()">
-               <option value="player" selected class="control choise-lookAt-item">Игрок</option>
-               <option value="near-player" class="control choise-lookAt-item">Ближний игрок</option>
-            </select>
-            <input type="text" class="control lookAt-player btn-blue" placeholder="ник игрока">
-            <button class="control-lookAt btn-blue">Смотреть</button>
-         </div>
-
-         <div class="control chatLog">
-            <ul class="control ul">
-
-            </ul>
-         </div>
-         <input class="control-chat" type="text" placeholder="сообщение в чат">
-      </div>
-      <div class="control item" data-item="addons">
-         <div class="control clickWindow">
-            <input type="text" class="control clickWindow-input btn-blue" placeholder="Слот инвентаря">
-            <button class="control clickWindow-btn btn-blue">Клик</button>
-         </div>
-      </div>
-      <div class="control item active" data-item="trading">
-
-         <div class="control trading list-adder">
-
-            <select class="control trading select-enchant btn-blue">
-               <option selected>Добавить зачарование</option>
-               <option>Починка</option>
-            </select>
-            <select class="control trading select-level btn-blue">
-               <option selected>Уровень</option>
-               <option>IV</option>
-            </select>
-            <input type="number" placeholder="Цена" class="control trading select-max-price btn-blue">
-            <button type="submit" class="control trading plus btn-blue">+</button>
-         </div>
-
-         <div class="control trading list">
-            <div class="control trading list-item btn-blue">Прочность III | Макс.цена:12</div>
-         </div>
-         <div class="control trading trading-log">
-            <div class="control trading-log ul"></div>
-         </div>
-
-         <div class="control trading-start btn-blue">Старт</div>
-      </div>
-   </div> -->
-
    <div class="bots"></div>
 
    <!--  -->
@@ -144,6 +82,14 @@
          <input type="text" class="login-host login-input" placeholder="host:port" value="">
          <input type="text" class="login-version login-input" placeholder="version" value="">
          <button type="submit" class="login-submit">Подключиться</button>
+         <button type="button" class="login favorite add">
+            <img class="login favorite add-img" src="./images/star.png" alt="">
+         </button>
+      </div>
+      <div class="login favorite panel">
+         <div class="login favorite title"><span>Избранные</span>
+            <input type="checkbox" class="login favorite checkbox">
+         </div>
       </div>
    </div>
 </body>

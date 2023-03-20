@@ -1,11 +1,12 @@
 {
   "devDependencies": {
-    "electron-builder": "^23.6.0",
-    "electron": "^23.1.0"
+    "electron": "^23.1.0",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "mineflayer": "^4.8.1",
     "mineflayer-autoclicker": "^1.2.0",
+    "mineflayer-item-map-downloader": "^1.2.0",
     "mineflayer-pathfinder": "^2.4.2",
     "pngjs-image": "^0.11.7"
   },

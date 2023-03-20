@@ -168,7 +168,7 @@ p {
 }
 
 .login-form {
-   width: 200px;
+   width: 250px;
 }
 
 .login-input {
@@ -194,7 +194,7 @@ p {
 
 .login-submit {
    width: 200px;
-   margin: 10px 8%;
+   margin: 10px 0;
    background: #191919;
    border: none;
    color: #fff;
@@ -739,4 +739,72 @@ span.red {
    font-size: 17px;
    color: rgb(95, 95, 95);
 
+}
+
+.login.favorite.panel {
+   width: 145px;
+   height: 200px;
+   background-color: #101010;
+   margin-left: 50px;
+   border-radius: 10px;
+   overflow: auto;
+}
+
+.login.favorite.item {
+   padding-top: 0;
+   margin: 0 auto;
+   margin-top: 5px;
+   border-radius: 5px;
+   width: 93%;
+   height: 22px;
+   background: orange;
+   cursor: pointer;
+   opacity: .7;
+}
+
+.login.favorite.panel::-webkit-scrollbar {
+   display: none;
+}
+
+.login.favorite.item span {
+   font-weight: 600;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   text-align: left;
+   cursor: pointer;
+   padding-left: 5px;
+   padding-top: 2px;
+}
+
+.login.favorite.item:hover {
+   opacity: 1;
+}
+
+.login.favorite.title {
+   text-align: center;
+}
+
+.login.favorite.title span {
+   color: #fff;
+   font-weight: 600;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.login.favorite.add {
+   width: 22px;
+   height: 22px;
+   background: #191919;
+   border: none;
+   padding: 0;
+   margin-left: 5px;
+}
+
+.login.favorite.add-img {
+   width: 22px;
+   height: 22px;
+   cursor: pointer;
+}
+
+.login.favorite.add-img:hover {
+   opacity: .7;
 }
