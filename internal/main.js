@@ -184,19 +184,18 @@ function favoriteEvent(item) {
       data = JSON.parse(data)
       item.addEventListener('click', () => {
          if (idLoginFavoriteCheckbox.checked) {
+
             for (let i = 0; i < data.length; i++) {
                if (item.dataset.username === data[i].username
                   && item.dataset.host === data[i].host
-                  && item.dataset.port === data[i].port
+                  && (+item.dataset.port === data[i].port || +data[i].port === 0)
                   && item.dataset.version === data[i].version) {
-
-                  console.log(data)
-                  console.log(data.splice(i, 1))
-                  console.log(data)
                }
             }
             fs.writeFileSync("./bot/assets/accounts/accounts.json", JSON.stringify(data))
             uploadFavorites()
+
+
          } else {
             username.value = item.dataset.username;
             if (!item.dataset.port) {
@@ -211,7 +210,7 @@ function favoriteEvent(item) {
 }
 
 function addFavorite() {
-   if (!username.value || !host.value) return;
+   if (!username.value || (!host.value || host.value === ':0')) return;
 
    const index = host.value.indexOf(':')
 
@@ -243,18 +242,7 @@ function addFavorite() {
 
       data.push(option);
       fs.writeFileSync("./bot/assets/accounts/accounts.json", JSON.stringify(data))
-
-      const item = document.createElement('div')
-      item.className = 'login favorite item';
-      item.innerHTML = `<span>${option.username}</span>`
-      item.dataset.username = `${option.username}`
-      item.dataset.host = `${option.host}`
-      item.dataset.port = `${option.port}`
-      item.dataset.version = `${option.version}`
-      idLoginFavoritePanel.append(item)
-      idLoginFavoriteItems.push(item)
-
-      favoriteEvent(item)
+      uploadFavorites()
    })
 }
 

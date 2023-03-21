@@ -38,10 +38,11 @@ module.exports = class Bot {
          'port': this.port,
          'version': this.version,
       })
-
-      this.bot.loadPlugin(pathfinder)
-      this.bot.loadPlugin(autoclicker);
       this.initEvents()
+
+      this.bot.loadPlugin(pathfinder);
+      this.bot.loadPlugin(autoclicker);
+      console.log('init bot')
    }
 
    // === Инициализция ивентов бота
@@ -72,7 +73,7 @@ module.exports = class Bot {
          this.tradeLog = props['tradeLog'];
 
          this.tradingBtn = props['tradingBtn'];
-         this.followComeBtn = props['followComeBtn']
+         this.followComeBtn = props['followComeBtn'];
 
          echo(1, `Connect`, ``, this.username);
       })
@@ -82,6 +83,20 @@ module.exports = class Bot {
             idNavUsername.innerText = `${this.bot.username}`
             idNavServer.innerText = `${this.host}:${this.port}`
          }
+         console.log('bot spawn')
+
+         if (!this.panel) {
+            const props = bot.spawn(this.username);
+
+            this.mcData = require('minecraft-data')(this.bot.version)
+            this.panel = props['panel'];
+            this.chatLog = props['chatLog'];
+            this.tradeLog = props['tradeLog'];
+
+            this.tradingBtn = props['tradingBtn'];
+            this.followComeBtn = props['followComeBtn'];
+         }
+
       })
 
       this.bot.on('end', (reason) => {

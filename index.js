@@ -50,28 +50,27 @@ app.on('window-all-closed', () => {
 });
 
 
-try {
-   if (!fs.existsSync('./bot/assets')) {
-      fs.mkdir('./bot/assets', () => {
-         try {
-            if (!fs.existsSync('./bot/assets/captcha')) {
-               fs.mkdir('./bot/assets/captcha', () => { })
+
+if (!fs.existsSync('./bot/assets')) {
+   fs.mkdir('./bot/assets', () => {
+
+      if (!fs.existsSync('./bot/assets/captcha')) {
+         fs.mkdir('./bot/assets/captcha', () => { })
+      }
+
+      if (!fs.existsSync('./bot/assets/accounts')) {
+         fs.mkdir('./bot/assets/accounts', () => {
+
+            if (!fs.existsSync('./bot/assets/accounts/accounts.json')) {
+               fs.writeFile('./bot/assets/accounts/accounts.json', '[]', 'utf8', () => { })
             }
-         } catch (err) { console.log(err) }
-         try {
-            if (!fs.existsSync('./bot/assets/accounts')) {
-               fs.mkdir('./bot/assets/accounts', () => {
-                  try {
-                     if (!fs.existsSync('./bot/assets/accounts/accounts.json')) {
-                        fs.writeFile('./bot/assets/accounts/accounts.json', '[]', 'utf8', () => { })
-                     }
-                  } catch (err) { console.log(err) }
-               })
-            }
-         } catch (err) { console.log(err) }
-      })
-   }
-} catch (err) { console.log(err) }
+
+         })
+      }
+
+   })
+}
+
 
 
 
