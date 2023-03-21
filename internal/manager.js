@@ -21,6 +21,8 @@ module.exports = {
    followPlayer: require('../bot/extends/movements/follow.js'),
    stopFollowPlayer: require('../bot/extends/movements/stopFollow.js'),
 
+   loadCaptcha: require('../bot/captcha/loadCaptcha.js'),
+
    // TRADING
    StartTrading: require('../bot/extends/trading/StartTrading.js'),
    stopTrading: require('../bot/extends/trading/stopTrading.js'),

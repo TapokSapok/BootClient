@@ -18,7 +18,6 @@ module.exports = (username, server, version) => {
       port: +port,
       version: version,
    }
-
    console.log(`Connect ${options.username} \n to ${options.host}:${options.port}`)
    startClient(options)
 }

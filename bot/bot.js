@@ -1,4 +1,6 @@
 const { pathfinder, Movements } = require('mineflayer-pathfinder');
+const { fstat } = require('original-fs');
+const DIRNAME = require('../getDirname');
 
 module.exports = class Bot {
    constructor(options) {
@@ -42,7 +44,8 @@ module.exports = class Bot {
 
       this.bot.loadPlugin(pathfinder);
       this.bot.loadPlugin(autoclicker);
-      console.log('init bot')
+
+      console.log('[DEBUG] init bot')
    }
 
    // === Инициализция ивентов бота
@@ -65,6 +68,7 @@ module.exports = class Bot {
       })
 
       this.bot.once('inject_allowed', () => {
+         console.log('[DEBUG] inject bot')
          const props = bot.spawn(this.username);
 
          this.mcData = require('minecraft-data')(this.bot.version)
@@ -83,7 +87,7 @@ module.exports = class Bot {
             idNavUsername.innerText = `${this.bot.username}`
             idNavServer.innerText = `${this.host}:${this.port}`
          }
-         console.log('bot spawn')
+         console.log('[DEBUG] bot spawn')
 
          if (!this.panel) {
             const props = bot.spawn(this.username);
@@ -96,7 +100,6 @@ module.exports = class Bot {
             this.tradingBtn = props['tradingBtn'];
             this.followComeBtn = props['followComeBtn'];
          }
-
       })
 
       this.bot.on('end', (reason) => {
@@ -133,14 +136,8 @@ module.exports = class Bot {
             }
          }
 
-         image.writeImage(`${__dirname}/assets/captha.png`, function (err) {
+         image.writeImage(`${DIRNAME}/resources/assets/captcha/map_${this.bot.username}.png`, function (err) {
             if (err) throw err;
-
-            // const img = document.createElement('img');
-            // img.className = 'login bar main-panel active'
-            // img.src = `${__dirname}/assets/captha.png`;
-            // document.querySelector('.captcha-img').append(img)
-            // console.log(document.querySelector('.captcha-img'))
 
          });
          this.bot.on('login', function () {
@@ -161,11 +158,10 @@ module.exports = class Bot {
    // Получение статистики бота
    getInfo() {
       if (this.bot.username === activeBot) {
-         idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`
-         idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`
-
-         idNavUsername.innerText = `${this.bot.username}`
-         idNavServer.innerText = `${this.host}:${this.port}`
+         if (this.bot.health) idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`
+         if (this.bot.food) idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`
+         if (this.bot.username) idNavUsername.innerText = `${this.bot.username}`
+         if (this.host && this.port) idNavServer.innerText = `${this.host}:${this.port}`
 
          idNavCoordinates.innerText = `${this.bot.entity.position.x.toFixed(0)}, ${this.bot.entity.position.y.toFixed(0)}, ${this.bot.entity.position.z.toFixed(0)}`
       }

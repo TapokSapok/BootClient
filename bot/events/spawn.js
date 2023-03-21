@@ -2,6 +2,7 @@ module.exports = (username) => {
    const separator = document.querySelector('.last-separator')
    const sidebarItem = `<div class="sidebar-bot-item" data-bot="${username}"><img src="images/headPlayer.png" class="bot-img" draggable="false"></div>`
    separator.insertAdjacentHTML('beforebegin', sidebarItem)
+   idSidebarItem.push(sidebarItem)
 
    const item = document.createElement('div')
    item.innerHTML = `

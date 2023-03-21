@@ -4,10 +4,14 @@ const PNGImage = require('pngjs-image');
 const Vec3 = require('vec3').Vec3;
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder');
 const autoclicker = require('mineflayer-autoclicker')
+const path = require('path')
 const GoalFollow = goals.GoalFollow;
 
 const fs = require('fs')
-const PATH_ACCOUNTS = './resources/assets/accounts/accounts.json'
+const DIRNAME = require('../getDirname.js')
+const PATH_ACCOUNTS = './resources/assets/accounts/accounts.json';
+const PATH_CAPTCHA = './resources/assets/captcha'
+console.log(DIRNAME)
 
 const // Элементы логина
    idLoginBtn = document.querySelector('.login-submit'),
@@ -29,9 +33,10 @@ const // Элементы логина
    idSideBots = document.querySelectorAll('.sidebar-bot-item'),
    idSidebar = document.querySelector('.sidebar'),
    idSideConsole = document.querySelector('.sideLog.bar'),
+   idSidebarItem = [];
 
-   // Панели
-   idMainPanels = document.querySelectorAll('.main-panel'),
+// Панели
+idMainPanels = document.querySelectorAll('.main-panel'),
    idLoginPanel = document.querySelector('.login.bar'),
    idControlPanel = document.querySelector('.control.bar'),
    idConsolePanel = document.querySelector('.console.bar'),
@@ -67,10 +72,12 @@ const // Элементы логина
    idLoginFavoritePanel = document.querySelector('.login.favorite.panel'),
    idLoginFavoriteAdd = document.querySelector('.login.favorite.add'),
    idLoginFavoriteCheckbox = document.querySelector('.login.favorite.checkbox'),
-   idLoginFavoriteItems = [];
+   idLoginFavoriteItems = [],
+
+   idPopupCaptcha = document.querySelector('.popup.captcha')
 
 let bots = [];
-
+let maps = [];
 let activeBot = '';
 let x, y;
 let markerBotData = '';
@@ -78,9 +85,12 @@ let markerBot;
 
 // Обработчики
 document.addEventListener('DOMContentLoaded', () => {
+
    document.onmouseover = document.onmouseout = mouseAction;
    document.onmousemove = (e) => { x = e.clientX; y = e.clientY; }
    uploadFavorites()
+   afterload()
+   // document.querySelector('.popup.captcha').style.display = 'block';
 
    username.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
    host.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
@@ -309,7 +319,6 @@ function consoleChatLog(text) {
    idConsoleChatLogUl.scrollIntoView(false)
 }
 
-// Показывание никнейма при наведении на сайдбар бота
 function mouseAction(event) {
    if (event.type == 'mouseover') {
       if (event.target.dataset.bot) {
@@ -335,7 +344,6 @@ function mouseAction(event) {
    }
 }
 
-// Покраска активного бота в сайдбаре
 function markerBots(el) {
    if (el.target.className === 'sidebar-bot-item' || el.target.className === 'sidebar-bot-item bot-log') {
       if (markerBotData !== activeBot && markerBot !== undefined) {
@@ -348,6 +356,7 @@ function markerBots(el) {
       if (markerBotData === activeBot) {
          el.target.style.background = '#fff'
       }
+
    }
 
    if (markerBotData !== activeBot && markerBot !== undefined) {
@@ -379,3 +388,16 @@ function openLoginPanel() {
    idNavItems.forEach(el => el.innerText = '')
 }
 
+function afterload() {
+   // const item = document.createElement('div')
+   // item.className = 'popup captcha hide show'
+   // item.innerHTML = `<span class="title">Заявок на капчу: <span class="count">3</span></span>
+   //    <button type="submit" class="popup captcha-btn">Решить</button>`
+
+   // document.body.prepend(item)
+}
+
+// idPopupCaptcha.addEventListener('click', () => {
+//    document.querySelector('.popap.captcha.panel.hide').classList.contains('show') ? document.querySelector('.popap.captcha.panel.hide').classList.remove('show')
+//       : document.querySelector('.popap.captcha.panel.hide').classList.add('show')
+// })

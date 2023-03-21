@@ -1,7 +1,8 @@
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
-const { app, BrowserWindow, shell, globalShortcut } = require('electron');
+const { app, BrowserWindow, shell, globalShortcut, ipcMain } = require('electron');
 const path = require('path');
+
 const fs = require('fs')
 
 let mainWindow;
@@ -49,30 +50,38 @@ app.on('window-all-closed', () => {
    if (process.platform !== 'darwin') app.quit()
 });
 
+
+function createAssets() {
+   if (!fs.existsSync('./resources/assets')) {
+      fs.mkdir('./resources/assets', () => {
+
+         if (!fs.existsSync('./resources/assets/captcha')) {
+            fs.mkdir('./resources/assets/captcha', () => { })
+         }
+
+         if (!fs.existsSync('./resources/assets/accounts')) {
+            fs.mkdir('./resources/assets/accounts', () => {
+
+               if (!fs.existsSync('./resources/assets/accounts/accounts.json')) {
+                  fs.writeFile('./resources/assets/accounts/accounts.json', '[]', 'utf8', () => { })
+               }
+
+            })
+         }
+
+      })
+   }
+}
+
+
 if (!fs.existsSync('./resources')) {
    fs.mkdir('./resources', () => {
-
-      if (!fs.existsSync('./resources/assets')) {
-         fs.mkdir('./resources/assets', () => {
-
-            if (!fs.existsSync('./resources/assets/captcha')) {
-               fs.mkdir('./resources/assets/captcha', () => { })
-            }
-
-            if (!fs.existsSync('./resources/assets/accounts')) {
-               fs.mkdir('./resources/assets/accounts', () => {
-
-                  if (!fs.existsSync('./resources/assets/accounts/accounts.json')) {
-                     fs.writeFile('./resources/assets/accounts/accounts.json', '[]', 'utf8', () => { })
-                  }
-
-               })
-            }
-
-         })
-      }
+      createAssets()
    })
+} else {
+   createAssets()
 }
+
 
 
 
