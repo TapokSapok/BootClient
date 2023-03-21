@@ -49,28 +49,30 @@ app.on('window-all-closed', () => {
    if (process.platform !== 'darwin') app.quit()
 });
 
+if (!fs.existsSync('./resources')) {
+   fs.mkdir('./resources', () => {
 
+      if (!fs.existsSync('./resources/assets')) {
+         fs.mkdir('./resources/assets', () => {
 
-if (!fs.existsSync('./bot/assets')) {
-   fs.mkdir('./bot/assets', () => {
+            if (!fs.existsSync('./resources/assets/captcha')) {
+               fs.mkdir('./resources/assets/captcha', () => { })
+            }
 
-      if (!fs.existsSync('./bot/assets/captcha')) {
-         fs.mkdir('./bot/assets/captcha', () => { })
-      }
+            if (!fs.existsSync('./resources/assets/accounts')) {
+               fs.mkdir('./resources/assets/accounts', () => {
 
-      if (!fs.existsSync('./bot/assets/accounts')) {
-         fs.mkdir('./bot/assets/accounts', () => {
+                  if (!fs.existsSync('./resources/assets/accounts/accounts.json')) {
+                     fs.writeFile('./resources/assets/accounts/accounts.json', '[]', 'utf8', () => { })
+                  }
 
-            if (!fs.existsSync('./bot/assets/accounts/accounts.json')) {
-               fs.writeFile('./bot/assets/accounts/accounts.json', '[]', 'utf8', () => { })
+               })
             }
 
          })
       }
-
    })
 }
-
 
 
 

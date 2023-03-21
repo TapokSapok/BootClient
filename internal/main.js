@@ -7,7 +7,7 @@ const autoclicker = require('mineflayer-autoclicker')
 const GoalFollow = goals.GoalFollow;
 
 const fs = require('fs')
-// fs.writeFileSync('./assets/captcha/EXECFILE.js', 'const data = [1,2,3,4,5,6]', 'utf-8');
+const PATH_ACCOUNTS = './resources/assets/accounts/accounts.json'
 
 const // Элементы логина
    idLoginBtn = document.querySelector('.login-submit'),
@@ -180,7 +180,7 @@ idLoginFavoriteAdd.addEventListener('click', () => { addFavorite() })
 
 // ================== HTML
 function favoriteEvent(item) {
-   fs.readFile('./bot/assets/accounts/accounts.json', (err, data) => {
+   fs.readFile(PATH_ACCOUNTS, (err, data) => {
       data = JSON.parse(data)
       item.addEventListener('click', () => {
          if (idLoginFavoriteCheckbox.checked) {
@@ -188,13 +188,13 @@ function favoriteEvent(item) {
             for (let i = 0; i < data.length; i++) {
                if (item.dataset.username === data[i].username
                   && item.dataset.host === data[i].host
-                  && (+item.dataset.port === data[i].port || +data[i].port === 0)
+                  && (item.dataset.port === data[i].port || (data[i].port === 0 && item.dataset.port === ''))
                   && item.dataset.version === data[i].version) {
+                  data.splice(i, 1)
                }
             }
-            fs.writeFileSync("./bot/assets/accounts/accounts.json", JSON.stringify(data))
+            fs.writeFileSync(PATH_ACCOUNTS, JSON.stringify(data))
             uploadFavorites()
-
 
          } else {
             username.value = item.dataset.username;
@@ -228,7 +228,7 @@ function addFavorite() {
       username: username.value, host: hostFav, port: portFav, version: version.value
    }
 
-   fs.readFile('./bot/assets/accounts/accounts.json', (err, data) => {
+   fs.readFile(PATH_ACCOUNTS, (err, data) => {
       if (!data) return;
 
       data = JSON.parse(data)
@@ -241,7 +241,7 @@ function addFavorite() {
       }
 
       data.push(option);
-      fs.writeFileSync("./bot/assets/accounts/accounts.json", JSON.stringify(data))
+      fs.writeFileSync(PATH_ACCOUNTS, JSON.stringify(data))
       uploadFavorites()
    })
 }
@@ -250,7 +250,7 @@ function uploadFavorites() {
 
    idLoginFavoriteItems.forEach(el => el.remove())
 
-   fs.readFile('./bot/assets/accounts/accounts.json', (err, data) => {
+   fs.readFile(PATH_ACCOUNTS, (err, data) => {
       data = JSON.parse(data)
 
       for (let i = 0; i < data.length; i++) {
