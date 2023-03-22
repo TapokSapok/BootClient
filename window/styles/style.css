@@ -417,6 +417,7 @@ p {
    border-radius: 5px 5px 0 0;
    overflow: auto;
    text-align: left;
+   position: relative;
 }
 
 
@@ -585,6 +586,7 @@ span.red {
    border-radius: 5px 5px 0 0;
    overflow: auto;
    text-align: left;
+   position: relative;
 }
 
 .console.ul {
@@ -964,4 +966,14 @@ span.red {
 
 .popap.captcha.input:focus {
    border-bottom: 2px solid orange;
+}
+
+.captcha.img {
+   position: absolute;
+   width: 150px;
+   height: 150px;
+   border-radius: 10px;
+   top: 15px;
+   right: 15px;
+   cursor: pointer;
 }

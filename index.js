@@ -28,13 +28,13 @@ const createWindow = () => {
 
    mainWindow.loadFile('window/index.html');
 
-   mainWindow.webContents.on('before-input-event', (event, input) => {
-      if (input.control && input.shift && input.key.toLowerCase() === 'i') {
-         event.preventDefault();
-         mainWindow.webContents.openDevTools();
-      }
-   });
-   mainWindow.webContents.openDevTools();
+   // mainWindow.webContents.on('before-input-event', (event, input) => {
+   //    if (input.control && input.shift && input.key.toLowerCase() === 'i') {
+   //       event.preventDefault();
+   //       mainWindow.webContents.openDevTools();
+   //    }
+   // });
+   // mainWindow.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
@@ -55,10 +55,6 @@ function createAssets() {
    if (!fs.existsSync('./resources/assets')) {
       fs.mkdir('./resources/assets', () => {
 
-         if (!fs.existsSync('./resources/assets/captcha')) {
-            fs.mkdir('./resources/assets/captcha', () => { })
-         }
-
          if (!fs.existsSync('./resources/assets/accounts')) {
             fs.mkdir('./resources/assets/accounts', () => {
 
@@ -69,18 +65,37 @@ function createAssets() {
             })
          }
 
+         createCaptcha()
+
+
+      })
+   } else { createCaptcha() }
+}
+
+function createCaptcha() {
+   if (!fs.existsSync('./resources/assets/captcha')) {
+      fs.mkdir('./resources/assets/captcha', () => { })
+   } else {
+      fs.readdir('./resources/assets/captcha', (err, files) => {
+         if (err) throw err
+
+         for (const file of files) {
+            console.log(file)
+            fs.unlink(`./resources/assets/captcha/${file}`, (err) => {
+               if (err) throw err
+            })
+         }
       })
    }
 }
-
 
 if (!fs.existsSync('./resources')) {
    fs.mkdir('./resources', () => {
       createAssets()
    })
-} else {
-   createAssets()
 }
+createAssets()
+
 
 
 

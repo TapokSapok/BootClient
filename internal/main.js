@@ -7,6 +7,8 @@ const autoclicker = require('mineflayer-autoclicker')
 const path = require('path')
 const GoalFollow = goals.GoalFollow;
 
+const chokidar = require('chokidar')
+
 const fs = require('fs')
 const DIRNAME = require('../getDirname.js')
 const PATH_ACCOUNTS = './resources/assets/accounts/accounts.json';
@@ -33,10 +35,10 @@ const // Элементы логина
    idSideBots = document.querySelectorAll('.sidebar-bot-item'),
    idSidebar = document.querySelector('.sidebar'),
    idSideConsole = document.querySelector('.sideLog.bar'),
-   idSidebarItem = [];
+   idSidebarItem = [],
 
-// Панели
-idMainPanels = document.querySelectorAll('.main-panel'),
+   // Панели
+   idMainPanels = document.querySelectorAll('.main-panel'),
    idLoginPanel = document.querySelector('.login.bar'),
    idControlPanel = document.querySelector('.control.bar'),
    idConsolePanel = document.querySelector('.console.bar'),
@@ -102,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
    idSideConsole.addEventListener('click', () => { openConsole() })
    document.addEventListener('click', (el) => { choiceBot(el); markerBots(el); })
 
+   idLoginFavoriteAdd.addEventListener('click', () => { addFavorite() })
 
    idConsoleChat.addEventListener('keyup', (el) => { if (el.which == 13) { bot.chatSend(el.target) } })
    idConsoleQuit.addEventListener('click', (el) => { bot.quit(el.target) })
@@ -182,7 +185,7 @@ function getTime() {
    return `${h}:${m}:${s}`
 }
 
-idLoginFavoriteAdd.addEventListener('click', () => { addFavorite() })
+
 
 
 

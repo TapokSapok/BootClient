@@ -67,8 +67,23 @@ module.exports = class Bot {
          }
       })
 
-      this.bot.once('inject_allowed', () => {
-         console.log('[DEBUG] inject bot')
+      // this.bot.once('inject_allowed', () => {
+      //    console.log('[DEBUG] inject bot')
+      //    const props = bot.spawn(this.username);
+
+      //    this.mcData = require('minecraft-data')(this.bot.version)
+      //    this.panel = props['panel'];
+      //    this.chatLog = props['chatLog'];
+      //    this.tradeLog = props['tradeLog'];
+
+      //    this.tradingBtn = props['tradingBtn'];
+      //    this.followComeBtn = props['followComeBtn'];
+
+      //    echo(1, `Connect`, ``, this.username);
+      // })
+
+      this.bot.once('login', () => {
+         console.log('[DEBUG] login bot')
          const props = bot.spawn(this.username);
 
          this.mcData = require('minecraft-data')(this.bot.version)
@@ -117,7 +132,6 @@ module.exports = class Bot {
             }
          }
 
-
          if (activeBot === this.username) { idNavItems.forEach(el => el.innerText = ''); idLoginPanel.classList.add('active'); activeBot = '' }
          if (reason === 'Выход с клиента') { echo(1, 'Disconnect', reason, this.username); return }
       })
@@ -136,13 +150,32 @@ module.exports = class Bot {
             }
          }
 
-         image.writeImage(`${DIRNAME}/resources/assets/captcha/map_${this.bot.username}.png`, function (err) {
-            if (err) throw err;
+         const chatLog = this.panel.querySelector('.control.chatLog');
+         const username = this.username;
+         let img = null;
 
+         image.writeImage(`${DIRNAME}/resources/assets/captcha/map_${this.bot.username}.png`, (err) => {
+            if (err) throw err;
+            if (!fs.existsSync(`${DIRNAME}/resources/assets/captcha/map_${this.bot.username}.png`)) return console.log('нету картинки :(')
+
+            const item = document.createElement('img')
+            item.className = 'captcha img';
+            item.src = `${DIRNAME}/resources/assets/captcha/map_${this.bot.username}.png`
+            item.dataset.useBot = this.username;
+            chatLog.prepend(item)
+            img = item;
          });
+
+
+
          this.bot.on('login', function () {
-            console.log("[DUBUG] Бот успешно подключён к серверу!");
+            if (img) img.remove()
+            fs.unlink(`${DIRNAME}/resources/assets/captcha/map_${username}.png`, () => { })
          });
+         this.bot.on('end', () => {
+            if (img) img.remove()
+            fs.unlink(`${DIRNAME}/resources/assets/captcha/map_${username}.png`, () => { })
+         })
       });
 
 
@@ -159,7 +192,9 @@ module.exports = class Bot {
    getInfo() {
       if (this.bot.username === activeBot) {
          if (this.bot.health) idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`
+         else idNavHealth.innerText = `20 Health`
          if (this.bot.food) idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`
+         else idNavHunger.innerText = `20 Hunger`
          if (this.bot.username) idNavUsername.innerText = `${this.bot.username}`
          if (this.host && this.port) idNavServer.innerText = `${this.host}:${this.port}`
 
