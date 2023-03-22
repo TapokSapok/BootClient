@@ -28,13 +28,13 @@ const createWindow = () => {
 
    mainWindow.loadFile('window/index.html');
 
-   // mainWindow.webContents.on('before-input-event', (event, input) => {
-   //    if (input.control && input.shift && input.key.toLowerCase() === 'i') {
-   //       event.preventDefault();
-   //       mainWindow.webContents.openDevTools();
-   //    }
-   // });
-   // mainWindow.webContents.openDevTools();
+   mainWindow.webContents.on('before-input-event', (event, input) => {
+      if (input.control && input.shift && input.key.toLowerCase() === 'i') {
+         event.preventDefault();
+         mainWindow.webContents.openDevTools();
+      }
+   });
+   mainWindow.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
@@ -51,53 +51,39 @@ app.on('window-all-closed', () => {
 });
 
 
-function createAssets() {
-   if (!fs.existsSync('./resources/assets')) {
-      fs.mkdir('./resources/assets', () => {
+// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-         if (!fs.existsSync('./resources/assets/accounts')) {
-            fs.mkdir('./resources/assets/accounts', () => {
+function cAssets() {
+   fs.mkdir(`${process.env.APPDATA}/SapokClient/assets`, () => {
 
-               if (!fs.existsSync('./resources/assets/accounts/accounts.json')) {
-                  fs.writeFile('./resources/assets/accounts/accounts.json', '[]', 'utf8', () => { })
-               }
-
-            })
-         }
-
-         createCaptcha()
-
-
+      fs.mkdir(`${process.env.APPDATA}/SapokClient/assets/accounts`, () => {
+         if (!fs.existsSync(`${process.env.APPDATA}/SapokClient/assets/accounts/accounts.json`)) {
+            fs.writeFile(`${process.env.APPDATA}/SapokClient/assets/accounts/accounts.json`, '[]', 'utf8', () => { })
+         };
       })
-   } else { createCaptcha() }
-}
 
-function createCaptcha() {
-   if (!fs.existsSync('./resources/assets/captcha')) {
-      fs.mkdir('./resources/assets/captcha', () => { })
-   } else {
-      fs.readdir('./resources/assets/captcha', (err, files) => {
-         if (err) throw err
+      if (!fs.existsSync(`${process.env.APPDATA}/SapokClient/assets/captcha`)) {
+         fs.mkdir(`${process.env.APPDATA}/SapokClient/assets/captcha`, () => { })
+      } else {
+         fs.readdir(`${process.env.APPDATA}/SapokClient/assets/captcha`, (err, files) => {
+            if (err) throw err
 
-         for (const file of files) {
-            console.log(file)
-            fs.unlink(`./resources/assets/captcha/${file}`, (err) => {
-               if (err) throw err
-            })
-         }
-      })
-   }
-}
-
-if (!fs.existsSync('./resources')) {
-   fs.mkdir('./resources', () => {
-      createAssets()
+            for (const file of files) {
+               console.log(file)
+               fs.unlink(`${process.env.APPDATA}/SapokClient/assets/captcha/${file}`, (err) => {
+                  if (err) throw err
+               })
+            }
+         })
+      }
    })
 }
-createAssets()
 
-
-
+if (!fs.existsSync(`${process.env.APPDATA}/SapokClient`)) {
+   fs.mkdir(`${process.env.APPDATA}/SapokClient`, () => {
+      cAssets()
+   })
+} else cAssets()
 
 
 

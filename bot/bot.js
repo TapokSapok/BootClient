@@ -154,13 +154,13 @@ module.exports = class Bot {
          const username = this.username;
          let img = null;
 
-         image.writeImage(`${DIRNAME}/resources/assets/captcha/map_${this.bot.username}.png`, (err) => {
+         image.writeImage(`${PATH_CAPTCHA}/map_${this.bot.username}.png`, (err) => {
             if (err) throw err;
-            if (!fs.existsSync(`${DIRNAME}/resources/assets/captcha/map_${this.bot.username}.png`)) return console.log('нету картинки :(')
+            if (!fs.existsSync(`${PATH_CAPTCHA}/map_${this.bot.username}.png`)) return console.log('нету картинки :(')
 
             const item = document.createElement('img')
             item.className = 'captcha img';
-            item.src = `${DIRNAME}/resources/assets/captcha/map_${this.bot.username}.png`
+            item.src = `$${PATH_CAPTCHA}/map_${this.bot.username}.png`
             item.dataset.useBot = this.username;
             chatLog.prepend(item)
             img = item;
@@ -170,11 +170,11 @@ module.exports = class Bot {
 
          this.bot.on('login', function () {
             if (img) img.remove()
-            fs.unlink(`${DIRNAME}/resources/assets/captcha/map_${username}.png`, () => { })
+            fs.unlink(`${PATH_CAPTCHA}/map_${username}.png`, () => { })
          });
          this.bot.on('end', () => {
             if (img) img.remove()
-            fs.unlink(`${DIRNAME}/resources/assets/captcha/map_${username}.png`, () => { })
+            fs.unlink(`${PATH_CAPTCHA}/map_${username}.png`, () => { })
          })
       });
 

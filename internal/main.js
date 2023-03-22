@@ -11,8 +11,8 @@ const chokidar = require('chokidar')
 
 const fs = require('fs')
 const DIRNAME = require('../getDirname.js')
-const PATH_ACCOUNTS = './resources/assets/accounts/accounts.json';
-const PATH_CAPTCHA = './resources/assets/captcha'
+const PATH_ACCOUNTS = `${process.env.APPDATA}/SapokClient/assets/accounts/accounts.json`;
+const PATH_CAPTCHA = `${process.env.APPDATA}/SapokClient/assets/captcha`
 console.log(DIRNAME)
 
 const // Элементы логина
@@ -404,3 +404,6 @@ function afterload() {
 //    document.querySelector('.popap.captcha.panel.hide').classList.contains('show') ? document.querySelector('.popap.captcha.panel.hide').classList.remove('show')
 //       : document.querySelector('.popap.captcha.panel.hide').classList.add('show')
 // })
+
+
+console.log(process.env.APPDATA)

@@ -34,15 +34,15 @@
     "nsis": {
       "installerIcon": "assets/s-brown.ico",
       "uninstallerIcon": "assets/s-brown.ico",
-      "installerSidebar": "assets/setup-img.bmp",
-      "uninstallerSidebar": "assets/setup-img.bmp",
+      "installerSidebar": "assets/installer-img.bmp",
+      "uninstallerSidebar": "assets/installer-img.bmp",
       "uninstallDisplayName": "SapokClient-uninstaller",
       "license": "license.md",
       "oneClick": false,
       "allowToChangeInstallationDirectory": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "runAfterFinish": false,
+      "runAfterFinish": true,
       "perMachine": true
     }
   }
