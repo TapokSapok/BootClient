@@ -27,7 +27,7 @@ module.exports = (username, server) => {
             <div class="control chatLog">
                <ul class="control ul"></ul>
             </div>
-            <input class="control-chat" data-use-bot="${username}" type="text" placeholder="сообщение в чат">
+            <input class="control-chat" data-use-bot="${username}" data-server="${server}" type="text" placeholder="сообщение в чат">
          </div>
 
 
@@ -87,7 +87,8 @@ module.exports = (username, server) => {
    </div>
             `
    item.className = 'control bar main-panel';
-   item.dataset.useBot = `${username}`
+   item.dataset.useBot = `${username}`;
+   item.dataset.server = server;
 
    document.querySelector('.bots').append(item)
 

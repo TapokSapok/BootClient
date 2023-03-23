@@ -54,14 +54,14 @@ module.exports = class Bot {
       })
 
       this.bot.on('health', () => {
-         if (this.bot.username === activeBot) {
+         if (this.bot.username === activeBot[0]) {
             idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`
             idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`
          }
       })
 
       this.bot.on('move', () => {
-         if (this.bot.username === activeBot) {
+         if (this.bot.username === activeBot[0]) {
             idNavCoordinates.innerText = `${this.bot.entity.position.x.toFixed(0)}, ${this.bot.entity.position.y.toFixed(0)}, ${this.bot.entity.position.z.toFixed(0)}`
          }
       })
@@ -83,7 +83,7 @@ module.exports = class Bot {
       })
 
       this.bot.once('spawn', () => {
-         if (this.bot.username === activeBot) {
+         if (this.bot.username === activeBot[0]) {
             idNavUsername.innerText = `${this.bot.username}`
             idNavServer.innerText = `${this.host}:${this.port}`
          }
@@ -120,9 +120,9 @@ module.exports = class Bot {
 
 
 
-         if (activeBot === this.username) {
+         if (activeBot[0] === this.username) {
             idNavItems.forEach(el => el.innerText = '');
-            idLoginPanel.classList.add('active'); activeBot = '';
+            idLoginPanel.classList.add('active'); activeBot[0] = '';
             markerBots(idSideNewBot);
             idNavBotImg.src = `images/head1.png`;
          }
@@ -179,7 +179,7 @@ module.exports = class Bot {
 
 
    getInfo() {
-      if (this.bot.username === activeBot) {
+      if (this.bot.username === activeBot[0]) {
 
          idNavBotImg.src = `images/mc-heads/${this.botImgId}.png`
          if (this.bot.health) idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`

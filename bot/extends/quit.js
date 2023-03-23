@@ -1,8 +1,10 @@
 module.exports = (el) => {
-   for (let i = 0; i < bots.length; i++) {
-      if (el.dataset.useBot === bots[i].username) {
-         bots[i].quit();
-      } else if (el.dataset.useBot === '.all.') {
+   const index = getActiveBot()
+
+   if (index[0] !== 'console') {
+      bots[index[0]].quit();
+   } else if (index[0] === 'console') {
+      for (let i = 0; i < bots.length; i++) {
          bots[i].quit();
       }
    }

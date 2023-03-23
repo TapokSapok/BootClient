@@ -1,7 +1,10 @@
 module.exports = (el, player) => {
-   for (let i = 0; i < bots.length; i++) {
-      if (el.dataset.useBot === bots[i].username) {
+   const index = getActiveBot()
 
+   if (index[0] !== 'console') {
+      bots[index[0]].comePlayer(player)
+   } else if (index[0] === 'console') {
+      for (let i = 0; i < bots.length; i++) {
          bots[i].comePlayer(player)
       }
    }

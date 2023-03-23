@@ -1108,3 +1108,12 @@ span.red {
    z-index: 10;
    left: calc(100% + 10px);
 }
+
+.console.addon {
+   margin-bottom: 20px;
+   margin-left: 10px;
+}
+
+.console.followPlayer-btn {
+   margin: 0;
+}

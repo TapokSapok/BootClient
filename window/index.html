@@ -69,6 +69,27 @@
                <button class="console clickWindow-btn btn-blue hint addon" data-hint="Клик по слоту инвентаря"
                   data-use-bot=".all.">Клик</button>
             </div>
+
+            <div class="console addon followPlayer">
+               <input type="text" class="console followPlayer-input btn-blue" placeholder="Ник игрока">
+               <input type="checkbox" class="console followPlayer-input-radio btn-blue"></input>
+               <button class="console followPlayer-btn btn-blue hint addon" data-hint="Подойти [следовать] к игроку"
+                  data-use-bot=".all.">Подойти</button>
+            </div>
+            <div class="console addon lookAt">
+               <select class="console choise-lookAt btn-blue">
+                  <option value="player" selected class="console choise-lookAt-item">Игрок</option>
+                  <option value="near-player" class="console choise-lookAt-item">Ближний игрок</option>
+               </select>
+               <input type="text" class="console lookAt-player btn-blue" placeholder="Ник игрока">
+               <button class="console-lookAt btn-blue hint addon" data-hint="Посмотреть на игрока"
+                  data-use-bot=".all.">Смотреть</button>
+            </div>
+            <div class="console addon autoclicker">
+               <input type="number" class="console autoclicker-interval btn-blue" placeholder="Интервал [ms]">
+               <button class="console autoclicker-btn btn-blue hint addon" data-hint="Автокликер"
+                  data-use-bot=".all.">Старт</button>
+            </div>
          </div>
       </div>
 

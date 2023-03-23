@@ -72,6 +72,15 @@ const // Элементы логина
    idConsoleClickWindowBtn = document.querySelector('.console.clickWindow-btn'),
    idConsoleClickWindowInput = document.querySelector('.console.clickWindow-input'),
 
+   idConsoleFollowCome = document.querySelector('.console.followPlayer-btn'),
+   idConsoleFollowComeCheckbox = document.querySelector('.console.followPlayer-input-radio'),
+   idConsoleFollowComePlayer = document.querySelector('.console.followPlayer-input'),
+   idConsoleAutoclicker = document.querySelector('.console.autoclicker-btn'),
+   idConsoleAutoclickerInterval = document.querySelector('.console.autoclicker-interval'),
+   idConsoleLookAt = document.querySelector('.console-lookAt'),
+   idConsoleSelectlookAtItems = document.querySelectorAll('.console.choise-lookAt-item'),
+   idConsoleLookAtPlayer = document.querySelector('.console.lookAt-player'),
+
    idLoginFavoritePanel = document.querySelector('.login.favorite.panel'),
    idLoginFavoriteAdd = document.querySelector('.login.favorite.add'),
    idLoginFavoriteCheckbox = document.querySelector('.login.favorite.checkbox'),
@@ -81,7 +90,7 @@ const // Элементы логина
 
 let bots = [];
 let maps = [];
-let activeBot = '';
+let activeBot = [''];
 let x, y;
 let markerBotData = '';
 let markerBot;
@@ -94,11 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
    uploadFavorites()
    markerBots(idSideNewBot);
    afterload();
-   // document.querySelector('.popup.captcha').style.display = 'block';
 
    username.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
    host.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
-   // port.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, port.value, version.value) } })
    version.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
 
    idLoginBtn.addEventListener('click', () => { bot.connect(username.value, host.value, version.value) })
@@ -112,6 +119,28 @@ document.addEventListener('DOMContentLoaded', () => {
    idConsoleQuit.addEventListener('click', (el) => { bot.quit(el.target) })
    idConsoleClickWindowBtn.addEventListener('click', (el) => { bot.clickWindow(el.target, idConsoleClickWindowInput.value) })
 
+   idConsoleFollowCome.addEventListener('click', (el) => {
+      if (idConsoleFollowComeCheckbox.checked) {
+
+         if (bot.followPlayer(el.target, idConsoleFollowComePlayer.value)) {
+            idConsoleFollowComeCheckbox.disabled = true;
+         } else {
+            idConsoleFollowComeCheckbox.disabled = false;
+         }
+
+      } else {
+         bot.comePlayer(el.target, idConsoleFollowComePlayer.value)
+      }
+
+   })
+   idConsoleAutoclicker.addEventListener('click', (el) => { bot.autoclicker(el.target, idConsoleAutoclickerInterval.value) })
+   idConsoleLookAt.addEventListener('click', (el) => {
+      let type = '';
+      idConsoleSelectlookAtItems.forEach(el => { if (el.selected) { type = el.value } })
+      bot.lookAt(el.target, type, idConsoleLookAtPlayer.value)
+   })
+
+
    idConsoleChoise.addEventListener('change', (e) => {
       idConsoleItems.forEach(el => {
          if (el.dataset.item === e.target.value) {
@@ -122,19 +151,18 @@ document.addEventListener('DOMContentLoaded', () => {
    })
 })
 
-// Подключение бота
+
 async function startClient(options) {
    bots.push(new bot.Bot(options));
 }
 
-// Выбор бота в сайдбаре
 function choiceBot(el) {
    if (el.target.dataset.bot && el.target.className === 'sidebar-bot-item') {
-      activeBot = el.target.dataset.bot;
+      activeBot = [el.target.dataset.bot, el.target.dataset.server]
 
       for (let i = 0; i < bots.length; i++) {
          if (!bots[i].panel) continue;
-         if (bots[i].panel.dataset.useBot === el.target.dataset.bot) {
+         if (bots[i].panel.dataset.useBot === el.target.dataset.bot && bots[i].panel.dataset.server === el.target.dataset.server) {
             clearPanels()
             bots[i].panel.classList.add('active')
          }
@@ -146,7 +174,6 @@ function choiceBot(el) {
    }
 }
 
-// Уведомление
 function echo(type, title, info, username) {
 
    const window = document.createElement('div')
@@ -179,7 +206,6 @@ function echo(type, title, info, username) {
    setTimeout(() => { window.remove() }, 3000);
 }
 
-// Получение времени
 function getTime() {
    const s = new Date().getSeconds(),
       m = new Date().getMinutes(),
@@ -210,12 +236,15 @@ function getRandomInt(min, max) {
    return Math.floor(Math.random() * (max - min) + min);
 }
 
-// function getActiveBot(username, server) {
-//    for (let i = 0; i < bots.length; i++) {
-//       if()
-//    }
-
-// }
+function getActiveBot() {
+   for (let i = 0; i < bots.length; i++) {
+      if (activeBot[0] === bots[i].username && activeBot[1] === `${bots[i].host}:${bots[i].port}`) {
+         return [i]
+      } else if (activeBot[0] === '.all.') {
+         return ['console']
+      }
+   }
+}
 
 
 
@@ -374,27 +403,26 @@ function markerBots(el) {
    if (el.className === 'sidebar-bot-item'
       || el.className === 'sidebar-bot-item bot-log'
       || el.className === 'sidebar-bot-item bot-plus') {
-      if (markerBotData !== activeBot && markerBot !== undefined) {
+      if (markerBotData !== activeBot[0] && markerBot !== undefined) {
          markerBot.style.background = '';
          this.return
       }
 
       markerBotData = el.dataset.bot;
       markerBot = el;
-      if (markerBotData === activeBot) {
+      if (markerBotData === activeBot[0]) {
          el.style.background = '#fff'
       }
 
    }
 
-   if (markerBotData !== activeBot && markerBot !== undefined) {
+   if (markerBotData !== activeBot[0] && markerBot !== undefined) {
       markerBot.style.background = '';
    }
 }
 
-// Открытие консоли
 function openConsole(elem) {
-   activeBot = '.all.'
+   activeBot = ['.all.']
 
    clearPanels();
    idConsolePanel.classList.add('active')
@@ -407,9 +435,8 @@ function openConsole(elem) {
    idNavUsername.innerText = 'Консоль управления всеми ботами';
 }
 
-// Открытие панели логина
 function openLoginPanel() {
-   activeBot = ''
+   activeBot[0] = ''
 
    clearPanels()
    idLoginPanel.classList.add('active')
@@ -419,18 +446,8 @@ function openLoginPanel() {
 }
 
 function afterload() {
-   // const item = document.createElement('div')
-   // item.className = 'popup captcha hide show'
-   // item.innerHTML = `<span class="title">Заявок на капчу: <span class="count">3</span></span>
-   //    <button type="submit" class="popup captcha-btn">Решить</button>`
 
-   // document.body.prepend(item)
 }
-
-// idPopupCaptcha.addEventListener('click', () => {
-//    document.querySelector('.popap.captcha.panel.hide').classList.contains('show') ? document.querySelector('.popap.captcha.panel.hide').classList.remove('show')
-//       : document.querySelector('.popap.captcha.panel.hide').classList.add('show')
-// })
 
 
 console.log(process.env.APPDATA)
