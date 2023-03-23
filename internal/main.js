@@ -219,7 +219,8 @@ function favoriteEvent(item) {
                   && item.dataset.host === data[i].host
                   && (+item.dataset.port === data[i].port
                      || (data[i].port === 0 && item.dataset.port === '')
-                     || (data[i].port === 0 || data[i].port === '' && +item.dataset.port === 25565))
+                     || (data[i].port === '' && +item.dataset.port === 25565))
+                  || (data[i].port === '' && !item.dataset.port)
                   && item.dataset.version === data[i].version) {
                   data.splice(i, 1)
                }

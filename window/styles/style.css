@@ -1,10 +1,14 @@
+html {
+   height: 100%;
+}
+
 body {
    background: #1E213D;
    background: black;
    margin: 0;
    padding: 0;
-   height: 100%;
-   width: 100%;
+   /* height: 100%;
+   width: 100%; */
    overflow: hidden;
 }
 
@@ -61,19 +65,64 @@ p {
    background-color: #1E213D;
 }
 
-/* .container {
-   display: grid;
-   grid-template-columns: 50px 90%;
-} */
+.container {
+   /* width: 100%;
+   height: 100%; */
+}
 
 .nav {
-   width: 98.5%;
+   width: calc(100% - 10px);
    height: 60px;
+
    background: #191919;
    margin: 5px auto;
    border-radius: 10px;
    display: grid;
    grid-template-columns: 1fr 10fr;
+}
+
+.side-container {
+   float: left;
+   width: 60px;
+   height: 485px;
+   margin-left: 5px;
+}
+
+.sidebar {
+   width: 100%;
+   height: calc(100% - 65px);
+
+   background: #191919;
+   border-radius: 10px;
+   overflow: auto;
+}
+
+.main-panel {
+   float: right;
+   width: calc(100% - 75px);
+   margin-right: 5px;
+   height: 485px;
+
+   background: #191919;
+   border-radius: 10px;
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: left;
+   z-index: auto;
+
+   display: none;
+}
+
+.sideLog {
+   float: left;
+
+   width: 60px;
+   height: 60px;
+   margin-top: 5px;
+   border-radius: 10px;
+   background: #191919;
 }
 
 .nav-picture {
@@ -139,15 +188,6 @@ p {
    margin: 5px auto;
 }
 
-.sidebar {
-   width: 60px;
-   height: 410px;
-   background: #191919;
-   border-radius: 10px;
-   margin-left: 7px;
-   overflow: auto;
-}
-
 .sidebar::-webkit-scrollbar {
    display: none;
 }
@@ -189,27 +229,6 @@ p {
 
 .bar {
    box-shadow: 0 0 4px #191919;
-}
-
-
-
-.main-panel {
-   width: calc(98.5% - 65px);
-   height: 85%;
-
-   background: #191919;
-   position: absolute;
-   right: 6px;
-   top: 70px;
-   border-radius: 10px;
-
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   text-align: left;
-   z-index: auto;
-
-   display: none;
 }
 
 .login-form {
@@ -480,15 +499,6 @@ span.red {
    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.sideLog {
-   width: 60px;
-   height: 60px;
-   margin-left: 7px;
-   margin-top: 5px;
-   border-radius: 10px;
-   background: #191919;
-}
-
 .separ {
    height: 5px;
 }
@@ -500,13 +510,9 @@ span.red {
 }
 
 .control.trading-start {
-   position: absolute;
-   top: 65px;
-   right: 10px;
-   width: 70px;
+   float: right;
+   margin-right: 10px;
 }
-
-
 
 /*  */
 
@@ -673,8 +679,6 @@ span.red {
    display: block;
 }
 
-.console.bar {}
-
 .popup.bot {
    max-width: 300px;
    height: 25px;
@@ -740,7 +744,7 @@ span.red {
    height: 190px;
 
    width: calc(100% - 20px);
-   margin: 0 auto;
+   margin: 0 auto 12px;
 
    margin-top: 10px;
    background: #101010;

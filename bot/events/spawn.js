@@ -54,25 +54,28 @@ module.exports = (username) => {
 
 
       <div class="control item" data-item="trading">
+
+      <div class="control trading-start btn-blue" data-use-bot="${username}">Старт</div>
+
          <div class="control trading list-adder">
 
-         <select class="control trading select-enchant btn-blue" data-use-bot="${username}">
-            <option selected>Добавить зачарование</option>
-         </select>
-         <select class="control trading select-level btn-blue" data-use-bot="${username}">
-            <option selected value="level">Уровень</option>
-         </select>
-         <input type="number" placeholder="Цена" class="control trading select-max-price btn-blue" data-use-bot="${username}">
-         <button type="submit" class="control trading plus btn-blue hintaddon" data-hint="Добавить Книгу" data-use-bot="${username}">+</button>
+            <select class="control trading select-enchant btn-blue" data-use-bot="${username}">
+               <option selected>Добавить зачарование</option>
+            </select>
+            <select class="control trading select-level btn-blue" data-use-bot="${username}">
+               <option selected value="level">Уровень</option>
+            </select>
+            <input type="number" placeholder="Цена" class="control trading select-max-price btn-blue" data-use-bot="${username}">
+            <button type="submit" class="control trading plus btn-blue hint addon" data-hint="Добавить Книгу" data-use-bot="${username}">+</button>
 
          </div>
 
-      <div class="control trading list" data-use-bot="${username}"></div>
-      <div class="control trading trading-log">
+         <div class="control trading list" data-use-bot="${username}"></div>
+         <div class="control trading trading-log">
          <div class="control trading-log ul"></div>
-      </div>
+         
+         </div>
 
-      <div class="control trading-start btn-blue" data-use-bot="${username}">Старт</div>
       </div>
    </div>
             `
