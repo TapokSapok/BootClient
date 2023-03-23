@@ -20,86 +20,92 @@
       <button type="submit" class="popup captcha-btn">Решить</button>
    </div> -->
 
-   <nav class="nav bar">
-      <div class="nav-picture">
-         <div class="nav-bot-item"><img src="images/headPlayer.png" class="bot-img"></div>
-      </div>
-      <div class="nav-info">
-         <div class="nav-upper nav-side">
-            <div class="nav-info-item nav-username"></div>
-            <div class="nav-info-item nav-server"></div>
-            <div class="nav-info-item nav-health"></div>
+   <div class="container">
+
+      <nav class="nav bar">
+         <div class="nav-picture">
+            <div class="nav-bot-item"><img src="images/headPlayer.png" class="bot-img"></div>
          </div>
-         <div class="nav-lover nav-side">
-            <div class="nav-info-item nav-coordinates"></div>
-            <div class="nav-info-item nav-hunger"></div>
+         <div class="nav-info">
+            <div class="nav-upper nav-side">
+               <div class="nav-info-item nav-username"></div>
+               <div class="nav-info-item nav-server"></div>
+               <div class="nav-info-item nav-health"></div>
+            </div>
+            <div class="nav-lover nav-side">
+               <div class="nav-info-item nav-coordinates"></div>
+               <div class="nav-info-item nav-hunger"></div>
+            </div>
+         </div>
+
+      </nav>
+
+      <div class="sidebar bar">
+         <div class="sep"></div>
+         <div class="sidebar-bot-item bot-plus"><img src="images/head1.png" class="bot-img" draggable="false"></div>
+         <div class="sep none last-separator"></div>
+      </div>
+      <div class="sideLog bar">
+         <div class="separ"></div>
+         <div class="sidebar-bot-item bot-log" data-bot=".all."><img src="images/computer.png" class="bot-img"
+               draggable="false"></div>
+      </div>
+
+      <!--  -->
+      <div class="console bar main-panel">
+         <div class="console header">
+            <select class="console choise btn-blue">
+               <option value="chatLog" class="console choise-item" selected>ЧатЛог</option>
+               <option value="log" class="console choise-item">Логи</option>
+               <option value="addons">Аддоны</option>
+            </select>
+            <button class="console-quit btn-blue" data-use-bot=".all.">Выйти</button>
+         </div>
+         <div class="console item active" data-item="chatLog">
+            <div class="console chatLog">
+               <ul class="console ul"></ul>
+            </div>
+            <input class="console-chat" data-use-bot=".all." type="text" placeholder="сообщение в чат">
+            <!-- <div class="captcha-img"></div> -->
+         </div>
+         <div class="console item" data-item="log">
+            <div class="console log">
+               <ul class="console ul log"></ul>
+            </div>
+         </div>
+         <div class="console item" data-item="addons">
+            <div class="console clickWindow">
+               <input type="text" class="console clickWindow-input btn-blue" placeholder="clickWindow">
+               <button class="console clickWindow-btn btn-blue hint addon" data-hint="Клик по слоту инвентаря"
+                  data-use-bot=".all.">Клик</button>
+            </div>
          </div>
       </div>
 
-   </nav>
+      <!--  -->
 
-   <div class="sidebar bar">
-      <div class="sep"></div>
-      <div class="sidebar-bot-item bot-plus"><img src="images/head1.png" class="bot-img" draggable="false"></div>
-      <div class="sep none last-separator"></div>
-   </div>
-   <div class="sideLog bar">
-      <div class="separ"></div>
-      <div class="sidebar-bot-item bot-log" data-bot=".all."><img src="images/computer.png" class="bot-img"
-            draggable="false"></div>
-   </div>
+      <div class="bots"></div>
 
-   <!--  -->
-   <div class="console bar main-panel">
-      <div class="console header">
-         <select class="console choise">
-            <option value="chatLog" class="console choise-item" selected>ЧатЛог</option>
-            <option value="log" class="console choise-item">Логи</option>
-            <option value="addons">Аддоны</option>
-         </select>
-         <button class="console-quit" data-use-bot=".all.">Выйти</button>
-      </div>
-      <div class="console item active" data-item="chatLog">
-         <div class="console chatLog">
-            <ul class="console ul"></ul>
+      <!--  -->
+
+      <div class="login bar main-panel active">
+         <!-- <button class="test-btn btn-blue">TEST</button> -->
+
+         <div class="login-form">
+            <input type="text" class="login-username login-input" placeholder="username" value="">
+            <input type="text" class="login-host login-input" placeholder="host:port" value="">
+            <input type="text" class="login-version login-input" placeholder="version" value="">
+            <button type="submit" class="login-submit">Подключиться</button>
+            <button type="button" class="login favorite add hint favorite-add" data-hint="Добавить в избранное">
+               <img class="login favorite add-img" src="./images/star.png" alt="">
+            </button>
          </div>
-         <input class="console-chat" data-use-bot=".all." type="text" placeholder="сообщение в чат">
-         <!-- <div class="captcha-img"></div> -->
-      </div>
-      <div class="console item" data-item="log">
-         <div class="console log">
-            <ul class="console ul log"></ul>
+         <div class="login favorite panel">
+            <div class="login favorite title"><span>Избранные</span>
+               <input type="checkbox" class="login favorite checkbox hint favorite-remove" data-hint="Удалить аккаунт">
+            </div>
          </div>
-      </div>
-      <div class="console item" data-item="addons">
-         <div class="console clickWindow">
-            <input type="text" class="console clickWindow-input btn-blue" placeholder="clickWindow">
-            <button class="console clickWindow-btn btn-blue" data-use-bot=".all.">Клик</button>
-         </div>
-      </div>
-   </div>
 
-   <!--  -->
-
-   <div class="bots"></div>
-
-   <!--  -->
-
-   <div class="login bar main-panel active">
-      <!-- <button class="test-btn btn-blue">TEST</button> -->
-      <div class="login-form">
-         <input type="text" class="login-username login-input" placeholder="username" value="">
-         <input type="text" class="login-host login-input" placeholder="host:port" value="">
-         <input type="text" class="login-version login-input" placeholder="version" value="">
-         <button type="submit" class="login-submit">Подключиться</button>
-         <button type="button" class="login favorite add">
-            <img class="login favorite add-img" src="./images/star.png" alt="">
-         </button>
-      </div>
-      <div class="login favorite panel">
-         <div class="login favorite title"><span>Избранные</span>
-            <input type="checkbox" class="login favorite checkbox">
-         </div>
       </div>
    </div>
 </body>

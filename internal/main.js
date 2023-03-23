@@ -185,6 +185,22 @@ function getTime() {
    return `${h}:${m}:${s}`
 }
 
+function getServer(server) {
+
+   const index = server.indexOf(':')
+
+   if (index !== -1) {
+      const port = server.slice(index + 1, server.length);
+      const host = server.slice(0, index);
+
+      return [host, +port]
+   } else {
+      const host = server;
+
+      return [host, 25565]
+   }
+
+}
 
 
 
@@ -201,7 +217,9 @@ function favoriteEvent(item) {
             for (let i = 0; i < data.length; i++) {
                if (item.dataset.username === data[i].username
                   && item.dataset.host === data[i].host
-                  && (item.dataset.port === data[i].port || (data[i].port === 0 && item.dataset.port === ''))
+                  && (+item.dataset.port === data[i].port
+                     || (data[i].port === 0 && item.dataset.port === '')
+                     || (data[i].port === 0 || data[i].port === '' && +item.dataset.port === 25565))
                   && item.dataset.version === data[i].version) {
                   data.splice(i, 1)
                }
@@ -225,20 +243,11 @@ function favoriteEvent(item) {
 function addFavorite() {
    if (!username.value || (!host.value || host.value === ':0')) return;
 
-   const index = host.value.indexOf(':')
 
-   let hostFav = '';
-   let portFav = '';
-
-   if (index !== -1) {
-      portFav = host.value.slice(index + 1, host.value.length)
-      hostFav = host.value.slice(0, index)
-   } else {
-      hostFav = host.value;
-   }
+   const server = getServer(host.value)
 
    const option = {
-      username: username.value, host: hostFav, port: portFav, version: version.value
+      username: username.value, host: server[0], port: server[1], version: version.value
    }
 
    fs.readFile(PATH_ACCOUNTS, (err, data) => {
@@ -268,12 +277,13 @@ function uploadFavorites() {
 
       for (let i = 0; i < data.length; i++) {
          const item = document.createElement('div')
-         item.className = 'login favorite item';
+         item.className = 'login favorite item hint favorite-item';
          item.innerHTML = `<span>${data[i].username}</span>`
          item.dataset.username = `${data[i].username}`
          item.dataset.host = `${data[i].host}`
          item.dataset.port = `${data[i].port}`
          item.dataset.version = `${data[i].version}`
+         item.dataset.hint = `${data[i].host}:${data[i].port}`
          idLoginFavoritePanel.append(item)
          idLoginFavoriteItems.push(item)
          favoriteEvent(item)

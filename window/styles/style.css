@@ -61,6 +61,11 @@ p {
    background-color: #1E213D;
 }
 
+/* .container {
+   display: grid;
+   grid-template-columns: 50px 90%;
+} */
+
 .nav {
    width: 98.5%;
    height: 60px;
@@ -202,7 +207,7 @@ p {
    justify-content: center;
    align-items: center;
    text-align: left;
-
+   z-index: auto;
 
    display: none;
 }
@@ -258,6 +263,8 @@ p {
 .login.active {
    display: flex;
 }
+
+
 
 .echo {
    max-width: 500px;
@@ -363,6 +370,7 @@ p {
    border-radius: 5px;
    padding: 5px 8px;
    outline: none;
+   box-shadow: 0 0 5px #000;
 }
 
 .btn-blue:hover {
@@ -623,6 +631,11 @@ span.red {
    list-style-type: none;
 }
 
+.console.clickWindow {
+   margin-top: 20px;
+   margin-left: 10px;
+}
+
 .console.chatLog-img {
    position: sticky;
    bottom: 0;
@@ -783,17 +796,17 @@ span.red {
 
 .login.favorite.panel {
    width: 145px;
-   height: 200px;
+   min-height: 200px;
    background-color: #101010;
    margin-left: 50px;
    border-radius: 10px;
-   overflow: auto;
 }
 
 .login.favorite.item {
    padding-top: 0;
    margin: 0 auto;
-   margin-top: 5px;
+   /* margin-top: 5px; */
+   margin-bottom: 5px;
    border-radius: 5px;
    width: 93%;
    height: 22px;
@@ -817,10 +830,12 @@ span.red {
 
 .login.favorite.item:hover {
    opacity: 1;
+   box-shadow: 0 0 10px #000;
 }
 
 .login.favorite.title {
    text-align: center;
+   margin-bottom: 5px;
 }
 
 .login.favorite.title span {
@@ -976,4 +991,112 @@ span.red {
    top: 15px;
    right: 15px;
    cursor: pointer;
+}
+
+.login.favorite.checkbox {
+   cursor: pointer;
+
+}
+
+.hint {
+   position: relative;
+}
+
+.hint.addon:before {
+   content: attr(data-hint);
+   position: absolute;
+   visibility: hidden;
+   z-index: -1;
+   display: block;
+   background: #101010;
+   border-radius: 5px;
+   padding: 5px;
+   bottom: 2%;
+   opacity: 0;
+   transition: all .09s ease-out;
+   pointer-events: none;
+   left: 136%;
+}
+
+.hint.addon:hover::before {
+   opacity: 1;
+   visibility: visible;
+   z-index: 10;
+   left: calc(100% + 10px);
+}
+
+.hint.favorite-add:before {
+   content: attr(data-hint);
+   position: absolute;
+   visibility: hidden;
+   z-index: -1;
+   height: 30px;
+   width: 80px;
+   color: #ababab;
+   left: -30px;
+   background: #101010;
+   border-radius: 5px;
+   padding: 5px;
+   bottom: 2%;
+   opacity: 0;
+   transition: all .09s ease-out;
+   pointer-events: none;
+   top: 164%;
+}
+
+.hint.favorite-add:hover:before {
+   opacity: 1;
+   visibility: visible;
+   z-index: 10;
+   top: calc(100% + 10px);
+}
+
+
+.hint.favorite-remove:before {
+   content: attr(data-hint);
+   position: absolute;
+   visibility: hidden;
+   z-index: -1;
+   display: block;
+   left: -20px;
+   background: #101010;
+   border-radius: 5px;
+   padding: 5px;
+   opacity: 0;
+   transition: all .09s ease-out;
+   pointer-events: none;
+   color: #ababab;
+   bottom: 150%;
+}
+
+.hint.favorite-remove:hover::before {
+   opacity: 1;
+   visibility: visible;
+   z-index: 10;
+   bottom: calc(100% + 10px);
+}
+
+
+.hint.favorite-item:before {
+   content: attr(data-hint);
+   position: absolute;
+   visibility: hidden;
+   z-index: -1;
+   display: block;
+   background: #101010;
+   border-radius: 5px;
+   padding: 5px;
+   bottom: 2%;
+   opacity: 0;
+   transition: all .09s ease-out;
+   pointer-events: none;
+   color: #ababab;
+   left: 115%;
+}
+
+.hint.favorite-item:hover::before {
+   opacity: 1;
+   visibility: visible;
+   z-index: 10;
+   left: calc(100% + 10px);
 }

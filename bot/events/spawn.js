@@ -7,12 +7,12 @@ module.exports = (username) => {
    const item = document.createElement('div')
    item.innerHTML = `
          <div class="control header">
-            <select class="control choise">
+            <select class="control choise btn-blue">
                <option class="control choise-item" value="chat" selected>Чат</option>
                <option class="control choise-item" value="addons">Аддоны</option>
                <option class="control choise-item" value="trading">Трейдинг</option>
             </select>
-            <button class="control-quit" data-use-bot="${username}">Выйти</button>
+            <button class="control-quit btn-blue" data-use-bot="${username}">Выйти</button>
          </div>
 
 
@@ -28,15 +28,13 @@ module.exports = (username) => {
 
             <div class="control addon clickWindow">
                <input type="text" class="control clickWindow-input btn-blue" placeholder="Слот инвентаря">
-               <button class="control clickWindow-btn btn-blue" data-use-bot="${username}">Клик</button>
-               <span class="control addon description"> - Клик по слоту инвентаря</span>
+               <button class="control clickWindow-btn btn-blue hint addon" data-hint="Клик по слоту инвентаря" data-use-bot="${username}">Клик</button>
             </div>
 
             <div class="control addon followPlayer">
                <input type="text" class="control followPlayer-input btn-blue" placeholder="Ник игрока">
                <input type="checkbox" class="control followPlayer-input-radio btn-blue"></input>
-               <button class="control followPlayer-btn btn-blue" data-use-bot="${username}">Подойти</button>
-               <span class="control addon description"> - Следовать[подойти] к игроку</span>
+               <button class="control followPlayer-btn btn-blue hint addon" data-hint="Подойти [следовать] к игроку" data-use-bot="${username}">Подойти</button>
             </div>
 
             <div class="control addon lookAt">
@@ -45,13 +43,11 @@ module.exports = (username) => {
                   <option value="near-player" class="control choise-lookAt-item">Ближний игрок</option>
                </select>
                <input type="text" class="control lookAt-player btn-blue" placeholder="Ник игрока">
-               <button class="control-lookAt btn-blue" data-use-bot="${username}">Смотреть</button>
-               <span class="control addon description"> - Посмотреть на игрока</span>
+               <button class="control-lookAt btn-blue hint addon" data-hint="Посмотреть на игрока" data-use-bot="${username}">Смотреть</button>
             </div>
             <div class="control addon autoclicker">
                <input type="number" class="control autoclicker-interval btn-blue" placeholder="Интервал [ms]">
-               <button class="control autoclicker-btn btn-blue" data-use-bot="${username}">Старт</button>
-               <span class="control addon description"> - Автокликер</span>
+               <button class="control autoclicker-btn btn-blue hint addon" data-hint="Автокликер" data-use-bot="${username}">Старт</button>
             </div>
          
          </div>
@@ -67,7 +63,7 @@ module.exports = (username) => {
             <option selected value="level">Уровень</option>
          </select>
          <input type="number" placeholder="Цена" class="control trading select-max-price btn-blue" data-use-bot="${username}">
-         <button type="submit" class="control trading plus btn-blue" data-use-bot="${username}">+</button>
+         <button type="submit" class="control trading plus btn-blue hintaddon" data-hint="Добавить Книгу" data-use-bot="${username}">+</button>
 
          </div>
 

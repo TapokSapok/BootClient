@@ -32,7 +32,6 @@ module.exports = class Bot {
       this.initBot();
    }
 
-   // === Инициализация бота
    initBot() {
       this.bot = mineflayer.createBot({
          'username': this.username,
@@ -48,7 +47,6 @@ module.exports = class Bot {
       console.log('[DEBUG] init bot')
    }
 
-   // === Инициализция ивентов бота
    initEvents() {
       this.bot.on("messagestr", (text) => {
          bot.messageStr(this.username, text)
@@ -66,21 +64,6 @@ module.exports = class Bot {
             idNavCoordinates.innerText = `${this.bot.entity.position.x.toFixed(0)}, ${this.bot.entity.position.y.toFixed(0)}, ${this.bot.entity.position.z.toFixed(0)}`
          }
       })
-
-      // this.bot.once('inject_allowed', () => {
-      //    console.log('[DEBUG] inject bot')
-      //    const props = bot.spawn(this.username);
-
-      //    this.mcData = require('minecraft-data')(this.bot.version)
-      //    this.panel = props['panel'];
-      //    this.chatLog = props['chatLog'];
-      //    this.tradeLog = props['tradeLog'];
-
-      //    this.tradingBtn = props['tradingBtn'];
-      //    this.followComeBtn = props['followComeBtn'];
-
-      //    echo(1, `Connect`, ``, this.username);
-      // })
 
       this.bot.once('login', () => {
          console.log('[DEBUG] login bot')
@@ -160,13 +143,11 @@ module.exports = class Bot {
 
             const item = document.createElement('img')
             item.className = 'captcha img';
-            item.src = `$${PATH_CAPTCHA}/map_${this.bot.username}.png`
+            item.src = `${PATH_CAPTCHA}/map_${this.bot.username}.png`
             item.dataset.useBot = this.username;
             chatLog.prepend(item)
             img = item;
          });
-
-
 
          this.bot.on('login', function () {
             if (img) img.remove()
@@ -186,11 +167,10 @@ module.exports = class Bot {
       this.bot.on('error', (err) => { echo(3, 'Error', err, this.username) })
    }
 
-   // === ФУНКЦИИ АДДОНОВ
 
-   // Получение статистики бота
    getInfo() {
       if (this.bot.username === activeBot) {
+
          if (this.bot.health) idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`
          else idNavHealth.innerText = `20 Health`
          if (this.bot.food) idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`
@@ -201,15 +181,15 @@ module.exports = class Bot {
          idNavCoordinates.innerText = `${this.bot.entity.position.x.toFixed(0)}, ${this.bot.entity.position.y.toFixed(0)}, ${this.bot.entity.position.z.toFixed(0)}`
       }
    }
-   // Отправка сообщение в чат
+
    chatSend(text) {
       this.bot.chat(text)
    }
-   // Выход с сервера
+
    quit() {
       this.bot.quit('Выход с клиента')
    }
-   // Посмотреть на..
+
    async lookAt(type, player) {
       let target
       switch (type) {
@@ -234,12 +214,12 @@ module.exports = class Bot {
       }
 
    }
-   // Клик в слот инвентаря.
+
    clickWindow(slot) {
       this.bot.simpleClick.leftMouse(slot);
       echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${this.username}`)
    }
-   // FollowPLayer
+
    stopComeFollow(type) {
       this.activeFollowPlayer = false;
       if (this.bot.pathfinder !== undefined) this.bot.pathfinder.setGoal(null);
@@ -291,7 +271,7 @@ module.exports = class Bot {
       await this.bot.pathfinder.setGoal(goal, true)
    }
 
-   // ЛОГ СКРИПТОВ
+
    scriptLog(script, state) {
       switch (script) {
          case 'trading':

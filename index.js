@@ -8,7 +8,7 @@ const fs = require('fs')
 let mainWindow;
 const createWindow = () => {
    mainWindow = new BrowserWindow({
-      title: `SapokClient v.${app.getVersion()} | ${app.getAppPath()}`,
+      title: `SapokClient v.${app.getVersion()}`,
       width: 930,
       minWidth: 930,
       minHeight: 600,
