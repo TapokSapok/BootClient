@@ -1,7 +1,14 @@
-module.exports = (username) => {
-   const separator = document.querySelector('.last-separator')
-   const sidebarItem = `<div class="sidebar-bot-item" data-bot="${username}"><img src="images/headPlayer.png" class="bot-img" draggable="false"></div>`
-   separator.insertAdjacentHTML('beforebegin', sidebarItem)
+module.exports = (username, server) => {
+   let botImgId = getRandomInt(1, 52);
+
+   const sidebar = document.querySelector('.sidebar')
+   const sidebarItem = document.createElement('div');
+   sidebarItem.className = 'sidebar-bot-item';
+   sidebarItem.dataset.bot = username;
+   sidebarItem.dataset.server = server;
+   sidebarItem.dataset.id = botImgId;
+   sidebarItem.innerHTML = `<img src="images/mc-heads/${botImgId}.png" class="bot-img" draggable="false">`
+   sidebar.prepend(sidebarItem)
    idSidebarItem.push(sidebarItem)
 
    const item = document.createElement('div')
@@ -89,6 +96,8 @@ module.exports = (username) => {
       panel: item,
       chatLog: item.querySelector('.control.ul'),
       tradeLog: item.querySelector('.control.trading-log.ul'),
+      botImgId: botImgId,
+
       tradingBtn: item.querySelector('.control.trading-start'),
       followComeBtn: item.querySelector('.control.followPlayer-btn')
    }

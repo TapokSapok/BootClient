@@ -196,7 +196,7 @@ p {
    height: 50px;
    width: 50px;
    margin: 0 auto;
-   margin-bottom: 10px;
+   margin-top: 5px;
    transition: .1s;
    /* border: #252525 solid 2px; */
    background: #252525;
@@ -205,6 +205,10 @@ p {
    text-align: center;
    position: relative;
 }
+
+/* .sidebar-bot-item.bot-plus {
+   margin: 5px auto;
+} */
 
 .sidebar-bot-item:hover {
    opacity: .6;

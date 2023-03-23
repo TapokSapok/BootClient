@@ -29,6 +29,7 @@ const // Элементы логина
    idNavServer = document.querySelector('.nav-server'),
    idNavCoordinates = document.querySelector('.nav-coordinates'),
    idNavItems = document.querySelectorAll('.nav-info-item'),
+   idNavBotImg = document.querySelector('.bot-img'),
 
    // Элементы Сайдбара
    idSideNewBot = document.querySelector('.bot-plus'),
@@ -91,7 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
    document.onmouseover = document.onmouseout = mouseAction;
    document.onmousemove = (e) => { x = e.clientX; y = e.clientY; }
    uploadFavorites()
-   afterload()
+   markerBots(idSideNewBot);
+   afterload();
    // document.querySelector('.popup.captcha').style.display = 'block';
 
    username.addEventListener('keyup', (el) => { if (el.which == 13) { bot.connect(username.value, host.value, version.value) } })
@@ -102,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
    idLoginBtn.addEventListener('click', () => { bot.connect(username.value, host.value, version.value) })
    idSideNewBot.addEventListener('click', () => { openLoginPanel(); })
    idSideConsole.addEventListener('click', () => { openConsole() })
-   document.addEventListener('click', (el) => { choiceBot(el); markerBots(el); })
+   document.addEventListener('click', (el) => { choiceBot(el); markerBots(el.target); })
 
    idLoginFavoriteAdd.addEventListener('click', () => { addFavorite() })
 
@@ -202,8 +204,18 @@ function getServer(server) {
 
 }
 
+function getRandomInt(min, max) {
+   min = Math.ceil(min);
+   max = Math.floor(max);
+   return Math.floor(Math.random() * (max - min) + min);
+}
 
+// function getActiveBot(username, server) {
+//    for (let i = 0; i < bots.length; i++) {
+//       if()
+//    }
 
+// }
 
 
 
@@ -359,16 +371,18 @@ function mouseAction(event) {
 }
 
 function markerBots(el) {
-   if (el.target.className === 'sidebar-bot-item' || el.target.className === 'sidebar-bot-item bot-log') {
+   if (el.className === 'sidebar-bot-item'
+      || el.className === 'sidebar-bot-item bot-log'
+      || el.className === 'sidebar-bot-item bot-plus') {
       if (markerBotData !== activeBot && markerBot !== undefined) {
          markerBot.style.background = '';
          this.return
       }
 
-      markerBotData = el.target.dataset.bot;
-      markerBot = el.target;
+      markerBotData = el.dataset.bot;
+      markerBot = el;
       if (markerBotData === activeBot) {
-         el.target.style.background = '#fff'
+         el.style.background = '#fff'
       }
 
    }
@@ -386,6 +400,7 @@ function openConsole(elem) {
    idConsolePanel.classList.add('active')
 
    idNavItems.forEach(el => el.innerText = '')
+   idNavBotImg.src = `images/computer.png`
 
    idConsoleChatLogUl.scrollIntoView(false)
 
@@ -400,6 +415,7 @@ function openLoginPanel() {
    idLoginPanel.classList.add('active')
 
    idNavItems.forEach(el => el.innerText = '')
+   idNavBotImg.src = `images/head1.png`;
 }
 
 function afterload() {

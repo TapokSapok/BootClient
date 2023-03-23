@@ -15,6 +15,7 @@ module.exports = class Bot {
       this.panel = null;
       this.chatLog = null;
       this.tradeLog = null;
+      this.botImgId = null;
 
       // SCRIPTS
       this.activeScript = false;
@@ -67,12 +68,13 @@ module.exports = class Bot {
 
       this.bot.once('login', () => {
          console.log('[DEBUG] login bot')
-         const props = bot.spawn(this.username);
+         const props = bot.spawn(this.username, `${this.host}:${this.port}`);
 
          this.mcData = require('minecraft-data')(this.bot.version)
          this.panel = props['panel'];
          this.chatLog = props['chatLog'];
          this.tradeLog = props['tradeLog'];
+         this.botImgId = props['botImgId'];
 
          this.tradingBtn = props['tradingBtn'];
          this.followComeBtn = props['followComeBtn'];
@@ -88,7 +90,7 @@ module.exports = class Bot {
          console.log('[DEBUG] bot spawn')
 
          if (!this.panel) {
-            const props = bot.spawn(this.username);
+            const props = bot.spawn(this.username, `${this.host}:${this.port}`);
 
             this.mcData = require('minecraft-data')(this.bot.version)
             this.panel = props['panel'];
@@ -111,11 +113,19 @@ module.exports = class Bot {
          for (let i = 0; i < bots.length; i++) {
             if (!bots[i].panel) continue;
             if (this.username === bots[i].panel.dataset.useBot) {
-               bots[i].panel.remove()
+               bots[i].panel.remove();
+               bots.splice(i, 1)
             }
          }
 
-         if (activeBot === this.username) { idNavItems.forEach(el => el.innerText = ''); idLoginPanel.classList.add('active'); activeBot = '' }
+
+
+         if (activeBot === this.username) {
+            idNavItems.forEach(el => el.innerText = '');
+            idLoginPanel.classList.add('active'); activeBot = '';
+            markerBots(idSideNewBot);
+            idNavBotImg.src = `images/head1.png`;
+         }
          if (reason === 'Выход с клиента') { echo(1, 'Disconnect', reason, this.username); return }
       })
 
@@ -171,6 +181,7 @@ module.exports = class Bot {
    getInfo() {
       if (this.bot.username === activeBot) {
 
+         idNavBotImg.src = `images/mc-heads/${this.botImgId}.png`
          if (this.bot.health) idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`
          else idNavHealth.innerText = `20 Health`
          if (this.bot.food) idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`

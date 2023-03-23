@@ -1,10 +1,13 @@
 module.exports = (el) => {
+   const msg = el.value;
 
    for (let i = 0; i < bots.length; i++) {
       if (el.dataset.useBot === bots[i].username) {
 
          bots[i].chatSend(el.value);
          el.value = '';
+
+
 
       } else if (el.dataset.useBot === '.all.') {
 
