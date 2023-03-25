@@ -90,10 +90,12 @@ const // Элементы логина
 
 let bots = [];
 let maps = [];
-let activeBot = [''];
+let activeBot = ['.login.', '.login.'];
 let x, y;
-let markerBotData = '';
+let markerBotDataUsername = '';
+let markerBotDataServer = '';
 let markerBot;
+let notifyMessages = [];
 
 // Обработчики
 document.addEventListener('DOMContentLoaded', () => {
@@ -113,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
    idSideConsole.addEventListener('click', () => { openConsole() })
    document.addEventListener('click', (el) => { choiceBot(el); markerBots(el.target); })
 
-   idLoginFavoriteAdd.addEventListener('click', () => { addFavorite() })
+   idLoginFavoriteAdd.addEventListener('click', () => { addFavorite(); notify(1) })
 
    idConsoleChat.addEventListener('keyup', (el) => { if (el.which == 13) { bot.chatSend(el.target) } })
    idConsoleQuit.addEventListener('click', (el) => { bot.quit(el.target) })
@@ -175,35 +177,27 @@ function choiceBot(el) {
 }
 
 function echo(type, title, info, username) {
-
-   const window = document.createElement('div')
    const item = document.createElement('li')
    item.className = 'bot-log'
 
    switch (type) {
       case 1: window.className = 'echo green'
-         window.innerHTML = `<div class="echo-title">Success: ${title} | ${username}</div><div class="echo-info">${info}</div>`;
+         notify(1, title, info, username)
          item.innerHTML = `<span>${getTime()} </span><span class="green">${title}</span> ${username} <span></span><span class="green">${info}</span>`;
          break;
       case 2: window.className = 'echo yellow'
-         window.innerHTML = `<div class="echo-title">Warning: ${title} | ${username}</div><div class="echo-info">${info}</div>`;
+         notify(2, title, info, username)
          item.innerHTML = `<span>${getTime()} </span><span class="yellow">${title}</span> ${username} <span></span><span class="yellow">${info}</span>`;
          break;
       case 3: window.className = 'echo red'
-         window.innerHTML = `<div class="echo-title">Error: ${title} | ${username}</div><div class="echo-info">${info}</div>`;
+         notify(3, title, info, username)
          item.innerHTML = `<span>${getTime()} </span><span class="red">${title}</span> ${username} <span></span><span class="red">${info}</span>`;
          break;
    }
 
-   const windows = document.querySelectorAll('.echo')
-   for (let i = 0; i < windows.length; i++) { if (window.innerHTML === windows[i].innerHTML) return }
-
-   document.body.append(window)
    idConsoleLogUl.append(item)
    idConsoleLogUl.scrollIntoView(false)
 
-   windows.forEach(el => { el.style.bottom = `${window.style.height + 70}px` })
-   setTimeout(() => { window.remove() }, 3000);
 }
 
 function getTime() {
@@ -381,6 +375,8 @@ function mouseAction(event) {
 
          if (event.target.dataset.bot === '.all.') {
             popup.innerHTML = 'Console'
+         } else if (event.target.dataset.bot === '.login.') {
+            popup.innerHTML = 'Login'
          } else {
             popup.innerHTML = event.target.dataset.bot;
          }
@@ -398,31 +394,31 @@ function mouseAction(event) {
       document.querySelectorAll('.popup.bot').forEach(el => el.remove())
    }
 }
-
 function markerBots(el) {
    if (el.className === 'sidebar-bot-item'
       || el.className === 'sidebar-bot-item bot-log'
       || el.className === 'sidebar-bot-item bot-plus') {
-      if (markerBotData !== activeBot[0] && markerBot !== undefined) {
+      if (markerBotDataUsername !== activeBot[0] && markerBot !== undefined) {
          markerBot.style.background = '';
          this.return
       }
 
-      markerBotData = el.dataset.bot;
+
+      markerBotDataUsername = el.dataset.bot;
+      markerBotDataServer = el.dataset.server;
       markerBot = el;
-      if (markerBotData === activeBot[0]) {
+      if (markerBotDataUsername === activeBot[0] && markerBotDataServer === activeBot[1]) {
          el.style.background = '#fff'
       }
-
    }
 
-   if (markerBotData !== activeBot[0] && markerBot !== undefined) {
+   if (markerBotDataUsername !== activeBot[0] && markerBot !== undefined) {
       markerBot.style.background = '';
    }
 }
 
 function openConsole(elem) {
-   activeBot = ['.all.']
+   activeBot = ['.all.', '.all.']
 
    clearPanels();
    idConsolePanel.classList.add('active')
@@ -436,7 +432,7 @@ function openConsole(elem) {
 }
 
 function openLoginPanel() {
-   activeBot[0] = ''
+   activeBot = ['.login.', '.login.']
 
    clearPanels()
    idLoginPanel.classList.add('active')
@@ -449,5 +445,33 @@ function afterload() {
 
 }
 
+function notify(type, title, info, username) {
+   const notifyPanel = document.querySelector('.notify.panel')
+   const message = document.createElement('div');
 
-console.log(process.env.APPDATA)
+   if (type === 0) {
+
+   } else if (type === 1) {
+      message.innerHTML = `<div class="notify message">
+      <span class="notify title green">Success: ${title}</span><span class="notify info"> ${username}</span>
+      <div class="notify info">${info}</div></div>`;
+   } else if (type === 2) {
+      message.innerHTML = `<div class="notify message">
+      <span class="notify title yellow">Warning: ${title}</span><span class="notify info"> ${username}</span>
+      <div class="notify info">${info}</div></div>`;
+   } else if (type === 3) {
+      message.innerHTML = `<div class="notify message">
+      <span class="notify title red">Error: ${title}</span><span class="notify info"> ${username}</span>
+      <div class="notify info">${info}</div></div>`;
+   }
+
+   message.className = 'notify message'
+   notifyPanel.append(message);
+   notifyMessages.push(message)
+
+   setTimeout(() => {
+      message.classList.add('hide');
+      setTimeout(() => { message.remove() }, 160)
+   }, 2000);
+};
+

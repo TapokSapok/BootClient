@@ -79,7 +79,7 @@ module.exports = class Bot {
          this.tradingBtn = props['tradingBtn'];
          this.followComeBtn = props['followComeBtn'];
 
-         echo(1, `Connect`, ``, this.username);
+         echo(1, `Connect`, `${this.host}:${this.port}`, this.username);
       })
 
       this.bot.once('spawn', () => {
@@ -103,26 +103,37 @@ module.exports = class Bot {
       })
 
       this.bot.on('end', (reason) => {
+         const server = `${this.host}:${this.port}`
          const items = document.querySelectorAll('.sidebar-bot-item')
          items.forEach(el => {
-            if (el.dataset.bot === this.username) {
+            if (el.dataset.bot === this.username && el.dataset.server === server) {
                el.remove()
             }
          })
 
          for (let i = 0; i < bots.length; i++) {
             if (!bots[i].panel) continue;
-            if (this.username === bots[i].panel.dataset.useBot) {
+            if (this.username === bots[i].panel.dataset.useBot && bots[i].panel.dataset.server === server) {
                bots[i].panel.remove();
                bots.splice(i, 1)
             }
          }
 
+         // setTimeout(() => {
 
+         //    const options = {
+         //       username: this.username,
+         //       host: this.host,
+         //       port: this.port,
+         //       version: this.version,
+         //    }
+         //    startClient(options)
+         // }, 100)
 
-         if (activeBot[0] === this.username) {
+         if (activeBot[0] === this.username && activeBot[1] === server) {
             idNavItems.forEach(el => el.innerText = '');
-            idLoginPanel.classList.add('active'); activeBot[0] = '';
+            idLoginPanel.classList.add('active');
+            activeBot = ['.login.', '.login.']
             markerBots(idSideNewBot);
             idNavBotImg.src = `images/head1.png`;
          }

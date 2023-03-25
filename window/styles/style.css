@@ -83,9 +83,13 @@ p {
 
 .side-container {
    float: left;
-   width: 60px;
-   height: 485px;
+   /* width: 60px;
+   height: 485px; */
    margin-left: 5px;
+
+   position: fixed;
+   top: 70px;
+   bottom: 5px;
 }
 
 .sidebar {
@@ -100,8 +104,6 @@ p {
 .main-panel {
    float: right;
    width: calc(100% - 75px);
-   margin-right: 5px;
-   height: 485px;
 
    background: #191919;
    border-radius: 10px;
@@ -113,6 +115,11 @@ p {
    z-index: auto;
 
    display: none;
+
+   position: fixed;
+   top: 70px;
+   bottom: 5px;
+   right: 5px;
 }
 
 .sideLog {
@@ -298,7 +305,8 @@ p {
    z-index: 100;
    border-radius: 5px;
    cursor: pointer;
-   overflow: auto
+   overflow: auto;
+   box-shadow: 0 0 20px #000;
 }
 
 .echo:hover {
@@ -662,6 +670,7 @@ span.red {
    background: #101010;
    border-radius: 5px;
    overflow: auto;
+   overflow-x: hidden;
    text-align: left;
    position: relative;
    flex-wrap: wrap;
@@ -1116,4 +1125,95 @@ span.red {
 
 .console.followPlayer-btn {
    margin: 0;
+}
+
+.notify.panel {
+   position: fixed;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   width: 300px;
+   z-index: 9999;
+
+   display: flex;
+   flex-direction: column;
+   flex-wrap: nowrap;
+   justify-content: flex-end;
+   pointer-events: none;
+}
+
+.notify.message {
+   width: 280px;
+   margin: 0 auto 10px;
+
+   background: #232323;
+   box-shadow: 0 0 2px #191919;
+
+   border-radius: 7px;
+   pointer-events: auto;
+   animation: showNotify 0.16s ease-in-out;
+
+}
+
+.notify.title {
+   padding-left: 5px;
+   font-weight: 700;
+   font-size: 18px;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.notify.info {
+   width: 275px;
+   word-break: break-all;
+   padding-left: 5px;
+   padding-right: 10px;
+   font-weight: 600;
+   font-size: 16px;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   color: #ababab;
+}
+
+.notify.title.green {
+   color: rgb(48, 158, 61);
+}
+
+.notify.title.yellow {
+   color: rgb(229, 190, 1);
+}
+
+.notify.title.red {
+   color: RGB(255, 0, 0);
+}
+
+@keyframes showNotify {
+   0% {
+      transform: translateX(calc(100% + 100px));
+   }
+
+   70% {
+      transform: translateX(-20px);
+   }
+
+   100% {
+      transform: translateX(0);
+   }
+}
+
+@keyframes hideNotify {
+   0% {
+      transform: translateX(0);
+   }
+
+   70% {
+      transform: translateX(-20px);
+   }
+
+   100% {
+      transform: translateX(calc(100% + 100px));
+      display: none;
+   }
+}
+
+.notify.message.hide {
+   animation: hideNotify 0.16s ease-in-out;
 }
