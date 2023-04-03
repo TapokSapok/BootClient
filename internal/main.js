@@ -3,8 +3,9 @@ const bot = require('../internal/manager.js');
 const PNGImage = require('pngjs-image');
 const Vec3 = require('vec3').Vec3;
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder');
-const autoclicker = require('mineflayer-autoclicker')
-const path = require('path')
+const autoclicker = require('mineflayer-autoclicker');
+const autoeat = require('mineflayer-auto-eat');
+const path = require('path');
 const GoalFollow = goals.GoalFollow;
 
 const chokidar = require('chokidar')
@@ -30,6 +31,9 @@ const // Элементы логина
    idNavCoordinates = document.querySelector('.nav-coordinates'),
    idNavItems = document.querySelectorAll('.nav-info-item'),
    idNavBotImg = document.querySelector('.bot-img'),
+   idNavXp = document.querySelector('.nav-xp'),
+   idNavProgress = document.querySelector('.progressbar'),
+   idNavXpStripe = document.querySelector('.exp-stripe'),
 
    // Элементы Сайдбара
    idSideNewBot = document.querySelector('.bot-plus'),
@@ -115,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
    idSideConsole.addEventListener('click', () => { openConsole() })
    document.addEventListener('click', (el) => { choiceBot(el); markerBots(el.target); })
 
-   idLoginFavoriteAdd.addEventListener('click', () => { addFavorite(); notify(1) })
+   idLoginFavoriteAdd.addEventListener('click', () => { addFavorite(); })
 
    idConsoleChat.addEventListener('keyup', (el) => { if (el.which == 13) { bot.chatSend(el.target) } })
    idConsoleQuit.addEventListener('click', (el) => { bot.quit(el.target) })
@@ -169,6 +173,8 @@ function choiceBot(el) {
             bots[i].panel.classList.add('active')
          }
       }
+
+      idNavProgress.style.display = 'block'
 
       for (let i = 0; i < bots.length; i++) {
          bots[i].getInfo()
@@ -423,7 +429,8 @@ function openConsole(elem) {
    clearPanels();
    idConsolePanel.classList.add('active')
 
-   idNavItems.forEach(el => el.innerText = '')
+   idNavItems.forEach(el => el.innerText = '');
+   idNavProgress.style.display = 'none'
    idNavBotImg.src = `images/computer.png`
 
    idConsoleChatLogUl.scrollIntoView(false)
@@ -437,7 +444,8 @@ function openLoginPanel() {
    clearPanels()
    idLoginPanel.classList.add('active')
 
-   idNavItems.forEach(el => el.innerText = '')
+   idNavItems.forEach(el => el.innerText = '');
+   idNavProgress.style.display = 'none';
    idNavBotImg.src = `images/head1.png`;
 }
 
@@ -472,6 +480,6 @@ function notify(type, title, info, username) {
    setTimeout(() => {
       message.classList.add('hide');
       setTimeout(() => { message.remove() }, 160)
-   }, 2000);
+   }, 2700);
 };
 

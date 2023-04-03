@@ -16,6 +16,7 @@ module.exports = (username, server) => {
          <div class="control header">
             <select class="control choise btn-blue">
                <option class="control choise-item" value="chat" selected>Чат</option>
+               <option class="control choise-item" value="control">Управление</option>
                <option class="control choise-item" value="addons">Аддоны</option>
                <option class="control choise-item" value="trading">Трейдинг</option>
             </select>
@@ -30,6 +31,18 @@ module.exports = (username, server) => {
             <input class="control-chat" data-use-bot="${username}" data-server="${server}" type="text" placeholder="сообщение в чат">
          </div>
 
+         <div class="control item" data-item="control">
+            <div class="control wasd-keys">
+               <div class="up">  
+                  <button class="control key-item w-key">W</button>
+               </div>
+               <div class="down">  
+                  <button class="control key-item a-key">A</button>
+                  <button class="control key-item s-key">S</button>
+                  <button class="control key-item d-key">D</button>
+                  </div>
+            </div>
+         </div>
 
          <div class="control item" data-item="addons">
 
@@ -52,9 +65,14 @@ module.exports = (username, server) => {
                <input type="text" class="control lookAt-player btn-blue" placeholder="Ник игрока">
                <button class="control-lookAt btn-blue hint addon" data-hint="Посмотреть на игрока" data-use-bot="${username}">Смотреть</button>
             </div>
+
             <div class="control addon autoclicker">
                <input type="number" class="control autoclicker-interval btn-blue" placeholder="Интервал [ms]">
                <button class="control autoclicker-btn btn-blue hint addon" data-hint="Автокликер" data-use-bot="${username}">Старт</button>
+            </div>
+
+            <div class="control addon autoEat">
+               <button class="control autoEat-btn btn-blue hint addon" data-hint="Авто еда" data-use-bot="${username}">Старт</button>
             </div>
          
          </div>
@@ -100,7 +118,8 @@ module.exports = (username, server) => {
       botImgId: botImgId,
 
       tradingBtn: item.querySelector('.control.trading-start'),
-      followComeBtn: item.querySelector('.control.followPlayer-btn')
+      followComeBtn: item.querySelector('.control.followPlayer-btn'),
+      autoEatBtn: item.querySelector('.control.autoEat-btn')
    }
 
    bot.client(item, username)

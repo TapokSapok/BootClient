@@ -6,7 +6,6 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="styles/style.css">
-   <!-- <title>SapokClient</title> -->
 </head>
 
 <body>
@@ -20,7 +19,11 @@
          <div class="nav-info">
             <div class="nav-upper nav-side">
                <div class="nav-info-item nav-username"></div>
-               <div class="nav-info-item nav-server"></div>
+               <div class="progressbar">
+                  <div class="nav-info-item nav-xp"></div>
+                  <div class="exp-stripe">
+                  </div>
+               </div>
                <div class="nav-info-item nav-health"></div>
             </div>
             <div class="nav-lover nav-side">
@@ -28,98 +31,98 @@
                <div class="nav-info-item nav-hunger"></div>
             </div>
          </div>
+   </div>
 
-      </nav>
+   </nav>
 
-      <div class="side-container">
-         <div class="sidebar bar">
-            <div class="sidebar-bot-item bot-plus" data-bot=".login." data-server=".login."><img src="images/head1.png"
-                  class="bot-img" draggable="false"></div>
+   <div class="side-container">
+      <div class="sidebar bar">
+         <div class="sidebar-bot-item bot-plus" data-bot=".login." data-server=".login."><img src="images/head1.png"
+               class="bot-img" draggable="false"></div>
+      </div>
+      <div class="sideLog bar">
+         <div class="sidebar-bot-item bot-log" data-bot=".all." data-server=".all."><img src="images/computer.png"
+               class="bot-img" draggable="false"></div>
+      </div>
+   </div>
+
+   <!--  -->
+   <div class="console bar main-panel">
+      <div class="console header">
+         <select class="console choise btn-blue">
+            <option value="chatLog" class="console choise-item" selected>ЧатЛог</option>
+            <option value="log" class="console choise-item">Логи</option>
+            <option value="addons">Аддоны</option>
+         </select>
+         <button class="console-quit btn-blue" data-use-bot=".all.">Выйти</button>
+      </div>
+      <div class="console item active" data-item="chatLog">
+         <div class="console chatLog">
+            <ul class="console ul"></ul>
          </div>
-         <div class="sideLog bar">
-            <div class="sidebar-bot-item bot-log" data-bot=".all." data-server=".all."><img src="images/computer.png"
-                  class="bot-img" draggable="false"></div>
+         <input class="console-chat" data-use-bot=".all." type="text" placeholder="сообщение в чат">
+      </div>
+      <div class="console item" data-item="log">
+         <div class="console log">
+            <ul class="console ul log"></ul>
          </div>
       </div>
 
-      <!--  -->
-      <div class="console bar main-panel">
-         <div class="console header">
-            <select class="console choise btn-blue">
-               <option value="chatLog" class="console choise-item" selected>ЧатЛог</option>
-               <option value="log" class="console choise-item">Логи</option>
-               <option value="addons">Аддоны</option>
+      <div class="console item" data-item="addons">
+         <div class="console clickWindow">
+            <input type="text" class="console clickWindow-input btn-blue" placeholder="clickWindow">
+            <button class="console clickWindow-btn btn-blue hint addon" data-hint="Клик по слоту инвентаря"
+               data-use-bot=".all.">Клик</button>
+         </div>
+
+         <div class="console addon followPlayer">
+            <input type="text" class="console followPlayer-input btn-blue" placeholder="Ник игрока">
+            <input type="checkbox" class="console followPlayer-input-radio btn-blue"></input>
+            <button class="console followPlayer-btn btn-blue hint addon" data-hint="Подойти [следовать] к игроку"
+               data-use-bot=".all.">Подойти</button>
+         </div>
+         <div class="console addon lookAt">
+            <select class="console choise-lookAt btn-blue">
+               <option value="player" selected class="console choise-lookAt-item">Игрок</option>
+               <option value="near-player" class="console choise-lookAt-item">Ближний игрок</option>
             </select>
-            <button class="console-quit btn-blue" data-use-bot=".all.">Выйти</button>
+            <input type="text" class="console lookAt-player btn-blue" placeholder="Ник игрока">
+            <button class="console-lookAt btn-blue hint addon" data-hint="Посмотреть на игрока"
+               data-use-bot=".all.">Смотреть</button>
          </div>
-         <div class="console item active" data-item="chatLog">
-            <div class="console chatLog">
-               <ul class="console ul"></ul>
-            </div>
-            <input class="console-chat" data-use-bot=".all." type="text" placeholder="сообщение в чат">
-         </div>
-         <div class="console item" data-item="log">
-            <div class="console log">
-               <ul class="console ul log"></ul>
-            </div>
-         </div>
-         <div class="console item" data-item="addons">
-            <div class="console clickWindow">
-               <input type="text" class="console clickWindow-input btn-blue" placeholder="clickWindow">
-               <button class="console clickWindow-btn btn-blue hint addon" data-hint="Клик по слоту инвентаря"
-                  data-use-bot=".all.">Клик</button>
-            </div>
-
-            <div class="console addon followPlayer">
-               <input type="text" class="console followPlayer-input btn-blue" placeholder="Ник игрока">
-               <input type="checkbox" class="console followPlayer-input-radio btn-blue"></input>
-               <button class="console followPlayer-btn btn-blue hint addon" data-hint="Подойти [следовать] к игроку"
-                  data-use-bot=".all.">Подойти</button>
-            </div>
-            <div class="console addon lookAt">
-               <select class="console choise-lookAt btn-blue">
-                  <option value="player" selected class="console choise-lookAt-item">Игрок</option>
-                  <option value="near-player" class="console choise-lookAt-item">Ближний игрок</option>
-               </select>
-               <input type="text" class="console lookAt-player btn-blue" placeholder="Ник игрока">
-               <button class="console-lookAt btn-blue hint addon" data-hint="Посмотреть на игрока"
-                  data-use-bot=".all.">Смотреть</button>
-            </div>
-            <div class="console addon autoclicker">
-               <input type="number" class="console autoclicker-interval btn-blue" placeholder="Интервал [ms]">
-               <button class="console autoclicker-btn btn-blue hint addon" data-hint="Автокликер"
-                  data-use-bot=".all.">Старт</button>
-            </div>
+         <div class="console addon autoclicker">
+            <input type="number" class="console autoclicker-interval btn-blue" placeholder="Интервал [ms]">
+            <button class="console autoclicker-btn btn-blue hint addon" data-hint="Автокликер"
+               data-use-bot=".all.">Старт</button>
          </div>
       </div>
+   </div>
 
-      <!--  -->
+   <!--  -->
 
-      <div class="bots"></div>
+   <div class="bots"></div>
 
-      <!--  -->
+   <!--  -->
 
-      <div class="login bar main-panel active">
-         <!-- <button class="test-btn btn-blue">TEST</button> -->
-
-         <div class="login-form">
-            <input type="text" class="login-username login-input" placeholder="username" value="">
-            <input type="text" class="login-host login-input" placeholder="host:port" value="">
-            <input type="text" class="login-version login-input" placeholder="version" value="">
-            <button type="submit" class="login-submit">Подключиться</button>
-            <button type="button" class="login favorite add hint favorite-add" data-hint="Добавить в избранное">
-               <img class="login favorite add-img" src="./images/star.png" alt="">
-            </button>
-         </div>
-         <div class="login favorite panel">
-            <div class="login favorite title"><span>Избранные</span>
-               <input type="checkbox" class="login favorite checkbox hint favorite-remove" data-hint="Удалить аккаунт">
-            </div>
+   <div class="login bar main-panel active">
+      <div class="login-form">
+         <input type="text" class="login-username login-input" placeholder="username" value="">
+         <input type="text" class="login-host login-input" placeholder="host:port" value="">
+         <input type="text" class="login-version login-input" placeholder="version" value="">
+         <button type="submit" class="login-submit">Подключиться</button>
+         <button type="button" class="login favorite add hint favorite-add" data-hint="Добавить в избранное">
+            <img class="login favorite add-img" src="./images/star.png" alt="">
+         </button>
+      </div>
+      <div class="login favorite panel">
+         <div class="login favorite title"><span>Избранные</span>
+            <input type="checkbox" class="login favorite checkbox hint favorite-remove" data-hint="Удалить аккаунт">
          </div>
       </div>
+   </div>
 
-      <div class="notify panel">
-      </div>
+   <div class="notify panel">
+   </div>
    </div>
 </body>
 <script src="../internal/main.js"></script>

@@ -31,6 +31,7 @@ module.exports = (item, username) => {
    const clickWindow = item.querySelector('.control.clickWindow-btn')
    const followCome = item.querySelector('.control.followPlayer-btn')
    const autoclicker = item.querySelector('.control.autoclicker-btn')
+   const autoEat = item.querySelector('.control.addon.autoEat')
 
 
    quit.addEventListener('click', (el) => { bot.quit(el.target) })
@@ -57,6 +58,7 @@ module.exports = (item, username) => {
 
    })
    autoclicker.addEventListener('click', (el) => { bot.autoclicker(el.target, autoclickerInterval.value) })
+   autoEat.addEventListener('click', (el) => { bot.autoEat(el.target) })
 
    // ===================================================================================
 

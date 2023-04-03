@@ -2,8 +2,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 const { app, BrowserWindow, shell, globalShortcut, ipcMain } = require('electron');
 const path = require('path');
-
-const fs = require('fs')
+const fs = require('fs');
 
 let mainWindow;
 const createWindow = () => {

@@ -4,28 +4,30 @@ const DIRNAME = require('../getDirname');
 
 module.exports = class Bot {
    constructor(options) {
-      // MAIN
+      // MAIN;
       this.username = options['username'];
       this.host = options['host'];
       this.port = options['port'];
       this.version = options['version'];
 
-      // SECOND
+      // SECOND;
       this.mcData = null;
       this.panel = null;
       this.chatLog = null;
       this.tradeLog = null;
       this.botImgId = null;
 
-      // SCRIPTS
+      // SCRIPTS;
       this.activeScript = false;
 
       this.activeFollowPlayer = false;
       this.activeAutoclicker = false;
+      this.activeAutoEat = false;
 
       this.followComeBtn = null;
+      this.autoEatBtn = null;
 
-      // TRADING
+      // TRADING;
       this.tradingBtn = null;
       this.activeTrading = false;
       this.tradingEnchants = [];
@@ -50,13 +52,23 @@ module.exports = class Bot {
 
    initEvents() {
       this.bot.on("messagestr", (text) => {
-         bot.messageStr(this.username, text)
+         bot.messageStr(this.username, text);
       })
 
       this.bot.on('health', () => {
          if (this.bot.username === activeBot[0]) {
-            idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`
-            idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`
+            idNavHealth.innerText = `${this.bot.health.toFixed(0)}`;
+            idNavHunger.innerText = `${this.bot.food.toFixed(0)}`;
+         }
+         if (this.bot.food !== 20) if (this.activeAutoEat) this.eat();
+      })
+
+      this.bot.on('experience', () => {
+         if (this.bot.username === activeBot[0]) {
+            if (this.bot.experience) {
+               idNavXp.innerText = `${this.bot.experience.level} `;
+               idNavXpStripe.style.width = `${this.bot.experience.progress * 100}%`;
+            }
          }
       })
 
@@ -78,6 +90,11 @@ module.exports = class Bot {
 
          this.tradingBtn = props['tradingBtn'];
          this.followComeBtn = props['followComeBtn'];
+         this.autoEatBtn = props['autoEatBtn'];
+
+         // ==
+
+         // ==
 
          echo(1, `Connect`, `${this.host}:${this.port}`, this.username);
       })
@@ -85,7 +102,6 @@ module.exports = class Bot {
       this.bot.once('spawn', () => {
          if (this.bot.username === activeBot[0]) {
             idNavUsername.innerText = `${this.bot.username}`
-            idNavServer.innerText = `${this.host}:${this.port}`
          }
          console.log('[DEBUG] bot spawn')
 
@@ -118,17 +134,6 @@ module.exports = class Bot {
                bots.splice(i, 1)
             }
          }
-
-         // setTimeout(() => {
-
-         //    const options = {
-         //       username: this.username,
-         //       host: this.host,
-         //       port: this.port,
-         //       version: this.version,
-         //    }
-         //    startClient(options)
-         // }, 100)
 
          if (activeBot[0] === this.username && activeBot[1] === server) {
             idNavItems.forEach(el => el.innerText = '');
@@ -180,32 +185,37 @@ module.exports = class Bot {
          })
       });
 
-
-      this.bot.on('death', (reason) => { echo(2, 'death', '', this.username) })
+      this.bot.on('death', (reason) => {
+         echo(2, 'death', '', this.username);
+         bot.autoEat(this.autoEatBtn);
+      })
 
       this.bot.on('kicked', (reason) => { echo(2, 'Kicked', reason, this.username) })
 
       this.bot.on('error', (err) => { echo(3, 'Error', err, this.username) })
    }
 
-
    getInfo() {
       if (this.bot.username === activeBot[0]) {
 
-         idNavBotImg.src = `images/mc-heads/${this.botImgId}.png`
-         if (this.bot.health) idNavHealth.innerText = `${this.bot.health.toFixed(0)} Health`
-         else idNavHealth.innerText = `20 Health`
-         if (this.bot.food) idNavHunger.innerText = `${this.bot.food.toFixed(0)} Hunger`
-         else idNavHunger.innerText = `20 Hunger`
-         if (this.bot.username) idNavUsername.innerText = `${this.bot.username}`
-         if (this.host && this.port) idNavServer.innerText = `${this.host}:${this.port}`
+         idNavBotImg.src = `images/mc-heads/${this.botImgId}.png`;
+         if (this.bot.health) idNavHealth.innerText = `${this.bot.health.toFixed(0)}`;
+         else idNavHealth.innerText = `20`;
+         if (this.bot.food) idNavHunger.innerText = `${this.bot.food.toFixed(0)}`;
+         else idNavHunger.innerText = `20`;
+         if (this.bot.username) idNavUsername.innerText = `${this.bot.username}`;
+         if (this.bot.experience) {
+            idNavXpStripe.style.width = `${this.bot.experience.progress * 100}%`;
+            idNavXp.innerText = `${this.bot.experience.level} `;
+         }
 
          idNavCoordinates.innerText = `${this.bot.entity.position.x.toFixed(0)}, ${this.bot.entity.position.y.toFixed(0)}, ${this.bot.entity.position.z.toFixed(0)}`
       }
    }
 
    chatSend(text) {
-      this.bot.chat(text)
+      this.bot.chat(text);
+      bot.chatMiddleware(this.username, text);
    }
 
    quit() {
@@ -241,6 +251,27 @@ module.exports = class Bot {
       this.bot.simpleClick.leftMouse(slot);
       echo(1, 'clickWindow', `Кликнул на ${slot} слот инвентаря.`, `${this.username}`)
    }
+
+   async eat() {
+
+      const items = await this.bot.inventory.items();
+      const food = await this.bot.registry.foodsByName;
+
+      const offhandItem = this.bot.inventory.slots[45];
+      if (offhandItem) items.push(offhandItem);
+
+      const bestChoices = items.filter((item) => item.name in this.bot.registry.foodsByName)
+      if (bestChoices.length === 0) {
+         echo(2, 'autoEat', 'Нету еды в инвентаре.', this.username);
+         bot.autoEat(this.autoEatBtn);
+         return;
+      }
+
+      const bestFood = bestChoices[0];
+      await this.bot.equip(bestFood, 'off-hand');
+      await this.bot.activateItem(true);
+   };
+
 
    stopComeFollow(type) {
       this.activeFollowPlayer = false;

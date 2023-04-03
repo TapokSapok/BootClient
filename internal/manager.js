@@ -16,6 +16,8 @@ module.exports = {
    lookAt: require('../bot/extends/lookAt.js'),
    clickWindow: require('../bot/extends/clickWindow.js'),
    autoclicker: require('../bot/extends/autoclicker.js'),
+   chatMiddleware: require('../bot/main/chatMiddleware.js'),
+   autoEat: require('../bot/extends/autoEat.js'),
 
    comePlayer: require('../bot/extends/movements/come.js'),
    followPlayer: require('../bot/extends/movements/follow.js'),
